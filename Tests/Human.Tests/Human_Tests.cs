@@ -1,4 +1,6 @@
 using NUnit.Framework;
+using PlayerClass;
+using HumanClass;
 
 namespace HumanClass.UnitTests
 {
@@ -13,10 +15,10 @@ namespace HumanClass.UnitTests
         }
 
         [TestCase("Fry")]
-        [TestCase("    Fry")]
-        [TestCase("  Fry    ")]
-        [TestCase("")]
-        [TestCase("     ")]
+        [TestCase("    Fry")]       // needs trimming
+        [TestCase("  Fry    ")]     // needs trimming
+        [TestCase("")]              // empty string
+        [TestCase("     ")]         // empty string after trimming
         public void SetPlayerNameShould(string str)
         {
             if (str.Trim().Length == 0)
@@ -25,8 +27,26 @@ namespace HumanClass.UnitTests
             }
             else
             {
+                _human.SetPlayerName(str);
                 string result = _human.Name;
-                Console.WriteLine(result);
+                Assert.That(result, Is.EqualTo(str.Trim()));
+            }
+        }
+
+        [TestCase("X")]
+        [TestCase(" X   ")]         // needs trimming
+        [TestCase("")]              // empty string
+        [TestCase("xo")]            // too long
+        public void SetPlayerTokenShould(string str)
+        {
+            if (str.Trim().Length != 1)
+            {
+                Assert.That(() => _human.SetPlayerToken(str), Throws.ArgumentException);
+            }
+            else
+            {
+                _human.SetPlayerToken(str);
+                string result = _human.Token;
                 Assert.That(result, Is.EqualTo(str.Trim()));
             }
         }

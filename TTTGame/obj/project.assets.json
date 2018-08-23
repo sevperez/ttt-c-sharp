@@ -208,10 +208,25 @@
           "build/netstandard2.0/NETStandard.Library.targets": {}
         }
       },
+      "Computer/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "dependencies": {
+          "Player": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Computer.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Computer.dll": {}
+        }
+      },
       "Game/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
+          "Computer": "1.0.0",
+          "Human": "1.0.0",
           "Player": "1.0.0"
         },
         "compile": {
@@ -219,6 +234,19 @@
         },
         "runtime": {
           "bin/placeholder/Game.dll": {}
+        }
+      },
+      "Human/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "dependencies": {
+          "Player": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Human.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Human.dll": {}
         }
       },
       "Player/1.0.0": {
@@ -697,10 +725,20 @@
         "netstandard.library.nuspec"
       ]
     },
+    "Computer/1.0.0": {
+      "type": "project",
+      "path": "../Classes/Computer/Computer.csproj",
+      "msbuildProject": "../Classes/Computer/Computer.csproj"
+    },
     "Game/1.0.0": {
       "type": "project",
       "path": "../Classes/Game/Game.csproj",
       "msbuildProject": "../Classes/Game/Game.csproj"
+    },
+    "Human/1.0.0": {
+      "type": "project",
+      "path": "../Classes/Human/Human.csproj",
+      "msbuildProject": "../Classes/Human/Human.csproj"
     },
     "Player/1.0.0": {
       "type": "project",

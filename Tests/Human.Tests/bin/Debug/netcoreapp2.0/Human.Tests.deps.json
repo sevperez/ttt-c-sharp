@@ -11,6 +11,7 @@
           "Human": "1.0.0",
           "Microsoft.NET.Test.Sdk": "15.7.2",
           "NUnit3TestAdapter": "3.10.0",
+          "Player": "1.0.0",
           "NUnit": "3.10.1"
         },
         "runtime": {

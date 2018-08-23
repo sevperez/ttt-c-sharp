@@ -5669,6 +5669,7 @@
       "Microsoft.NET.Test.Sdk >= 15.7.2",
       "Microsoft.NETCore.App >= 2.0.0",
       "NUnit3TestAdapter >= 3.10.0",
+      "Player >= 1.0.0",
       "nunit >= 3.10.1"
     ]
   },
@@ -5702,6 +5703,9 @@
           "projectReferences": {
             "/Users/severinperez/Documents/ttt_c_sharp/Classes/Human/Human.csproj": {
               "projectPath": "/Users/severinperez/Documents/ttt_c_sharp/Classes/Human/Human.csproj"
+            },
+            "/Users/severinperez/Documents/ttt_c_sharp/Classes/Player/Player.csproj": {
+              "projectPath": "/Users/severinperez/Documents/ttt_c_sharp/Classes/Player/Player.csproj"
             }
           }
         }

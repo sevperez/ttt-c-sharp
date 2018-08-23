@@ -14,12 +14,30 @@
           "TTTGame.dll": {}
         }
       },
-      "Game/1.0.0": {
+      "Computer/1.0.0": {
         "dependencies": {
           "Player": "1.0.0"
         },
         "runtime": {
+          "Computer.dll": {}
+        }
+      },
+      "Game/1.0.0": {
+        "dependencies": {
+          "Computer": "1.0.0",
+          "Human": "1.0.0",
+          "Player": "1.0.0"
+        },
+        "runtime": {
           "Game.dll": {}
+        }
+      },
+      "Human/1.0.0": {
+        "dependencies": {
+          "Player": "1.0.0"
+        },
+        "runtime": {
+          "Human.dll": {}
         }
       },
       "Player/1.0.0": {
@@ -35,7 +53,17 @@
       "serviceable": false,
       "sha512": ""
     },
+    "Computer/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
     "Game/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Human/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

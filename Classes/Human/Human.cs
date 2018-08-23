@@ -7,16 +7,29 @@ namespace HumanClass
     {
         public void SetPlayerName(string str)
         {
-            string trimmedStr = str.Trim();
+            string trimmed = str.Trim();
 
-            if (trimmedStr.Length > 0)
+            if (trimmed.Length > 0)
             {
-                Console.WriteLine(trimmedStr);
-                this.Name = str;
+                this.Name = trimmed;
             }
             else
             {
                 throw new ArgumentException("name must be greater than 0 length, trimmed");
+            }
+        }
+
+        public void SetPlayerToken(string str)
+        {
+            string trimmed = str.Trim();
+
+            if (trimmed.Length == 1)
+            {
+                this.Token = trimmed;
+            }
+            else
+            {
+                throw new ArgumentException("token must be greater 1 length");
             }
         }
     }
