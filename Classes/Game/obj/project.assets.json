@@ -25,6 +25,42 @@
         "build": {
           "build/netstandard2.0/NETStandard.Library.targets": {}
         }
+      },
+      "Computer/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "dependencies": {
+          "Player": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Computer.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Computer.dll": {}
+        }
+      },
+      "Human/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "dependencies": {
+          "Player": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Human.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Human.dll": {}
+        }
+      },
+      "Player/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "compile": {
+          "bin/placeholder/Player.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Player.dll": {}
+        }
       }
     }
   },
@@ -168,11 +204,29 @@
         "netstandard.library.2.0.3.nupkg.sha512",
         "netstandard.library.nuspec"
       ]
+    },
+    "Computer/1.0.0": {
+      "type": "project",
+      "path": "../Computer/Computer.csproj",
+      "msbuildProject": "../Computer/Computer.csproj"
+    },
+    "Human/1.0.0": {
+      "type": "project",
+      "path": "../Human/Human.csproj",
+      "msbuildProject": "../Human/Human.csproj"
+    },
+    "Player/1.0.0": {
+      "type": "project",
+      "path": "../Player/Player.csproj",
+      "msbuildProject": "../Player/Player.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETStandard,Version=v2.0": [
-      "NETStandard.Library >= 2.0.3"
+      "Computer >= 1.0.0",
+      "Human >= 1.0.0",
+      "NETStandard.Library >= 2.0.3",
+      "Player >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -202,7 +256,17 @@
       },
       "frameworks": {
         "netstandard2.0": {
-          "projectReferences": {}
+          "projectReferences": {
+            "/Users/severinperez/Documents/ttt_c_sharp/Classes/Computer/Computer.csproj": {
+              "projectPath": "/Users/severinperez/Documents/ttt_c_sharp/Classes/Computer/Computer.csproj"
+            },
+            "/Users/severinperez/Documents/ttt_c_sharp/Classes/Human/Human.csproj": {
+              "projectPath": "/Users/severinperez/Documents/ttt_c_sharp/Classes/Human/Human.csproj"
+            },
+            "/Users/severinperez/Documents/ttt_c_sharp/Classes/Player/Player.csproj": {
+              "projectPath": "/Users/severinperez/Documents/ttt_c_sharp/Classes/Player/Player.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

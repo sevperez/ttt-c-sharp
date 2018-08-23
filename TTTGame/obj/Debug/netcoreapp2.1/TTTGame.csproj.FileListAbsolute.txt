@@ -12,3 +12,5 @@
 /Users/severinperez/Documents/ttt_c_sharp/TTTGame/bin/Debug/netcoreapp2.1/Game.dll
 /Users/severinperez/Documents/ttt_c_sharp/TTTGame/bin/Debug/netcoreapp2.1/Game.pdb
 /Users/severinperez/Documents/ttt_c_sharp/TTTGame/obj/Debug/netcoreapp2.1/TTTGame.csproj.CopyComplete
+/Users/severinperez/Documents/ttt_c_sharp/TTTGame/bin/Debug/netcoreapp2.1/Player.dll
+/Users/severinperez/Documents/ttt_c_sharp/TTTGame/bin/Debug/netcoreapp2.1/Player.pdb

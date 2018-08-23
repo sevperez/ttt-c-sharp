@@ -1,4 +1,7 @@
 ﻿using System;
+using PlayerClass;
+using HumanClass;
+using ComputerClass;
 
 namespace GameClass
 {
@@ -7,6 +10,8 @@ namespace GameClass
         private int _roundsToWin;
         private bool _gameOver;
         private bool _vsComputer;
+        private Player player1;
+        private Player player2;
         
         public int RoundsToWin 
         {
@@ -14,8 +19,9 @@ namespace GameClass
             set { _roundsToWin = value; }
         }
         public bool GameOver { get; set; }
-
         public bool VsComputer { get; set; }
+        public Player Player1 { get; set; }
+        public Player Player2 { get; set; }
 
         public void Play()
         {
@@ -47,6 +53,20 @@ namespace GameClass
             else
             {
                 throw new ArgumentException("rounds to win must be in range 1..9");
+            }
+        }
+
+        public void InstantiatePlayers(bool vsComp)
+        {
+            this.Player1 = new Human();
+
+            if (vsComp)
+            {
+                this.Player2 = new Computer();
+            }
+            else
+            {
+                this.Player2 = new Human();
             }
         }
     }

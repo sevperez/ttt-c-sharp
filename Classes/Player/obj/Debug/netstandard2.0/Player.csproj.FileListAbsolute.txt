@@ -1,0 +1,9 @@
+/Users/severinperez/Documents/ttt_c_sharp/Classes/Player/bin/Debug/netstandard2.0/Player.deps.json
+/Users/severinperez/Documents/ttt_c_sharp/Classes/Player/bin/Debug/netstandard2.0/Player.dll
+/Users/severinperez/Documents/ttt_c_sharp/Classes/Player/bin/Debug/netstandard2.0/Player.pdb
+/Users/severinperez/Documents/ttt_c_sharp/Classes/Player/obj/Debug/netstandard2.0/Player.csprojAssemblyReference.cache
+/Users/severinperez/Documents/ttt_c_sharp/Classes/Player/obj/Debug/netstandard2.0/Player.csproj.CoreCompileInputs.cache
+/Users/severinperez/Documents/ttt_c_sharp/Classes/Player/obj/Debug/netstandard2.0/Player.AssemblyInfoInputs.cache
+/Users/severinperez/Documents/ttt_c_sharp/Classes/Player/obj/Debug/netstandard2.0/Player.AssemblyInfo.cs
+/Users/severinperez/Documents/ttt_c_sharp/Classes/Player/obj/Debug/netstandard2.0/Player.dll
+/Users/severinperez/Documents/ttt_c_sharp/Classes/Player/obj/Debug/netstandard2.0/Player.pdb

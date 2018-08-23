@@ -1,0 +1,12 @@
+/Users/severinperez/Documents/ttt_c_sharp/Classes/Computer/bin/Debug/netstandard2.0/Computer.deps.json
+/Users/severinperez/Documents/ttt_c_sharp/Classes/Computer/bin/Debug/netstandard2.0/Computer.dll
+/Users/severinperez/Documents/ttt_c_sharp/Classes/Computer/bin/Debug/netstandard2.0/Computer.pdb
+/Users/severinperez/Documents/ttt_c_sharp/Classes/Computer/bin/Debug/netstandard2.0/Player.dll
+/Users/severinperez/Documents/ttt_c_sharp/Classes/Computer/bin/Debug/netstandard2.0/Player.pdb
+/Users/severinperez/Documents/ttt_c_sharp/Classes/Computer/obj/Debug/netstandard2.0/Computer.csprojAssemblyReference.cache
+/Users/severinperez/Documents/ttt_c_sharp/Classes/Computer/obj/Debug/netstandard2.0/Computer.csproj.CoreCompileInputs.cache
+/Users/severinperez/Documents/ttt_c_sharp/Classes/Computer/obj/Debug/netstandard2.0/Computer.AssemblyInfoInputs.cache
+/Users/severinperez/Documents/ttt_c_sharp/Classes/Computer/obj/Debug/netstandard2.0/Computer.AssemblyInfo.cs
+/Users/severinperez/Documents/ttt_c_sharp/Classes/Computer/obj/Debug/netstandard2.0/Computer.csproj.CopyComplete
+/Users/severinperez/Documents/ttt_c_sharp/Classes/Computer/obj/Debug/netstandard2.0/Computer.dll
+/Users/severinperez/Documents/ttt_c_sharp/Classes/Computer/obj/Debug/netstandard2.0/Computer.pdb

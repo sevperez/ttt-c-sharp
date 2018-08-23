@@ -1640,14 +1640,55 @@
           "lib/netstandard1.3/System.Xml.XPath.XmlDocument.dll": {}
         }
       },
+      "Computer/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "dependencies": {
+          "Player": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Computer.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Computer.dll": {}
+        }
+      },
       "Game/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
+        "dependencies": {
+          "Computer": "1.0.0",
+          "Human": "1.0.0",
+          "Player": "1.0.0"
+        },
         "compile": {
           "bin/placeholder/Game.dll": {}
         },
         "runtime": {
           "bin/placeholder/Game.dll": {}
+        }
+      },
+      "Human/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "dependencies": {
+          "Player": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Human.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Human.dll": {}
+        }
+      },
+      "Player/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "compile": {
+          "bin/placeholder/Player.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Player.dll": {}
         }
       }
     }
@@ -5639,10 +5680,25 @@
         "system.xml.xpath.xmldocument.nuspec"
       ]
     },
+    "Computer/1.0.0": {
+      "type": "project",
+      "path": "../../Classes/Computer/Computer.csproj",
+      "msbuildProject": "../../Classes/Computer/Computer.csproj"
+    },
     "Game/1.0.0": {
       "type": "project",
       "path": "../../Classes/Game/Game.csproj",
       "msbuildProject": "../../Classes/Game/Game.csproj"
+    },
+    "Human/1.0.0": {
+      "type": "project",
+      "path": "../../Classes/Human/Human.csproj",
+      "msbuildProject": "../../Classes/Human/Human.csproj"
+    },
+    "Player/1.0.0": {
+      "type": "project",
+      "path": "../../Classes/Player/Player.csproj",
+      "msbuildProject": "../../Classes/Player/Player.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -5651,6 +5707,7 @@
       "Microsoft.NET.Test.Sdk >= 15.7.2",
       "Microsoft.NETCore.App >= 2.0.0",
       "NUnit3TestAdapter >= 3.10.0",
+      "Player >= 1.0.0",
       "nunit >= 3.10.1"
     ]
   },
@@ -5684,6 +5741,9 @@
           "projectReferences": {
             "/Users/severinperez/Documents/ttt_c_sharp/Classes/Game/Game.csproj": {
               "projectPath": "/Users/severinperez/Documents/ttt_c_sharp/Classes/Game/Game.csproj"
+            },
+            "/Users/severinperez/Documents/ttt_c_sharp/Classes/Player/Player.csproj": {
+              "projectPath": "/Users/severinperez/Documents/ttt_c_sharp/Classes/Player/Player.csproj"
             }
           }
         }

@@ -1,5 +1,8 @@
 using NUnit.Framework;
 using GameClass;
+using PlayerClass;
+using HumanClass;
+using ComputerClass;
 
 namespace GameClass.UnitTests
 {
@@ -53,6 +56,24 @@ namespace GameClass.UnitTests
             else
             {
                 Assert.That(() => _game.SetRoundsToWin(value), Throws.ArgumentException);
+            }
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void InstantiatePlayers(bool vsComp)
+        {
+            _game.InstantiatePlayers(vsComp);
+
+            if (vsComp)
+            {
+                bool result = _game.Player1 is Human && _game.Player2 is Computer;
+                Assert.IsTrue(result, "player2 should be computer if vsComp is true");
+            }
+            else
+            {
+                bool result = _game.Player1 is Human && _game.Player2 is Human;
+                Assert.IsTrue(result, "player2 should be human if vsComp is false");
             }
         }
     }

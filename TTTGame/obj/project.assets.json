@@ -211,11 +211,24 @@
       "Game/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
+        "dependencies": {
+          "Player": "1.0.0"
+        },
         "compile": {
           "bin/placeholder/Game.dll": {}
         },
         "runtime": {
           "bin/placeholder/Game.dll": {}
+        }
+      },
+      "Player/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "compile": {
+          "bin/placeholder/Player.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Player.dll": {}
         }
       }
     }
@@ -688,6 +701,11 @@
       "type": "project",
       "path": "../Classes/Game/Game.csproj",
       "msbuildProject": "../Classes/Game/Game.csproj"
+    },
+    "Player/1.0.0": {
+      "type": "project",
+      "path": "../Classes/Player/Player.csproj",
+      "msbuildProject": "../Classes/Player/Player.csproj"
     }
   },
   "projectFileDependencyGroups": {

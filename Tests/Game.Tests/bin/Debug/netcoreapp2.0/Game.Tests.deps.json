@@ -11,6 +11,7 @@
           "Game": "1.0.0",
           "Microsoft.NET.Test.Sdk": "15.7.2",
           "NUnit3TestAdapter": "3.10.0",
+          "Player": "1.0.0",
           "NUnit": "3.10.1"
         },
         "runtime": {
@@ -1059,9 +1060,35 @@
           }
         }
       },
+      "Computer/1.0.0": {
+        "dependencies": {
+          "Player": "1.0.0"
+        },
+        "runtime": {
+          "Computer.dll": {}
+        }
+      },
       "Game/1.0.0": {
+        "dependencies": {
+          "Computer": "1.0.0",
+          "Human": "1.0.0",
+          "Player": "1.0.0"
+        },
         "runtime": {
           "Game.dll": {}
+        }
+      },
+      "Human/1.0.0": {
+        "dependencies": {
+          "Player": "1.0.0"
+        },
+        "runtime": {
+          "Human.dll": {}
+        }
+      },
+      "Player/1.0.0": {
+        "runtime": {
+          "Player.dll": {}
         }
       }
     }
@@ -1576,7 +1603,22 @@
       "path": "system.xml.xpath.xmldocument/4.3.0",
       "hashPath": "system.xml.xpath.xmldocument.4.3.0.nupkg.sha512"
     },
+    "Computer/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
     "Game/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Human/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Player/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

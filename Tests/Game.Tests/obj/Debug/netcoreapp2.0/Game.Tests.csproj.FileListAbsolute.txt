@@ -16,3 +16,9 @@
 /Users/severinperez/Documents/ttt_c_sharp/Tests/Game.Tests/obj/Debug/netcoreapp2.0/Game.Tests.csproj.CopyComplete
 /Users/severinperez/Documents/ttt_c_sharp/Tests/Game.Tests/obj/Debug/netcoreapp2.0/Game.Tests.dll
 /Users/severinperez/Documents/ttt_c_sharp/Tests/Game.Tests/obj/Debug/netcoreapp2.0/Game.Tests.pdb
+/Users/severinperez/Documents/ttt_c_sharp/Tests/Game.Tests/bin/Debug/netcoreapp2.0/Player.dll
+/Users/severinperez/Documents/ttt_c_sharp/Tests/Game.Tests/bin/Debug/netcoreapp2.0/Player.pdb
+/Users/severinperez/Documents/ttt_c_sharp/Tests/Game.Tests/bin/Debug/netcoreapp2.0/Computer.dll
+/Users/severinperez/Documents/ttt_c_sharp/Tests/Game.Tests/bin/Debug/netcoreapp2.0/Human.dll
+/Users/severinperez/Documents/ttt_c_sharp/Tests/Game.Tests/bin/Debug/netcoreapp2.0/Computer.pdb
+/Users/severinperez/Documents/ttt_c_sharp/Tests/Game.Tests/bin/Debug/netcoreapp2.0/Human.pdb

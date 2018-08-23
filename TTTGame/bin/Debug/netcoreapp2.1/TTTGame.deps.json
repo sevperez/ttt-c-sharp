@@ -15,8 +15,16 @@
         }
       },
       "Game/1.0.0": {
+        "dependencies": {
+          "Player": "1.0.0"
+        },
         "runtime": {
           "Game.dll": {}
+        }
+      },
+      "Player/1.0.0": {
+        "runtime": {
+          "Player.dll": {}
         }
       }
     }
@@ -28,6 +36,11 @@
       "sha512": ""
     },
     "Game/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Player/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
