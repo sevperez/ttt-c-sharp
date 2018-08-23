@@ -1,0 +1,90 @@
+---------------------------------------------
+Impossible Tic-Tac-Toe - Objects
+---------------------------------------------
+
+----- Main -----
+
+Responsibilities
+- Instantiates game
+- Executes game
+
+
+----- Game -----
+
+Attributes
+- Rounds to Win
+- Player1
+- Player2
+- Game status
+
+Responsibilities
+- Sets up game
+- Instantiates players
+- Tracks game status
+- Controls game loop
+- Displays winner message
+
+
+----- Round -----
+
+Attributes
+- Round status
+- Board
+
+Responsibilities
+- Instantiates board
+- Tracks round status
+- Controls round loop
+
+
+----- Board -----
+
+Attributes
+- Squares
+- Full status
+- Winning token
+
+Responsibilities
+- Draws self
+- Tracks full status
+- Identifies winning token
+
+
+----- Square -----
+
+Attributes
+- Fill token
+
+Responsibilities
+- Tracks fill state
+- Fills self
+
+----- Player -----
+
+(Abstract Class)
+
+Attributes
+- Name
+- Token
+- Number of round wins
+
+Responsibilities
+- Selects name
+- Selects token
+- Moves
+
+
+----- Human : Player -----
+
+Responsibilities
+- Override name select
+- Override token select
+- Override move
+
+
+----- Computer : Player -----
+
+Responsibilities
+- Override name select
+- Override token select
+- Override move
