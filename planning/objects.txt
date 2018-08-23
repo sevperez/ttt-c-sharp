@@ -19,6 +19,8 @@ Attributes
 
 Responsibilities
 - Sets up game
+  - Sets up players
+  - Sets up rounds to win
 - Instantiates players
 - Tracks game status
 - Controls game loop
@@ -58,6 +60,7 @@ Attributes
 Responsibilities
 - Tracks fill state
 - Fills self
+
 
 ----- Player -----
 
