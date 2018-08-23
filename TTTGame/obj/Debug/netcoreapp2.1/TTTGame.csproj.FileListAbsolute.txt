@@ -1,0 +1,14 @@
+/Users/severinperez/Documents/ttt_c_sharp/TTTGame/bin/Debug/netcoreapp2.1/TTTGame.deps.json
+/Users/severinperez/Documents/ttt_c_sharp/TTTGame/bin/Debug/netcoreapp2.1/TTTGame.runtimeconfig.json
+/Users/severinperez/Documents/ttt_c_sharp/TTTGame/bin/Debug/netcoreapp2.1/TTTGame.runtimeconfig.dev.json
+/Users/severinperez/Documents/ttt_c_sharp/TTTGame/bin/Debug/netcoreapp2.1/TTTGame.dll
+/Users/severinperez/Documents/ttt_c_sharp/TTTGame/bin/Debug/netcoreapp2.1/TTTGame.pdb
+/Users/severinperez/Documents/ttt_c_sharp/TTTGame/obj/Debug/netcoreapp2.1/TTTGame.csprojAssemblyReference.cache
+/Users/severinperez/Documents/ttt_c_sharp/TTTGame/obj/Debug/netcoreapp2.1/TTTGame.csproj.CoreCompileInputs.cache
+/Users/severinperez/Documents/ttt_c_sharp/TTTGame/obj/Debug/netcoreapp2.1/TTTGame.AssemblyInfoInputs.cache
+/Users/severinperez/Documents/ttt_c_sharp/TTTGame/obj/Debug/netcoreapp2.1/TTTGame.AssemblyInfo.cs
+/Users/severinperez/Documents/ttt_c_sharp/TTTGame/obj/Debug/netcoreapp2.1/TTTGame.dll
+/Users/severinperez/Documents/ttt_c_sharp/TTTGame/obj/Debug/netcoreapp2.1/TTTGame.pdb
+/Users/severinperez/Documents/ttt_c_sharp/TTTGame/bin/Debug/netcoreapp2.1/Game.dll
+/Users/severinperez/Documents/ttt_c_sharp/TTTGame/bin/Debug/netcoreapp2.1/Game.pdb
+/Users/severinperez/Documents/ttt_c_sharp/TTTGame/obj/Debug/netcoreapp2.1/TTTGame.csproj.CopyComplete
