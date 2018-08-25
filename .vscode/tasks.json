@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/Tests/Computer.Tests/Computer.Tests.csproj"
+                "${workspaceFolder}/Tests/Tests.csproj"
             ],
             "problemMatcher": "$msCompile"
         }
