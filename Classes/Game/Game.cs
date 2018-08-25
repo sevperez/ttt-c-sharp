@@ -23,6 +23,8 @@ namespace GameClass
         public Player Player1 { get; set; }
         public Player Player2 { get; set; }
 
+        public enum GameModes { PvP, PvC };
+        
         public void Play()
         {
             Console.WriteLine("Welcome to Tic Tac Toe!");

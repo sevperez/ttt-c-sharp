@@ -25,12 +25,12 @@ namespace ComputerClass.UnitTests
         [TestCase("O")]             // choose "X"
         [TestCase("X")]             // choose "O"
         [TestCase("q")]             // choose "O"
-        public void SetPlayerTokenShould(string humToken)
+        public void SetPlayerTokenShould(string humanToken)
         {
-            _computer.SetPlayerToken(humToken);
+            _computer.SetPlayerToken(humanToken);
             string result = _computer.Token;
 
-            if (humToken == "O")
+            if (humanToken == "O")
             {
                 Assert.That(result, Is.EqualTo("X"));
             }

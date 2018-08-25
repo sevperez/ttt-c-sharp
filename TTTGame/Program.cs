@@ -12,7 +12,6 @@ namespace TTTGame
             Human hum = new Human();
             hum.SetPlayerName("Fry");
             Console.WriteLine(hum.Name);
-            Hello.Greet();
         }
     }
 }
