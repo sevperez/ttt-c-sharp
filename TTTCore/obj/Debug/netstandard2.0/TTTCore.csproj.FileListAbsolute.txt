@@ -1,0 +1,9 @@
+/Users/severinperez/Documents/ttt_c_sharp/TTTCore/obj/Debug/netstandard2.0/TTTCore.csprojAssemblyReference.cache
+/Users/severinperez/Documents/ttt_c_sharp/TTTCore/obj/Debug/netstandard2.0/TTTCore.csproj.CoreCompileInputs.cache
+/Users/severinperez/Documents/ttt_c_sharp/TTTCore/obj/Debug/netstandard2.0/TTTCore.AssemblyInfoInputs.cache
+/Users/severinperez/Documents/ttt_c_sharp/TTTCore/obj/Debug/netstandard2.0/TTTCore.AssemblyInfo.cs
+/Users/severinperez/Documents/ttt_c_sharp/TTTCore/bin/Debug/netstandard2.0/TTTCore.deps.json
+/Users/severinperez/Documents/ttt_c_sharp/TTTCore/bin/Debug/netstandard2.0/TTTCore.dll
+/Users/severinperez/Documents/ttt_c_sharp/TTTCore/bin/Debug/netstandard2.0/TTTCore.pdb
+/Users/severinperez/Documents/ttt_c_sharp/TTTCore/obj/Debug/netstandard2.0/TTTCore.dll
+/Users/severinperez/Documents/ttt_c_sharp/TTTCore/obj/Debug/netstandard2.0/TTTCore.pdb

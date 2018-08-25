@@ -9,12 +9,6 @@
 /Users/severinperez/Documents/ttt_c_sharp/TTTGame/obj/Debug/netcoreapp2.1/TTTGame.AssemblyInfo.cs
 /Users/severinperez/Documents/ttt_c_sharp/TTTGame/obj/Debug/netcoreapp2.1/TTTGame.dll
 /Users/severinperez/Documents/ttt_c_sharp/TTTGame/obj/Debug/netcoreapp2.1/TTTGame.pdb
-/Users/severinperez/Documents/ttt_c_sharp/TTTGame/bin/Debug/netcoreapp2.1/Game.dll
-/Users/severinperez/Documents/ttt_c_sharp/TTTGame/bin/Debug/netcoreapp2.1/Game.pdb
 /Users/severinperez/Documents/ttt_c_sharp/TTTGame/obj/Debug/netcoreapp2.1/TTTGame.csproj.CopyComplete
-/Users/severinperez/Documents/ttt_c_sharp/TTTGame/bin/Debug/netcoreapp2.1/Player.dll
-/Users/severinperez/Documents/ttt_c_sharp/TTTGame/bin/Debug/netcoreapp2.1/Player.pdb
-/Users/severinperez/Documents/ttt_c_sharp/TTTGame/bin/Debug/netcoreapp2.1/Computer.dll
-/Users/severinperez/Documents/ttt_c_sharp/TTTGame/bin/Debug/netcoreapp2.1/Human.dll
-/Users/severinperez/Documents/ttt_c_sharp/TTTGame/bin/Debug/netcoreapp2.1/Computer.pdb
-/Users/severinperez/Documents/ttt_c_sharp/TTTGame/bin/Debug/netcoreapp2.1/Human.pdb
+/Users/severinperez/Documents/ttt_c_sharp/TTTGame/bin/Debug/netcoreapp2.1/TTTCore.dll
+/Users/severinperez/Documents/ttt_c_sharp/TTTGame/bin/Debug/netcoreapp2.1/TTTCore.pdb
