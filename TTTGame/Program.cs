@@ -8,18 +8,21 @@ namespace TTTGame
         static void Main(string[] args)
         {
             Game game = new Game();
-            Human hum = new Human();
-            Computer comp = new Computer();
+            Human human = new Human();
+            Computer computer = new Computer();
 
-            hum.SetPlayerName("Fry");
-            hum.SetPlayerToken("O");
-            Console.WriteLine(hum.Name);
-            Console.WriteLine(hum.Token);
+            human.SetPlayerName("Fry");
+            human.SetPlayerToken("O");
+            Console.WriteLine(human.Name);
+            Console.WriteLine(human.Token);
 
-            comp.SetPlayerName();
-            comp.SetPlayerToken(hum.Token);
-            Console.WriteLine(comp.Name);
-            Console.WriteLine(comp.Token);
+            computer.SetPlayerName();
+            computer.SetPlayerToken(human.Token);
+            Console.WriteLine(computer.Name);
+            Console.WriteLine(computer.Token);
+
+            game.SetGameMode("2");
+            Console.WriteLine(game.Mode);
         }
     }
 }

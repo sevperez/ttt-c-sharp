@@ -6,7 +6,7 @@ namespace TTTCore
     {
         private int _roundsToWin;
         private bool _gameOver;
-        private bool _vsComputer;
+        private GameModes _mode;
         private Player player1;
         private Player player2;
         
@@ -16,30 +16,25 @@ namespace TTTCore
             set { _roundsToWin = value; }
         }
         public bool GameOver { get; set; }
-        public bool VsComputer { get; set; }
+        public GameModes Mode { get; set; }
         public Player Player1 { get; set; }
         public Player Player2 { get; set; }
-
-        public enum GameModes { PvP, PvC };
         
         public void Play()
         {
             Console.WriteLine("Welcome to Tic Tac Toe!");
         }
 
-        public void SetGameType(int value)
+        public void SetGameMode(string input)
         {
-            if (value == 1)
+            GameModes mode = (GameModes)Enum.Parse(typeof(GameModes), input);
+            if (Enum.IsDefined(typeof(GameModes), mode))
             {
-                this.VsComputer = false;
-            }
-            else if (value == 2)
-            {
-                this.VsComputer = true;
+                this.Mode = mode;
             }
             else
             {
-                throw new ArgumentException("game type selection must be in range 1..2");
+                throw new ArgumentException("Invalid game mode selection.");
             }
         }
 
@@ -51,15 +46,15 @@ namespace TTTCore
             }
             else
             {
-                throw new ArgumentException("rounds to win must be in range 1..9");
+                throw new ArgumentException("Rounds to win must be in range 1..9");
             }
         }
 
-        public void InstantiatePlayers(bool vsComp)
+        public void InstantiatePlayers(GameModes mode)
         {
             this.Player1 = new Human();
 
-            if (vsComp)
+            if (mode == GameModes.PlayerVsComputer)
             {
                 this.Player2 = new Computer();
             }

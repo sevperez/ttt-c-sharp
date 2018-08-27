@@ -6,37 +6,42 @@ namespace ComputerClass.UnitTests
     [TestFixture]
     public class Computer_Tests
     {
-        private readonly Computer _computer;
+        private readonly Computer _subject;
 
         public Computer_Tests()
         {
-            _computer = new Computer();
+            _subject = new Computer();
         }
 
         [Test]
-        public void SetPlayerNameShould()
+        public void SetPlayerNameShouldChooseValidName()
         {
-            _computer.SetPlayerName();
-            string result = _computer.Name;
-            Assert.That(_computer.ValidNames, Has.Member(_computer.Name));
+            _subject.SetPlayerName();
+
+            string result = _subject.Name;
+
+            Assert.That(_subject.ValidNames, Has.Member(_subject.Name));
         }
 
-        [TestCase("O")]             // choose "X"
-        [TestCase("X")]             // choose "O"
-        [TestCase("q")]             // choose "O"
-        public void SetPlayerTokenShould(string humanToken)
+        [TestCase("O")]
+        public void SetPlayerTokenChoosesXIfPlayerIsO(string humanToken)
         {
-            _computer.SetPlayerToken(humanToken);
-            string result = _computer.Token;
+            _subject.SetPlayerToken(humanToken);
 
-            if (humanToken == "O")
-            {
-                Assert.That(result, Is.EqualTo("X"));
-            }
-            else
-            {
-                Assert.That(result, Is.EqualTo("O"));
-            }
+            string result = _subject.Token;
+
+            Assert.That(result, Is.EqualTo("X"));
+        }
+
+        [TestCase("X")]
+        [TestCase("q")]
+        public void SetPlayerTokenChoosesOIfPlayerIsNotO(string humanToken)
+        {
+            _subject.SetPlayerToken(humanToken);
+
+            string result = _subject.Token;
+
+            Assert.That(result, Is.EqualTo("O"));
         }
     }
 }

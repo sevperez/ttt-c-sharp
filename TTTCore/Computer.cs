@@ -14,13 +14,15 @@ namespace TTTCore
         public void SetPlayerName()
         {
             Random rnd = new Random();
+
             int r = rnd.Next(this.ValidNames.Length);
+
             this.Name = this.ValidNames[r];
         }
 
-        public void SetPlayerToken(string humToken)
+        public void SetPlayerToken(string humanToken)
         {
-            if (humToken == "O")
+            if (humanToken == "O")
             {
                 this.Token = "X";
             }

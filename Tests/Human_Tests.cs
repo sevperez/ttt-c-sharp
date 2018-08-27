@@ -6,48 +6,68 @@ namespace HumanClass.UnitTests
     [TestFixture]
     public class Human_Tests
     {
-        private readonly Human _human;
+        private readonly Human _subject;
 
         public Human_Tests()
         {
-            _human = new Human();
+            _subject = new Human();
         }
 
         [TestCase("Fry")]
-        [TestCase("    Fry")]       // needs trimming
-        [TestCase("  Fry    ")]     // needs trimming
+        public void SetPlayerNameShouldHandleValidInput(string name)
+        {
+            _subject.SetPlayerName(name);
+
+            string result = _subject.Name;
+
+            Assert.That(result, Is.EqualTo(name));
+        }
+
+        [TestCase("    Fry")]
+        [TestCase("  Fry    ")]
+        public void SetPlayerNameShouldTrimInput(string name)
+        {
+            _subject.SetPlayerName(name);
+
+            string result = _subject.Name;
+            string expected = name.Trim();
+
+            Assert.That(result, Is.EqualTo(expected));
+        }
+
         [TestCase("")]              // empty string
         [TestCase("     ")]         // empty string after trimming
-        public void SetPlayerNameShould(string str)
+        public void SetPlayerNameShouldThrowErrorIfEmptyInput(string name)
         {
-            if (str.Trim().Length == 0)
-            {
-                Assert.That(() => _human.SetPlayerName(str), Throws.ArgumentException);
-            }
-            else
-            {
-                _human.SetPlayerName(str);
-                string result = _human.Name;
-                Assert.That(result, Is.EqualTo(str.Trim()));
-            }
+            Assert.That(() => _subject.SetPlayerName(name), Throws.ArgumentException);
         }
 
         [TestCase("X")]
-        [TestCase(" X   ")]         // needs trimming
-        [TestCase("")]              // empty string
-        [TestCase("xo")]            // too long
-        public void SetPlayerTokenShould(string str)
+        public void SetPlayerTokenShouldHandleValidInput(string token)
         {
-            if (str.Trim().Length != 1)
-            {
-                Assert.That(() => _human.SetPlayerToken(str), Throws.ArgumentException);
-            }
-            else
-            {
-                _human.SetPlayerToken(str);
-                string result = _human.Token;
-                Assert.That(result, Is.EqualTo(str.Trim()));
-            }
+            _subject.SetPlayerToken(token);
+
+            string result = _subject.Token;
+
+            Assert.That(result, Is.EqualTo(token));
+        }
+
+        [TestCase(" X   ")]
+        public void SetPlayerTokenShouldTrimInput(string token)
+        {
+            _subject.SetPlayerToken(token);
+
+            string result = _subject.Token;
+            string expected = token.Trim();
+
+            Assert.That(result, Is.EqualTo(expected));
+        }
+
+        [TestCase("")]
+        [TestCase("xo")]
+        public void SetPlayerTokenShouldThrowErrorIfInvalidInput(string token)
+        {
+            Assert.That(() => _subject.SetPlayerToken(token), Throws.ArgumentException);
         }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using NUnit.Framework;
 using TTTCore;
 
@@ -6,73 +7,69 @@ namespace GameClass.UnitTests
     [TestFixture]
     public class Game_Tests
     {
-        private readonly Game _game;
+        private readonly Game _subject;
 
         public Game_Tests()
         {
-            _game = new Game();
+            _subject = new Game();
         }
 
-        [TestCase(1)]
-        [TestCase(2)]
-        [TestCase(3)] // invalid argument
-        public void SetGameTypeShouldSetVsComputer(int value)
+        [TestCase("1")]
+        [TestCase("2")]
+        public void SetGameModeShouldHandleValidInput(string input)
         {
-            // if (value == Game.GameModes.PvP || value == Game.GameModes.PvC)
-            if (value == 1 || value == 2)
-            {
-                _game.SetGameType(value);
-                bool result = _game.VsComputer;
+            _subject.SetGameMode(input);
 
-                if (value == 1)
-                {
-                    Assert.IsFalse(result, "vsComputer should be false with input of 1");
-                }
-                else
-                {
-                    Assert.IsTrue(result, "vsComputer should be true with input of 2");
-                }
-            }
-            else
-            {
-                Assert.That(() => _game.SetGameType(value), Throws.ArgumentException);
-            }
+            var result = _subject.Mode;
+            var expected = (GameModes)Enum.Parse(typeof(GameModes), input);
+
+            Assert.That(result, Is.EqualTo(expected));
+        }
+
+        [TestCase("3")]
+        [TestCase("")]
+        [TestCase("a")]
+        public void SetGameModeShouldThrowErrorOnInvalidInput(string input)
+        {
+            Assert.That(() => _subject.SetGameMode(input), Throws.ArgumentException);
         }
 
         [TestCase(1)]
         [TestCase(5)]
-        [TestCase(0)]  // outside range
-        [TestCase(10)] // outside range
-        public void SetRoundsToWinShould(int value)
+        public void SetRoundsToWinShouldHandleValidInput(int input)
         {
-            if (value >= 1 && value <= 9)
-            {
-                _game.SetRoundsToWin(value);
-                int result = _game.RoundsToWin;
-                Assert.That(result, Is.EqualTo(value), "roundsToWin should be set to input value");
-            }
-            else
-            {
-                Assert.That(() => _game.SetRoundsToWin(value), Throws.ArgumentException);
-            }
+            _subject.SetRoundsToWin(input);
+            
+            int result = _subject.RoundsToWin;
+
+            Assert.That(result, Is.EqualTo(input));
         }
 
-        [TestCase(false)]
-        [TestCase(true)]
-        public void InstantiatePlayers(bool vsComp)
+        [TestCase(0)]
+        [TestCase(10)]
+        public void SetRoundsToWinThrowsErrorOnInvalidInput(int input)
         {
-            _game.InstantiatePlayers(vsComp);
+            Assert.That(() => _subject.SetRoundsToWin(input), Throws.ArgumentException);
+        }
 
-            if (vsComp)
-            {
-                bool result = _game.Player1 is Human && _game.Player2 is Computer;
-                Assert.IsTrue(result, "player2 should be computer if vsComp is true");
-            }
-            else
-            {
-                bool result = _game.Player1 is Human && _game.Player2 is Human;
-                Assert.IsTrue(result, "player2 should be human if vsComp is false");
-            }
+        [TestCase(GameModes.PlayerVsPlayer)]
+        public void InstantiatePlayersHandlesPlayerVsPlayer(GameModes mode)
+        {
+            _subject.InstantiatePlayers(mode);
+
+            bool result = _subject.Player1 is Human && _subject.Player2 is Human;
+
+            Assert.IsTrue(result);
+        }
+
+        [TestCase(GameModes.PlayerVsComputer)]
+        public void InstantiatePlayersHandlesPlayerVsComputer(GameModes mode)
+        {
+        _subject.InstantiatePlayers(mode);
+
+        bool result = _subject.Player1 is Human && _subject.Player2 is Computer;
+
+        Assert.IsTrue(result);
         }
     }
 }
