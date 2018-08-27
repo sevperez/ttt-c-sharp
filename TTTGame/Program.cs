@@ -1,12 +1,9 @@
 ﻿using System;
 using TTTCore;
 
-namespace TTTGame
-{
-    class Program
-    {
-        static void Main(string[] args)
-        {
+namespace TTTGame {
+    class Program {
+        static void Main(string[] args) {
             Game game = new Game();
             Human human = new Human();
             Computer computer = new Computer();

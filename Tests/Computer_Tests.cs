@@ -1,21 +1,17 @@
 using NUnit.Framework;
 using TTTCore;
 
-namespace ComputerClass.UnitTests
-{
+namespace ComputerClass.UnitTests {
     [TestFixture]
-    public class Computer_Tests
-    {
-        private readonly Computer _subject;
+    public class Computer_Tests {
+        private Computer _subject;
 
-        public Computer_Tests()
-        {
+        [SetUp] public void Init() {
             _subject = new Computer();
         }
 
         [Test]
-        public void SetPlayerNameShouldChooseValidName()
-        {
+        public void SetPlayerNameShouldChooseValidName() {
             _subject.SetPlayerName();
 
             string result = _subject.Name;
@@ -24,8 +20,7 @@ namespace ComputerClass.UnitTests
         }
 
         [TestCase("O")]
-        public void SetPlayerTokenChoosesXIfPlayerIsO(string humanToken)
-        {
+        public void SetPlayerTokenChoosesXIfPlayerIsO(string humanToken) {
             _subject.SetPlayerToken(humanToken);
 
             string result = _subject.Token;
@@ -35,8 +30,7 @@ namespace ComputerClass.UnitTests
 
         [TestCase("X")]
         [TestCase("q")]
-        public void SetPlayerTokenChoosesOIfPlayerIsNotO(string humanToken)
-        {
+        public void SetPlayerTokenChoosesOIfPlayerIsNotO(string humanToken) {
             _subject.SetPlayerToken(humanToken);
 
             string result = _subject.Token;

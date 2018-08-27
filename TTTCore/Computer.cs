@@ -1,18 +1,16 @@
 ﻿using System;
 
-namespace TTTCore
-{
-    public class Computer : Player
-    {
-        private readonly string[] _validNames = { "GLaDOS", "Hal 9000", "Ava", "Cortana", "Alexa" };
+namespace TTTCore {
+    public class Computer : Player {
+        private readonly string[] _validNames = { 
+            "GLaDOS", "Hal 9000", "Ava", "Cortana", "Alexa"
+        };
         
-        public string[] ValidNames
-        { 
+        public string[] ValidNames { 
             get { return _validNames; }
         }
 
-        public void SetPlayerName()
-        {
+        public void SetPlayerName() {
             Random rnd = new Random();
 
             int r = rnd.Next(this.ValidNames.Length);
@@ -20,14 +18,10 @@ namespace TTTCore
             this.Name = this.ValidNames[r];
         }
 
-        public void SetPlayerToken(string humanToken)
-        {
-            if (humanToken == "O")
-            {
+        public void SetPlayerToken(string humanToken) {
+            if (humanToken == "O") {
                 this.Token = "X";
-            }
-            else
-            {
+            } else {
                 this.Token = "O";
             }
         }

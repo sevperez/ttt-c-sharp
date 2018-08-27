@@ -1,9 +1,7 @@
 ﻿using System;
 
-namespace TTTCore
-{
-    public class Game
-    {
+namespace TTTCore {
+    public class Game {
         private int _roundsToWin;
         private bool _gameOver;
         private int _nextPlayerNumber;
@@ -18,61 +16,46 @@ namespace TTTCore
         public Player Player1 { get; set; }
         public Player Player2 { get; set; }
         
-        public void Play()
-        {
+        public void Play() {
             Console.WriteLine("Welcome to Tic Tac Toe!");
         }
 
-        public void SetGameMode(string gameModeNumber)
-        {
+        public void SetGameMode(string gameModeNumber) {
             GameModes mode = (GameModes)Enum.Parse(typeof(GameModes), gameModeNumber);
-            if (Enum.IsDefined(typeof(GameModes), mode))
-            {
+            
+            if (Enum.IsDefined(typeof(GameModes), mode)) {
                 this.Mode = mode;
-            }
-            else
-            {
+            } else {
                 throw new ArgumentException("Invalid game mode selection.");
             }
         }
 
-        public void SetRoundsToWin(string roundsToWinString)
-        {  
+        public void SetRoundsToWin(string roundsToWinString) {  
             int value = System.Int32.Parse(roundsToWinString);
-            if (value >= 1 && value <= 9)
-            {
+            
+            if (value >= 1 && value <= 9) {
                 this.RoundsToWin = value;
-            }
-            else
-            {
+            } else {
                 throw new ArgumentException("Rounds to win must be in range 1..9");
             }
         }
 
-        public void InstantiatePlayers(GameModes mode)
-        {
+        public void InstantiatePlayers(GameModes mode) {
             this.Player1 = new Human();
 
-            if (mode == GameModes.PlayerVsComputer)
-            {
+            if (mode == GameModes.PlayerVsComputer) {
                 this.Player2 = new Computer();
-            }
-            else
-            {
+            } else {
                 this.Player2 = new Human();
             }
         }
 
-        public void SetFirstPlayer(string playerNumberString)
-        {
+        public void SetFirstPlayer(string playerNumberString) {
             int value = System.Int32.Parse(playerNumberString);
             
-            if (value == 1 || value == 2)
-            {
+            if (value == 1 || value == 2) {
                 this.NextPlayerNumber = value;
-            }
-            else
-            {
+            } else {
                 throw new ArgumentException("Invalid first player selection.");
             }
         }

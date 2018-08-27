@@ -1,21 +1,17 @@
 using NUnit.Framework;
 using TTTCore;
 
-namespace HumanClass.UnitTests
-{
+namespace HumanClass.UnitTests {
     [TestFixture]
-    public class Human_Tests
-    {
-        private readonly Human _subject;
+    public class Human_Tests {
+        private Human _subject;
 
-        public Human_Tests()
-        {
+        [SetUp] public void Init() {
             _subject = new Human();
         }
 
         [TestCase("Fry")]
-        public void SetPlayerNameShouldHandleValidInput(string name)
-        {
+        public void SetPlayerNameShouldHandleValidInput(string name) {
             _subject.SetPlayerName(name);
 
             string result = _subject.Name;
@@ -25,8 +21,7 @@ namespace HumanClass.UnitTests
 
         [TestCase("    Fry")]
         [TestCase("  Fry    ")]
-        public void SetPlayerNameShouldTrimInput(string name)
-        {
+        public void SetPlayerNameShouldTrimInput(string name) {
             _subject.SetPlayerName(name);
 
             string result = _subject.Name;
@@ -37,14 +32,12 @@ namespace HumanClass.UnitTests
 
         [TestCase("")]              // empty string
         [TestCase("     ")]         // empty string after trimming
-        public void SetPlayerNameShouldThrowErrorIfEmptyInput(string name)
-        {
+        public void SetPlayerNameShouldThrowErrorIfEmptyInput(string name) {
             Assert.That(() => _subject.SetPlayerName(name), Throws.ArgumentException);
         }
 
         [TestCase("X")]
-        public void SetPlayerTokenShouldHandleValidInput(string token)
-        {
+        public void SetPlayerTokenShouldHandleValidInput(string token) {
             _subject.SetPlayerToken(token);
 
             string result = _subject.Token;
@@ -53,8 +46,7 @@ namespace HumanClass.UnitTests
         }
 
         [TestCase(" X   ")]
-        public void SetPlayerTokenShouldTrimInput(string token)
-        {
+        public void SetPlayerTokenShouldTrimInput(string token) {
             _subject.SetPlayerToken(token);
 
             string result = _subject.Token;
@@ -65,8 +57,7 @@ namespace HumanClass.UnitTests
 
         [TestCase("")]
         [TestCase("xo")]
-        public void SetPlayerTokenShouldThrowErrorIfInvalidInput(string token)
-        {
+        public void SetPlayerTokenShouldThrowErrorIfInvalidInput(string token) {
             Assert.That(() => _subject.SetPlayerToken(token), Throws.ArgumentException);
         }
     }
