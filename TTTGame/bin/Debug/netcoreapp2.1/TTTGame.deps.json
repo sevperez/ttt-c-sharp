@@ -8,23 +8,15 @@
     ".NETCoreApp,Version=v2.1": {
       "TTTGame/1.0.0": {
         "dependencies": {
-          "Game": "1.0.0"
+          "TTTCore": "1.0.0"
         },
         "runtime": {
           "TTTGame.dll": {}
         }
       },
-      "Game/1.0.0": {
-        "dependencies": {
-          "Player": "1.0.0"
-        },
+      "TTTCore/1.0.0": {
         "runtime": {
-          "Game.dll": {}
-        }
-      },
-      "Player/1.0.0": {
-        "runtime": {
-          "Player.dll": {}
+          "TTTCore.dll": {}
         }
       }
     }
@@ -35,12 +27,7 @@
       "serviceable": false,
       "sha512": ""
     },
-    "Game/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "Player/1.0.0": {
+    "TTTCore/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

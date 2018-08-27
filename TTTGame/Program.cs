@@ -1,5 +1,5 @@
 ﻿using System;
-using GameClass;
+using TTTCore;
 
 namespace TTTGame
 {
@@ -8,7 +8,24 @@ namespace TTTGame
         static void Main(string[] args)
         {
             Game game = new Game();
-            game.Play();
+            Human human = new Human();
+            Computer computer = new Computer();
+
+            human.SetPlayerName("Fry");
+            human.SetPlayerToken("O");
+            Console.WriteLine(human.Name);
+            Console.WriteLine(human.Token);
+
+            computer.SetPlayerName();
+            computer.SetPlayerToken(human.Token);
+            Console.WriteLine(computer.Name);
+            Console.WriteLine(computer.Token);
+
+            game.SetGameMode("2");
+            Console.WriteLine(game.Mode);
+
+            game.SetRoundsToWin("5");
+            Console.WriteLine(game.RoundsToWin);
         }
     }
 }

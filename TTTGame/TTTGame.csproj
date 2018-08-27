@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\Classes\Game\Game.csproj" />
+    <ProjectReference Include="..\TTTCore\TTTCore.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

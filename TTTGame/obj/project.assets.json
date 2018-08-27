@@ -208,27 +208,14 @@
           "build/netstandard2.0/NETStandard.Library.targets": {}
         }
       },
-      "Game/1.0.0": {
-        "type": "project",
-        "framework": ".NETStandard,Version=v2.0",
-        "dependencies": {
-          "Player": "1.0.0"
-        },
-        "compile": {
-          "bin/placeholder/Game.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Game.dll": {}
-        }
-      },
-      "Player/1.0.0": {
+      "TTTCore/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "compile": {
-          "bin/placeholder/Player.dll": {}
+          "bin/placeholder/TTTCore.dll": {}
         },
         "runtime": {
-          "bin/placeholder/Player.dll": {}
+          "bin/placeholder/TTTCore.dll": {}
         }
       }
     }
@@ -697,21 +684,16 @@
         "netstandard.library.nuspec"
       ]
     },
-    "Game/1.0.0": {
+    "TTTCore/1.0.0": {
       "type": "project",
-      "path": "../Classes/Game/Game.csproj",
-      "msbuildProject": "../Classes/Game/Game.csproj"
-    },
-    "Player/1.0.0": {
-      "type": "project",
-      "path": "../Classes/Player/Player.csproj",
-      "msbuildProject": "../Classes/Player/Player.csproj"
+      "path": "../TTTCore/TTTCore.csproj",
+      "msbuildProject": "../TTTCore/TTTCore.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.1": [
-      "Game >= 1.0.0",
-      "Microsoft.NETCore.App >= 2.1.0"
+      "Microsoft.NETCore.App >= 2.1.0",
+      "TTTCore >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -742,8 +724,8 @@
       "frameworks": {
         "netcoreapp2.1": {
           "projectReferences": {
-            "/Users/severinperez/Documents/ttt_c_sharp/Classes/Game/Game.csproj": {
-              "projectPath": "/Users/severinperez/Documents/ttt_c_sharp/Classes/Game/Game.csproj"
+            "/Users/severinperez/Documents/ttt_c_sharp/TTTCore/TTTCore.csproj": {
+              "projectPath": "/Users/severinperez/Documents/ttt_c_sharp/TTTCore/TTTCore.csproj"
             }
           }
         }
