@@ -16,12 +16,12 @@ namespace GameClass.UnitTests
 
         [TestCase("1")]
         [TestCase("2")]
-        public void SetGameModeShouldHandleValidInput(string input)
+        public void SetGameModeShouldHandleValidInput(string gameModeNumberString)
         {
-            _subject.SetGameMode(input);
+            _subject.SetGameMode(gameModeNumberString);
 
             var result = _subject.Mode;
-            var expected = (GameModes)Enum.Parse(typeof(GameModes), input);
+            var expected = (GameModes)Enum.Parse(typeof(GameModes), gameModeNumberString);
 
             Assert.That(result, Is.EqualTo(expected));
         }
@@ -29,27 +29,35 @@ namespace GameClass.UnitTests
         [TestCase("3")]
         [TestCase("")]
         [TestCase("a")]
-        public void SetGameModeShouldThrowErrorOnInvalidInput(string input)
+        public void SetGameModeShouldThrowErrorOnInvalidInput(string gameModeNumberString)
         {
-            Assert.That(() => _subject.SetGameMode(input), Throws.ArgumentException);
+            Assert.That
+            (
+                () => _subject.SetGameMode(gameModeNumberString), Throws.ArgumentException
+            );
         }
 
-        [TestCase(1)]
-        [TestCase(5)]
-        public void SetRoundsToWinShouldHandleValidInput(int input)
+        [TestCase("1")]
+        [TestCase("5")]
+        public void SetRoundsToWinShouldHandleValidInput(string roundsToWinString)
         {
-            _subject.SetRoundsToWin(input);
+            _subject.SetRoundsToWin(roundsToWinString);
             
             int result = _subject.RoundsToWin;
+            int expected = System.Int32.Parse(roundsToWinString);
 
-            Assert.That(result, Is.EqualTo(input));
+            Assert.That(result, Is.EqualTo(expected));
         }
 
-        [TestCase(0)]
-        [TestCase(10)]
-        public void SetRoundsToWinThrowsErrorOnInvalidInput(int input)
+        [TestCase("0")]
+        [TestCase("10")]
+        [TestCase("a")]
+        public void SetRoundsToWinThrowsErrorOnInvalidInput(string roundsToWinString)
         {
-            Assert.That(() => _subject.SetRoundsToWin(input), Throws.ArgumentException);
+            Assert.That
+            (
+                () => _subject.SetRoundsToWin(roundsToWinString), Throws.Exception
+            );
         }
 
         [TestCase(GameModes.PlayerVsPlayer)]
@@ -65,11 +73,34 @@ namespace GameClass.UnitTests
         [TestCase(GameModes.PlayerVsComputer)]
         public void InstantiatePlayersHandlesPlayerVsComputer(GameModes mode)
         {
-        _subject.InstantiatePlayers(mode);
+            _subject.InstantiatePlayers(mode);
 
-        bool result = _subject.Player1 is Human && _subject.Player2 is Computer;
+            bool result = _subject.Player1 is Human && _subject.Player2 is Computer;
 
-        Assert.IsTrue(result);
+            Assert.IsTrue(result);
+        }
+
+        [TestCase("1")]
+        [TestCase("2")]
+        public void SetFirstPlayerShouldHandleValidInput(string playerNumberString)
+        {
+            _subject.SetFirstPlayer(playerNumberString);
+
+            int result = _subject.NextPlayerNumber;
+            int expected = System.Int32.Parse(playerNumberString);
+
+            Assert.That(result, Is.EqualTo(expected));
+        }
+
+        [TestCase("0")]
+        [TestCase("3")]
+        [TestCase("a")]
+        public void SetFirstPlayerShouldHandleInvalidInput(string playerNumberString)
+        {
+            Assert.That
+            (
+                () => _subject.SetFirstPlayer(playerNumberString), Throws.Exception
+            );
         }
     }
 }

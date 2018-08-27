@@ -6,15 +6,13 @@ namespace TTTCore
     {
         private int _roundsToWin;
         private bool _gameOver;
+        private int _nextPlayerNumber;
         private GameModes _mode;
         private Player player1;
         private Player player2;
         
-        public int RoundsToWin 
-        {
-            get { return _roundsToWin; }
-            set { _roundsToWin = value; }
-        }
+        public int RoundsToWin { get; set; }
+        public int NextPlayerNumber { get; set; }
         public bool GameOver { get; set; }
         public GameModes Mode { get; set; }
         public Player Player1 { get; set; }
@@ -25,9 +23,9 @@ namespace TTTCore
             Console.WriteLine("Welcome to Tic Tac Toe!");
         }
 
-        public void SetGameMode(string input)
+        public void SetGameMode(string gameModeNumber)
         {
-            GameModes mode = (GameModes)Enum.Parse(typeof(GameModes), input);
+            GameModes mode = (GameModes)Enum.Parse(typeof(GameModes), gameModeNumber);
             if (Enum.IsDefined(typeof(GameModes), mode))
             {
                 this.Mode = mode;
@@ -38,8 +36,9 @@ namespace TTTCore
             }
         }
 
-        public void SetRoundsToWin(int value)
-        {
+        public void SetRoundsToWin(string roundsToWinString)
+        {  
+            int value = System.Int32.Parse(roundsToWinString);
             if (value >= 1 && value <= 9)
             {
                 this.RoundsToWin = value;
@@ -61,6 +60,20 @@ namespace TTTCore
             else
             {
                 this.Player2 = new Human();
+            }
+        }
+
+        public void SetFirstPlayer(string playerNumberString)
+        {
+            int value = System.Int32.Parse(playerNumberString);
+            
+            if (value == 1 || value == 2)
+            {
+                this.NextPlayerNumber = value;
+            }
+            else
+            {
+                throw new ArgumentException("Invalid first player selection.");
             }
         }
     }

@@ -23,6 +23,9 @@ namespace TTTGame
 
             game.SetGameMode("2");
             Console.WriteLine(game.Mode);
+
+            game.SetRoundsToWin("5");
+            Console.WriteLine(game.RoundsToWin);
         }
     }
 }
