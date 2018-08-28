@@ -30,13 +30,11 @@ namespace TTTCore
             }
         }
 
-        public void SetRoundsToWin(string roundsToWinString)
+        public void SetRoundsToWin(int roundsToWin)
         {  
-            var value = System.Int32.Parse(roundsToWinString);
-            
-            if (value >= 1 && value <= 9)
+            if (roundsToWin >= 1 && roundsToWin <= 9)
             {
-                this.RoundsToWin = value;
+                this.RoundsToWin = roundsToWin;
             }
             else
             {
@@ -58,13 +56,11 @@ namespace TTTCore
             }
         }
 
-        public void SetFirstPlayer(string playerNumberString)
+        public void SetFirstPlayer(int playerNumber)
         {
-            var value = System.Int32.Parse(playerNumberString);
-            
-            if (value == 1 || value == 2)
+            if (playerNumber == 1 || playerNumber == 2)
             {
-                this.NextPlayerNumber = value;
+                this.NextPlayerNumber = playerNumber;
             }
             else
             {

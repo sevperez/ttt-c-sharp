@@ -38,26 +38,24 @@ namespace GameClass.UnitTests
             );
         }
 
-        [TestCase("1")]
-        [TestCase("5")]
-        public void SetRoundsToWinShouldHandleValidInput(string roundsToWinString)
+        [TestCase(1)]
+        [TestCase(5)]
+        public void SetRoundsToWinShouldHandleValidInput(int roundsToWin)
         {
-            subject.SetRoundsToWin(roundsToWinString);
+            subject.SetRoundsToWin(roundsToWin);
             
             var result = subject.RoundsToWin;
-            var expected = System.Int32.Parse(roundsToWinString);
 
-            Assert.That(result, Is.EqualTo(expected));
+            Assert.That(result, Is.EqualTo(roundsToWin));
         }
 
-        [TestCase("0")]
-        [TestCase("10")]
-        [TestCase("a")]
-        public void SetRoundsToWinThrowsErrorOnInvalidInput(string roundsToWinString)
+        [TestCase(0)]
+        [TestCase(10)]
+        public void SetRoundsToWinThrowsErrorOnInvalidInput(int roundsToWin)
         {
             Assert.That
             (
-                () => subject.SetRoundsToWin(roundsToWinString),
+                () => subject.SetRoundsToWin(roundsToWin),
                 Throws.Exception
             );
         }
@@ -82,26 +80,24 @@ namespace GameClass.UnitTests
             Assert.IsTrue(result);
         }
 
-        [TestCase("1")]
-        [TestCase("2")]
-        public void SetFirstPlayerShouldHandleValidInput(string playerNumberString)
+        [TestCase(1)]
+        [TestCase(2)]
+        public void SetFirstPlayerShouldHandleValidInput(int playerNumber)
         {
-            subject.SetFirstPlayer(playerNumberString);
+            subject.SetFirstPlayer(playerNumber);
 
             var result = subject.NextPlayerNumber;
-            var expected = System.Int32.Parse(playerNumberString);
 
-            Assert.That(result, Is.EqualTo(expected));
+            Assert.That(result, Is.EqualTo(playerNumber));
         }
 
-        [TestCase("0")]
-        [TestCase("3")]
-        [TestCase("a")]
-        public void SetFirstPlayerShouldHandleInvalidInput(string playerNumberString)
+        [TestCase(0)]
+        [TestCase(3)]
+        public void SetFirstPlayerShouldHandleInvalidInput(int playerNumber)
         {
             Assert.That
             (
-                () => subject.SetFirstPlayer(playerNumberString),
+                () => subject.SetFirstPlayer(playerNumber),
                 Throws.Exception
             );
         }

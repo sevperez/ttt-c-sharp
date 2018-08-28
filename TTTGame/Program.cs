@@ -24,8 +24,11 @@ namespace TTTGame
             game.SetGameMode("2");
             Console.WriteLine(game.Mode);
 
-            game.SetRoundsToWin("5");
+            game.SetRoundsToWin(5);
             Console.WriteLine(game.RoundsToWin);
+
+            int len1 = Constants.WinningLines.GetLength(0);
+            int len2 = Constants.WinningLines.GetLength(1);
         }
     }
 }

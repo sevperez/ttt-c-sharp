@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using System.Collections;
 using System.Collections.Generic;
 using TTTCore;
 
@@ -65,6 +66,65 @@ namespace BoardClass.UnitTests
             var result = subject.IsFull;
 
             Assert.That(result, Is.EqualTo(false));
+        }
+
+        [Test]
+        public void GetWinningTokenShouldReturnTokenIfWinner()
+        {
+            string[] existingTokens = new string[] {
+                "X", "X", "X", "O", "X", "O", "", "", "O"
+            };
+            var subject = new Board(existingTokens);
+
+            var result = subject.GetWinningToken();
+
+            Assert.That(result, Is.EqualTo("X"));
+        }
+
+        [Test]
+        public void GetWinningTokenShouldReturnNullIfNoWinner()
+        {
+            string[] existingTokens = new string[] {
+                "X", "", "X", "O", "X", "O", "", "", "O"
+            };
+            var subject = new Board(existingTokens);
+
+            var result = subject.GetWinningToken();
+
+            Assert.IsNull(result);
+        }
+
+        [Test]
+        public void IsWinningLineShouldReturnTrueIfWinningLine()
+        {
+            var inputLine = new string[] { "X", "X", "X"};
+            var subject = new Board();
+
+            var result = subject.IsWinningLine(inputLine);
+
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public void IsWinningLineShouldReturnFalseIfNotWinningLine()
+        {
+            var inputLine = new string[] { "X", "O", "X" };
+            var subject = new Board();
+
+            var result = subject.IsWinningLine(inputLine);
+
+            Assert.IsFalse(result);
+        }
+
+        [Test]
+        public void IsWinningLineShouldReturnFalseIfUnfilledLine()
+        {
+            var inputLine = new string[] { "X", "X", "" };
+            var subject = new Board();
+
+            var result = subject.IsWinningLine(inputLine);
+
+            Assert.IsFalse(result);
         }
 
         [Test]
