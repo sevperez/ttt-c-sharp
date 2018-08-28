@@ -2,18 +2,20 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using TTTCore;
 
-namespace BoardClass.UnitTests {
+namespace BoardClass.UnitTests
+{
     [TestFixture]
-    public class Board_Tests {
-        private Board _subject;
-
+    public class Board_Tests
+    {
         [Test]
-        public void ConstructorShouldInitializeEmptySquaresAsDefault() {
-            _subject = new Board();
+        public void ConstructorShouldInitializeEmptySquaresAsDefault()
+        {
+            var subject = new Board();
 
-            var result = _subject.Squares;
+            var result = subject.Squares;
             var expected = new List<Square>(Constants.NumSquares);
-            for (int i = 0; i < expected.Capacity; i += 1) {
+            for (var i = 0; i < expected.Capacity; i += 1)
+            {
                 expected.Add(new Square(""));
             }
 
@@ -26,11 +28,11 @@ namespace BoardClass.UnitTests {
             string[] existingTokens = new string[] { 
                 "X", "X", "O", "", "X", "O", "X", "O", ""
             };
-            _subject = new Board(existingTokens);
+            var subject = new Board(existingTokens);
             
-            var result = _subject.Squares;
+            var result = subject.Squares;
             var expected = new List<Square>(Constants.NumSquares);
-            for (int i = 0; i < expected.Capacity; i += 1) {
+            for (var i = 0; i < expected.Capacity; i += 1) {
                 expected.Add(new Square(existingTokens[i]));
             }
 
@@ -43,49 +45,52 @@ namespace BoardClass.UnitTests {
             string[] existingTokens = new string[] {
                 "X", "X", "O", "O", "X", "X", "X", "O", "O"
             };
-            _subject = new Board(existingTokens);
-            _subject.UpdateFullStatus();
+            var subject = new Board(existingTokens);
+            subject.UpdateFullStatus();
 
-            var result = _subject.IsFull;
+            var result = subject.IsFull;
 
             Assert.That(result, Is.EqualTo(true));
         }
 
         [Test]
-        public void UpdateFullStatusShouldNotUpdateIfBoardNotFull() {
+        public void UpdateFullStatusShouldNotUpdateIfBoardNotFull()
+        {
             string[] existingTokens = new string[] {
                 "X", "X", "", "O", "X", "", "X", "O", "O"
             };
-            _subject = new Board(existingTokens);
-            _subject.UpdateFullStatus();
+            var subject = new Board(existingTokens);
+            subject.UpdateFullStatus();
 
-            var result = _subject.IsFull;
+            var result = subject.IsFull;
 
             Assert.That(result, Is.EqualTo(false));
         }
 
         [Test]
-        public void UpdateWinningTokenShouldUpdateIfWinner() {
+        public void UpdateWinningTokenShouldUpdateIfWinner()
+        {
             string[] existingTokens = new string[] {
                 "X", "X", "X", "O", "X", "O", "", "", "O"
             };
-            _subject = new Board(existingTokens);
-            _subject.UpdateWinningToken();
+            var subject = new Board(existingTokens);
+            subject.UpdateWinningToken();
 
-            var result = _subject.WinningToken;
+            var result = subject.WinningToken;
 
             Assert.That(result, Is.EqualTo("X"));
         }
 
         [Test]
-        public void UpdateWinningTokenShouldNotUpdateIfNoWinner() {
+        public void UpdateWinningTokenShouldNotUpdateIfNoWinner()
+        {
             string[] existingTokens = new string[] {
                 "X", "", "X", "O", "X", "O", "", "", "O"
             };
-            _subject = new Board(existingTokens);
-            _subject.UpdateWinningToken();
+            var subject = new Board(existingTokens);
+            subject.UpdateWinningToken();
 
-            var result = _subject.WinningToken;
+            var result = subject.WinningToken;
 
             Assert.That(result, Is.EqualTo(null));
         }

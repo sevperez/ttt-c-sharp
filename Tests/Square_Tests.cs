@@ -1,54 +1,63 @@
 using NUnit.Framework;
 using TTTCore;
 
-namespace SquareClass.UnitTests {
+namespace SquareClass.UnitTests
+{
     [TestFixture]
-    public class Square_Tests {
-        private Square _subject;
-
+    public class Square_Tests
+    {
         [Test]
-        public void ConstructorShouldInitializeWithEmptyCurrentTokenByDefault() {
-            _subject = new Square();
+        public void ConstructorShouldInitializeWithEmptyCurrentTokenByDefault()
+        {
+            var subject = new Square();
 
-            var result = _subject.CurrentToken;
+            var result = subject.CurrentToken;
 
             Assert.That(result, Is.EqualTo(""));
         }
 
         [TestCase("X")]
-        public void ConstructorShouldInitializeWithToken(string token) {
-            _subject = new Square(token);
+        public void ConstructorShouldInitializeWithToken(string token)
+        {
+            var subject = new Square(token);
 
-            var result = _subject.CurrentToken;
+            var result = subject.CurrentToken;
 
             Assert.That(result, Is.EqualTo(token));
         }
 
         [TestCase("X")]
         [TestCase("O")]
-        public void FillShouldUpdateCurrentTokenIfSquareIsEmpty(string token) {
-            _subject = new Square();
-            _subject.Fill(token);
+        public void FillShouldUpdateCurrentTokenIfSquareIsEmpty(string token)
+        {
+            var subject = new Square();
+            subject.Fill(token);
 
-            var result = _subject.CurrentToken;
+            var result = subject.CurrentToken;
 
             Assert.That(result, Is.EqualTo(token));
         }
         
         [TestCase("X")]
-        public void FillShouldNotChangeCurrentTokenIfSquareIsOccupied(string token) {
-            _subject = new Square("O");
+        public void FillShouldNotChangeCurrentTokenIfSquareIsOccupied(string token)
+        {
+            var subject = new Square("O");
 
-            var result = _subject.CurrentToken;
+            var result = subject.CurrentToken;
 
             Assert.That(result, Is.Not.EqualTo(token));
         }
 
         [TestCase("X")]
-        public void FillShouldThrowArgumentErrorIfSquareIsOccupied(string token) {
-            _subject = new Square("O");
+        public void FillShouldThrowArgumentErrorIfSquareIsOccupied(string token)
+        {
+            var subject = new Square("O");
 
-            Assert.That(() => _subject.Fill(token), Throws.ArgumentException);
+            Assert.That
+            (
+                () => subject.Fill(token),
+                Throws.ArgumentException
+            );
         }
 
         [TestCase("X", "X", true)]
@@ -56,11 +65,12 @@ namespace SquareClass.UnitTests {
         [TestCase("X", "", false)]
         public void SquaresShouldCompareByToken(
             string firstToken, string secondToken, bool expected
-        ) {
-            _subject = new Square(firstToken);
+        )
+        {
+            var subject = new Square(firstToken);
             Square compare = new Square(secondToken);
 
-            bool result = _subject == compare;
+            bool result = subject == compare;
             
             Assert.That(result, Is.EqualTo(expected));
         }

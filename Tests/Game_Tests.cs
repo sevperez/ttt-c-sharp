@@ -2,21 +2,25 @@ using System;
 using NUnit.Framework;
 using TTTCore;
 
-namespace GameClass.UnitTests {
+namespace GameClass.UnitTests
+{
     [TestFixture]
-    public class Game_Tests {
-        private Game _subject;
+    public class Game_Tests
+    {
+        private Game subject;
 
-        [SetUp] public void Init() {
-            _subject = new Game();
+        [SetUp] public void Init()
+        {
+            subject = new Game();
         }
 
         [TestCase("1")]
         [TestCase("2")]
-        public void SetGameModeShouldHandleValidInput(string gameModeNumberString) {
-            _subject.SetGameMode(gameModeNumberString);
+        public void SetGameModeShouldHandleValidInput(string gameModeNumberString)
+        {
+            subject.SetGameMode(gameModeNumberString);
 
-            var result = _subject.Mode;
+            var result = subject.Mode;
             var expected = (GameModes)Enum.Parse(typeof(GameModes), gameModeNumberString);
 
             Assert.That(result, Is.EqualTo(expected));
@@ -25,19 +29,23 @@ namespace GameClass.UnitTests {
         [TestCase("3")]
         [TestCase("")]
         [TestCase("a")]
-        public void SetGameModeShouldThrowErrorOnInvalidInput(string gameModeNumberString) {
-            Assert.That(
-                () => _subject.SetGameMode(gameModeNumberString), Throws.ArgumentException
+        public void SetGameModeShouldThrowErrorOnInvalidInput(string gameModeNumberString)
+        {
+            Assert.That
+            (
+                () => subject.SetGameMode(gameModeNumberString),
+                Throws.ArgumentException
             );
         }
 
         [TestCase("1")]
         [TestCase("5")]
-        public void SetRoundsToWinShouldHandleValidInput(string roundsToWinString) {
-            _subject.SetRoundsToWin(roundsToWinString);
+        public void SetRoundsToWinShouldHandleValidInput(string roundsToWinString)
+        {
+            subject.SetRoundsToWin(roundsToWinString);
             
-            int result = _subject.RoundsToWin;
-            int expected = System.Int32.Parse(roundsToWinString);
+            var result = subject.RoundsToWin;
+            var expected = System.Int32.Parse(roundsToWinString);
 
             Assert.That(result, Is.EqualTo(expected));
         }
@@ -45,37 +53,43 @@ namespace GameClass.UnitTests {
         [TestCase("0")]
         [TestCase("10")]
         [TestCase("a")]
-        public void SetRoundsToWinThrowsErrorOnInvalidInput(string roundsToWinString) {
-            Assert.That(
-                () => _subject.SetRoundsToWin(roundsToWinString), Throws.Exception
+        public void SetRoundsToWinThrowsErrorOnInvalidInput(string roundsToWinString)
+        {
+            Assert.That
+            (
+                () => subject.SetRoundsToWin(roundsToWinString),
+                Throws.Exception
             );
         }
 
         [TestCase(GameModes.PlayerVsPlayer)]
-        public void InstantiatePlayersHandlesPlayerVsPlayer(GameModes mode) {
-            _subject.InstantiatePlayers(mode);
+        public void InstantiatePlayersHandlesPlayerVsPlayer(GameModes mode)
+        {
+            subject.InstantiatePlayers(mode);
 
-            bool result = _subject.Player1 is Human && _subject.Player2 is Human;
+            bool result = subject.Player1 is Human && subject.Player2 is Human;
 
             Assert.IsTrue(result);
         }
 
         [TestCase(GameModes.PlayerVsComputer)]
-        public void InstantiatePlayersHandlesPlayerVsComputer(GameModes mode) {
-            _subject.InstantiatePlayers(mode);
+        public void InstantiatePlayersHandlesPlayerVsComputer(GameModes mode)
+        {
+            subject.InstantiatePlayers(mode);
 
-            bool result = _subject.Player1 is Human && _subject.Player2 is Computer;
+            bool result = subject.Player1 is Human && subject.Player2 is Computer;
 
             Assert.IsTrue(result);
         }
 
         [TestCase("1")]
         [TestCase("2")]
-        public void SetFirstPlayerShouldHandleValidInput(string playerNumberString) {
-            _subject.SetFirstPlayer(playerNumberString);
+        public void SetFirstPlayerShouldHandleValidInput(string playerNumberString)
+        {
+            subject.SetFirstPlayer(playerNumberString);
 
-            int result = _subject.NextPlayerNumber;
-            int expected = System.Int32.Parse(playerNumberString);
+            var result = subject.NextPlayerNumber;
+            var expected = System.Int32.Parse(playerNumberString);
 
             Assert.That(result, Is.EqualTo(expected));
         }
@@ -83,9 +97,12 @@ namespace GameClass.UnitTests {
         [TestCase("0")]
         [TestCase("3")]
         [TestCase("a")]
-        public void SetFirstPlayerShouldHandleInvalidInput(string playerNumberString) {
-            Assert.That(
-                () => _subject.SetFirstPlayer(playerNumberString), Throws.Exception
+        public void SetFirstPlayerShouldHandleInvalidInput(string playerNumberString)
+        {
+            Assert.That
+            (
+                () => subject.SetFirstPlayer(playerNumberString),
+                Throws.Exception
             );
         }
     }

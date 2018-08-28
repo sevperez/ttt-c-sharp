@@ -1,27 +1,35 @@
 ﻿using System;
 
-namespace TTTCore {
-    public class Computer : Player {
-        private readonly string[] _validNames = { 
+namespace TTTCore
+{
+    public class Computer : Player
+    {
+        private readonly string[] validNames = { 
             "GLaDOS", "Hal 9000", "Ava", "Cortana", "Alexa"
         };
         
-        public string[] ValidNames { 
-            get { return _validNames; }
+        public string[] ValidNames
+        { 
+            get { return validNames; }
         }
 
-        public void SetPlayerName() {
-            Random rnd = new Random();
+        public void SetPlayerName()
+        {
+            var random = new Random();
 
-            int r = rnd.Next(this.ValidNames.Length);
+            int index = random.Next(this.ValidNames.Length);
 
-            this.Name = this.ValidNames[r];
+            this.Name = this.ValidNames[index];
         }
 
-        public void SetPlayerToken(string humanToken) {
-            if (humanToken == "O") {
+        public void SetPlayerToken(string humanToken)
+        {
+            if (humanToken == "O")
+            {
                 this.Token = "X";
-            } else {
+            }
+            else
+            {
                 this.Token = "O";
             }
         }

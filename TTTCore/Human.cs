@@ -1,24 +1,34 @@
 ﻿using System;
 
-namespace TTTCore {
-    public class Human : Player {
-        public void SetPlayerName(string str) {
-            string trimmed = str.Trim();
+namespace TTTCore
+{
+    public class Human : Player
+    {
+        public void SetPlayerName(string inputString)
+        {
+            var trimmed = inputString.Trim();
 
-            if (trimmed.Length > 0) {
+            if (trimmed.Length > 0)
+            {
                 this.Name = trimmed;
-            } else {
-                throw new ArgumentException("name must be greater than 0 length, trimmed");
+            }
+            else
+            {
+                throw new ArgumentException("Name must be greater than 0 length.");
             }
         }
 
-        public void SetPlayerToken(string str) {
-            string trimmed = str.Trim();
+        public void SetPlayerToken(string inputString)
+        {
+            var trimmed = inputString.Trim();
 
-            if (trimmed.Length == 1) {
+            if (trimmed.Length == 1)
+            {
                 this.Token = trimmed;
-            } else {
-                throw new ArgumentException("token must be greater 1 length");
+            }
+            else
+            {
+                throw new ArgumentException("Token must be greater 1 length.");
             }
         }
     }

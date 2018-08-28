@@ -1,5 +1,7 @@
-namespace TTTCore {
-    public static class Constants {
+namespace TTTCore
+{
+    public static class Constants
+    {
         public static int NumSquares = 9;
 
         public static int[,] WinningLines = new int[8, 3] {

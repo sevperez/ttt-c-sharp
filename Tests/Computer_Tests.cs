@@ -1,39 +1,45 @@
 using NUnit.Framework;
 using TTTCore;
 
-namespace ComputerClass.UnitTests {
+namespace ComputerClass.UnitTests
+{
     [TestFixture]
-    public class Computer_Tests {
-        private Computer _subject;
+    public class Computer_Tests
+    {
+        private Computer subject;
 
-        [SetUp] public void Init() {
-            _subject = new Computer();
+        [SetUp] public void Init()
+        {
+            subject = new Computer();
         }
 
         [Test]
-        public void SetPlayerNameShouldChooseValidName() {
-            _subject.SetPlayerName();
+        public void SetPlayerNameShouldChooseValidName()
+        {
+            subject.SetPlayerName();
 
-            string result = _subject.Name;
+            var result = subject.Name;
 
-            Assert.That(_subject.ValidNames, Has.Member(_subject.Name));
+            Assert.That(subject.ValidNames, Has.Member(subject.Name));
         }
 
         [TestCase("O")]
-        public void SetPlayerTokenChoosesXIfPlayerIsO(string humanToken) {
-            _subject.SetPlayerToken(humanToken);
+        public void SetPlayerTokenChoosesXIfPlayerIsO(string humanToken)
+        {
+            subject.SetPlayerToken(humanToken);
 
-            string result = _subject.Token;
+            var result = subject.Token;
 
             Assert.That(result, Is.EqualTo("X"));
         }
 
         [TestCase("X")]
         [TestCase("q")]
-        public void SetPlayerTokenChoosesOIfPlayerIsNotO(string humanToken) {
-            _subject.SetPlayerToken(humanToken);
+        public void SetPlayerTokenChoosesOIfPlayerIsNotO(string humanToken)
+        {
+            subject.SetPlayerToken(humanToken);
 
-            string result = _subject.Token;
+            var result = subject.Token;
 
             Assert.That(result, Is.EqualTo("O"));
         }

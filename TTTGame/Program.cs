@@ -1,12 +1,15 @@
 ﻿using System;
 using TTTCore;
 
-namespace TTTGame {
-    class Program {
-        static void Main(string[] args) {
-            Game game = new Game();
-            Human human = new Human();
-            Computer computer = new Computer();
+namespace TTTGame
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            var game = new Game();
+            var human = new Human();
+            var computer = new Computer();
 
             human.SetPlayerName("Fry");
             human.SetPlayerToken("O");
