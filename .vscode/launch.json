@@ -6,7 +6,7 @@
    "configurations": [
    
         {
-            "name": ".NET Core Launch (console)",
+            "name": ".NET Game Launch (console)",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",

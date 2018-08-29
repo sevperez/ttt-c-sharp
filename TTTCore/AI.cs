@@ -15,6 +15,54 @@ namespace TTTCore
             this.OwnerToken = ownerToken;
             this.OpponentToken = opponentToken;
         }
+        
+        public int GetTopMoveIndex(Board board, bool ownerMovesNext)
+        {
+            var moveOptions = this.GetMoveOptions(board, ownerMovesNext);
+            ArrayList topMoves = new ArrayList();
+            var bestMiniMaxScore = moveOptions[0].MiniMaxScore;
+
+            for (var i = 0; i < moveOptions.Length; i += 1)
+            {
+                var currentMoveOption = moveOptions[i];
+                if (currentMoveOption.MiniMaxScore > bestMiniMaxScore)
+                {
+                    topMoves = new ArrayList();
+                    topMoves.Add(currentMoveOption);
+                    bestMiniMaxScore = currentMoveOption.MiniMaxScore;
+                }
+                else if (currentMoveOption.MiniMaxScore == bestMiniMaxScore)
+                {
+                    topMoves.Add(currentMoveOption);
+                }
+            }
+
+            var random = new Random();
+            var randomIndex = random.Next(topMoves.Count);
+            MoveOption[] goodMoves = (MoveOption[])topMoves.ToArray(typeof(MoveOption));
+            
+            return goodMoves[randomIndex].SquareIndex;
+        }
+
+        public MoveOption[] GetMoveOptions(Board board, bool ownerMovesNext)
+        {
+            int[] emptyIndices = this.GetEmptySquareIndices(board);
+            var nextMoveToken = ownerMovesNext ? this.OwnerToken : this.OpponentToken;
+            
+            var moveOptions = new ArrayList();
+            for (var i = 0; i < emptyIndices.Length; i += 1)
+            {
+                var emptyIndex = emptyIndices[i];
+                var nextBoard = this.SimulateMove(board, emptyIndex, nextMoveToken);
+                var newMoveStatus = !ownerMovesNext;
+                
+                var miniMaxScore = this.GetMiniMaxScore(nextBoard, newMoveStatus);
+                
+                moveOptions.Add(new MoveOption(emptyIndex, miniMaxScore));
+            }
+            
+            return (MoveOption[])moveOptions.ToArray(typeof(MoveOption));
+        }
 
         public int[] GetEmptySquareIndices(Board board)
         {
@@ -81,9 +129,9 @@ namespace TTTCore
             {
                 return 0;
             }
-
-            ownerMovesNext = !ownerMovesNext;
+            
             var nextMoveToken = ownerMovesNext ? this.OwnerToken : this.OpponentToken;
+            ownerMovesNext = !ownerMovesNext;
 
             Board[] nextBoardStates = this.GetPossibleBoardStates(board, nextMoveToken);
             int[] miniMaxScores = nextBoardStates.Select

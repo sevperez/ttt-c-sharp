@@ -27,15 +27,15 @@ namespace TTTGame
             game.SetRoundsToWin(5);
             Console.WriteLine(game.RoundsToWin);
 
-            string[] currentTokens = new string[] {
-                "O", "X", "X", 
-                "X", "", "X", 
-                "", "O", "O"
+            string[] testTokens = new string[] {
+                "O", "", "O",
+                "", "X", "O",
+                "X", "X", ""
             };
-            var board = new Board(currentTokens);
+            var board = new Board(testTokens);
             var ai = new AI("X", "O");
             
-            var result = ai.GetMiniMaxScore(board, false);
+            var result = ai.GetTopMoveIndex(board, true);
 
             Console.WriteLine(result);
         }

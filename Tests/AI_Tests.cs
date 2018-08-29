@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using TTTCore;
+using System.Linq;
 
 namespace AIClass.UnitTests
 {
@@ -12,6 +13,44 @@ namespace AIClass.UnitTests
         public void Init()
         {
             subject = new AI("X", "O");
+        }
+        
+        [Test]
+        public void GetTopMoveIndexShouldReturnIndexOfAWinningMoveIfAvailable()
+        {
+            string[] testTokens = new string[] {
+                "O", "", "O", 
+                "", "X", "O", 
+                "X", "X", ""
+            };
+            var testBoard = new Board(testTokens);
+            var ownerMovesNext = true;
+            
+            var result = subject.GetTopMoveIndex(testBoard, ownerMovesNext);
+
+            var winningMoveOption1 = new MoveOption(1, 10);
+            var winningMoveOption2 = new MoveOption(8, 10);
+            var winningMoves = new MoveOption[] { winningMoveOption1, winningMoveOption2 };
+            var winningMoveIndices = winningMoves.Select( move => move.SquareIndex);
+
+            Assert.That(winningMoveIndices, Has.Member(result));
+        }
+
+        [Test]
+        public void GetMoveOptionsShouldReturnArrayOfMoveOptionObjects()
+        {
+            string[] testTokens = new string[] {
+                "O", "X", "X", "O", "", "X", "", "X", "O"
+            };
+            var testBoard = new Board(testTokens);
+            var ownerMovesNext = true;
+            
+            var result = subject.GetMoveOptions(testBoard, ownerMovesNext);
+            var moveOption1 = new MoveOption(4, 10);
+            var moveOption2 = new MoveOption(6, -10);
+            var expected = new MoveOption[] { moveOption1, moveOption2 };
+
+            Assert.That(result, Is.EquivalentTo(expected));
         }
 
         [Test]
@@ -124,7 +163,6 @@ namespace AIClass.UnitTests
         }
 
         [Test]
-        [Ignore("Not yet implemented")]
         public void GetMiniMaxScoreShouldReturnZeroIfDraw()
         {
             string[] testTokens = new string[] {
