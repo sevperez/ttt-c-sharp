@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace TTTCore
 {
-    public class Board
+    public class Board : IEquatable<Board>
     {
         public bool IsFull { get; set; }
         public string WinningToken { get; set; }
@@ -33,6 +33,16 @@ namespace TTTCore
             if (!this.Squares.Contains(new Square()))
             {
                 this.IsFull = true;
+            }
+        }
+
+        public void UpdateWinningToken()
+        {
+            var winningToken = this.GetWinningToken();
+
+            if (winningToken != null)
+            {
+                this.WinningToken = winningToken;
             }
         }
 
@@ -71,14 +81,70 @@ namespace TTTCore
             return true;
         }
 
-        public void UpdateWinningToken()
+        // IEquatable Implementation
+        public bool Equals(Board other)
         {
-            var winningToken = this.GetWinningToken();
-
-            if (winningToken != null)
+            if (other == null)
             {
-                this.WinningToken = winningToken;
+                return false;
             }
+            else
+            {
+                var areEqual = true;
+                for (var i = 0; i < this.Squares.Count; i += 1)
+                {
+                    if (this.Squares[i].CurrentToken != other.Squares[i].CurrentToken)
+                    {
+                        areEqual = false;
+                        break;
+                    }
+                }
+                
+                return areEqual;
+            }
+        }
+
+        public override bool Equals(Object obj)
+        {
+            if (obj == null)
+            {
+                return false;
+            }
+
+            var boardObj = obj as Board;
+            if (boardObj == null)
+            {
+                return false;
+            }
+            else
+            {
+                return Equals(boardObj);
+            }
+        }
+
+        public override int GetHashCode()
+        {
+            return this.Squares.GetHashCode();
+        }
+
+        public static bool operator ==(Board board1, Board board2)
+        {
+            if (((object)board1) == null || ((object)board2) == null)
+            {
+                return Object.Equals(board1, board2);
+            }
+
+            return board1.Equals(board2);
+        }
+
+        public static bool operator !=(Board board1, Board board2)
+        {
+            if (((object)board1) == null || ((object)board2) == null)
+            {
+                return ! Object.Equals(board1, board2);
+            }
+
+            return ! board1.Equals(board2);
         }
     }
 }

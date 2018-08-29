@@ -154,5 +154,36 @@ namespace BoardClass.UnitTests
 
             Assert.That(result, Is.EqualTo(null));
         }
+
+        [Test]
+        public void BoardsShouldCompareEqualIfSameSquareTokens()
+        {
+            string[] existingTokens = new string[] {
+                "X", "", "X", "O", "X", "O", "", "", "O"
+            };
+            var subject = new Board(existingTokens);
+            var compare = new Board(existingTokens);
+
+            bool result = subject == compare;
+
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public void BoardsShouldNotCompareEqualIfDifferentSquareTokens()
+        {
+            string[] subjectTokens = new string[] {
+                "X", "", "X", "O", "X", "O", "", "", "O"
+            };
+            var subject = new Board(subjectTokens);
+            string[] compareTokens = new string[] {
+                "O", "", "X", "O", "X", "O", "", "", "X"
+            };
+            var compare = new Board(compareTokens);
+
+            bool result = subject == compare;
+
+            Assert.IsFalse(result);
+        }
     }
 }

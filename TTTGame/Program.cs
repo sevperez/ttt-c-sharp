@@ -27,8 +27,13 @@ namespace TTTGame
             game.SetRoundsToWin(5);
             Console.WriteLine(game.RoundsToWin);
 
-            int len1 = Constants.WinningLines.GetLength(0);
-            int len2 = Constants.WinningLines.GetLength(1);
+            string[] currentTokens = new string[] {
+                "X", "", "X", "O", "X", "O", "", "", "O"
+            };
+            var board = new Board(currentTokens);
+            var ai = new AI("X");
+            var result = ai.GetPossibleBoardStates(board);
+            Console.WriteLine(result);
         }
     }
 }

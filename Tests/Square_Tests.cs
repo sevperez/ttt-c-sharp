@@ -68,7 +68,7 @@ namespace SquareClass.UnitTests
         )
         {
             var subject = new Square(firstToken);
-            Square compare = new Square(secondToken);
+            var compare = new Square(secondToken);
 
             bool result = subject == compare;
             
