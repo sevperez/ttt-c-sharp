@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace TTTCore
 {
     public class Board : IEquatable<Board>
     {
-        public bool IsFull { get; set; }
-        public string WinningToken { get; set; }
         public List<Square> Squares { get; set; }
 
         public Board()
@@ -28,21 +27,15 @@ namespace TTTCore
             }
         }
 
-        public void UpdateFullStatus()
+        public bool IsFull()
         {
-            if (!this.Squares.Contains(new Square()))
+            if (this.Squares.Contains(new Square()))
             {
-                this.IsFull = true;
+                return false;
             }
-        }
-
-        public void UpdateWinningToken()
-        {
-            var winningToken = this.GetWinningToken();
-
-            if (winningToken != null)
+            else
             {
-                this.WinningToken = winningToken;
+                return true;
             }
         }
 
@@ -69,16 +62,7 @@ namespace TTTCore
 
         public bool IsWinningLine(string[] line)
         {
-            var compareItem = line[0];
-            for (var i = 0; i < line.Length; i += 1)
-            {
-                if (line[i] != compareItem)
-                {
-                    return false;
-                }
-            }
-
-            return true;
+            return line.All( token => token == line[0] );
         }
 
         // IEquatable Implementation

@@ -41,31 +41,29 @@ namespace BoardClass.UnitTests
         }
 
         [Test]
-        public void UpdateFullStatusShouldUpdateToTrueIfBoardIsFull()
+        public void IsFullReturnsTrueIfBoardIsFull()
         {
             string[] existingTokens = new string[] {
                 "X", "X", "O", "O", "X", "X", "X", "O", "O"
             };
             var subject = new Board(existingTokens);
-            subject.UpdateFullStatus();
 
-            var result = subject.IsFull;
+            var result = subject.IsFull();
 
-            Assert.That(result, Is.EqualTo(true));
+            Assert.IsTrue(result);
         }
-
+        
         [Test]
-        public void UpdateFullStatusShouldNotUpdateIfBoardNotFull()
+        public void IsFullReturnsFalseIfBoardIsNotFull()
         {
             string[] existingTokens = new string[] {
                 "X", "X", "", "O", "X", "", "X", "O", "O"
             };
             var subject = new Board(existingTokens);
-            subject.UpdateFullStatus();
 
-            var result = subject.IsFull;
+            var result = subject.IsFull();
 
-            Assert.That(result, Is.EqualTo(false));
+            Assert.IsFalse(result);
         }
 
         [Test]
@@ -125,34 +123,6 @@ namespace BoardClass.UnitTests
             var result = subject.IsWinningLine(inputLine);
 
             Assert.IsFalse(result);
-        }
-
-        [Test]
-        public void UpdateWinningTokenShouldUpdateIfWinner()
-        {
-            string[] existingTokens = new string[] {
-                "X", "X", "X", "O", "X", "O", "", "", "O"
-            };
-            var subject = new Board(existingTokens);
-            subject.UpdateWinningToken();
-
-            var result = subject.WinningToken;
-
-            Assert.That(result, Is.EqualTo("X"));
-        }
-
-        [Test]
-        public void UpdateWinningTokenShouldNotUpdateIfNoWinner()
-        {
-            string[] existingTokens = new string[] {
-                "X", "", "X", "O", "X", "O", "", "", "O"
-            };
-            var subject = new Board(existingTokens);
-            subject.UpdateWinningToken();
-
-            var result = subject.WinningToken;
-
-            Assert.That(result, Is.EqualTo(null));
         }
 
         [Test]
