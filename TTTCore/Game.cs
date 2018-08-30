@@ -17,7 +17,11 @@ namespace TTTCore
         {
             this.WelcomeScreen();
             this.GameSetup();
+            this.PlayRound();
+        }
 
+        public void PlayRound()
+        {
             string[] tokens = new string[] {
                 "X", "", "O", "O", "", "X", "X", "", "O"
             };
@@ -81,17 +85,14 @@ namespace TTTCore
 
         public void HandlePlayerNameSetup()
         {
-            if (this.Player1 is Human)
-            {
-                Console.Clear();
-                var name1 = ConsoleInterface.GetPlayerNameSelection(1);
-                this.Player1.SetPlayerName(name1);
-            }
+            Console.Clear();
+            var name1 = ConsoleInterface.GetPlayerNameSelection(1);
+            this.Player1.SetPlayerName(name1);
+            var invalidName = this.Player1.Name;
 
-            if (this.Player2 is Human)
+            if (this.Mode == GameModes.PlayerVsPlayer)
             {
                 Console.Clear();
-                var invalidName = this.Player1.Name;
                 var name2 = ConsoleInterface.GetPlayerNameSelection(2, invalidName);
                 this.Player2.SetPlayerName(name2);
             }
@@ -103,23 +104,19 @@ namespace TTTCore
 
         public void HandlePlayerTokenSetup()
         {
-            if (this.Player1 is Human)
-            {
-                Console.Clear();
-                var token1 = ConsoleInterface.GetPlayerTokenSelection(1);
-                this.Player1.SetPlayerToken(token1);
-            }
+            Console.Clear();
+            var token1 = ConsoleInterface.GetPlayerTokenSelection(1);
+            this.Player1.SetPlayerToken(token1);
+            var invalidToken = this.Player1.Token;
 
-            if (this.Player2 is Human)
+            if (this.Mode == GameModes.PlayerVsPlayer)
             {
                 Console.Clear();
-                var invalidToken = this.Player1.Token;
                 var token2 = ConsoleInterface.GetPlayerTokenSelection(2, invalidToken);
                 this.Player2.SetPlayerToken(token2);
             }
             else
             {
-                var invalidToken = this.Player1.Token;
                 this.Player2.SetPlayerToken(invalidToken);
             }
         }
