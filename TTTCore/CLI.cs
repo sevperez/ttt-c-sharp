@@ -15,14 +15,14 @@ namespace TTTCore
         {
             Console.Write(Constants.Messages["banner"]);
             Console.Write(Constants.Messages["requestGameMode"]);
-            string selection = Console.ReadKey(true).KeyChar.ToString();
+            string selection = Console.ReadLine();
 
             while (selection != "1" && selection != "2")
             {
                 Console.Clear();
                 Console.Write(Constants.Messages["banner"]);
                 Console.Write(Constants.Messages["gameModeInputError"]);
-                selection = Console.ReadKey(true).KeyChar.ToString();
+                selection = Console.ReadLine();
             }
             
             return selection;
@@ -33,7 +33,7 @@ namespace TTTCore
             Console.Write(Constants.Messages["banner"]);
             Console.Write(Constants.Messages["requestRoundsToWin"]);
 
-            string input = Console.ReadKey(true).KeyChar.ToString();
+            string input = Console.ReadLine();
             int selection;
             bool successfulParse = Int32.TryParse(input, out selection);
 
@@ -42,7 +42,7 @@ namespace TTTCore
                 Console.Clear();
                 Console.Write(Constants.Messages["banner"]);
                 Console.Write(Constants.Messages["roundsToWinInputError"]);
-                input = Console.ReadKey(true).KeyChar.ToString();
+                input = Console.ReadLine();
                 successfulParse = Int32.TryParse(input, out selection);
             }
             
@@ -91,14 +91,14 @@ namespace TTTCore
             Console.Write(Constants.Messages["banner"]);
             Console.Write(Constants.Messages["requestFirstPlayer"], name1, name2);
 
-            string selection = Console.ReadKey(true).KeyChar.ToString();
+            string selection = Console.ReadLine();
 
             while (selection != "1" && selection != "2")
             {
                 Console.Clear();
                 Console.Write(Constants.Messages["banner"]);
                 Console.Write(Constants.Messages["firstPlayerInputError"], name1, name2);
-                selection = Console.ReadKey(true).KeyChar.ToString();
+                selection = Console.ReadLine();
             }
             
             return Int32.Parse(selection);

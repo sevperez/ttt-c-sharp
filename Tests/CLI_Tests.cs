@@ -43,5 +43,79 @@ namespace CLI_Class.UnitTests
             
             Assert.That(result, Is.EqualTo(expected));
         }
+
+        [Test]
+        public void GetGameModeSelectionShouldReturnStringInRange1To2()
+        {
+            var subject = new CLI();
+            var expected = "1";
+
+            sr = new StringReader(expected);
+            Console.SetIn(sr);
+
+            string result = subject.GetGameModeSelection();
+
+            Assert.That(result, Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void GetRoundsToWinShouldReturnIntInRange1To9()
+        {
+            var subject = new CLI();
+            var expected = "5";
+
+            sr = new StringReader(expected);
+            Console.SetIn(sr);
+
+            int result = subject.GetRoundsToWinSelection();
+
+            Assert.That(result, Is.EqualTo(Int32.Parse(expected)));
+        }
+
+        [Test]
+        public void GetPlayerNameSelectionShouldReturnString()
+        {
+            var subject = new CLI();
+            var testPlayerNumber = 1;
+            var expected = "Fry";
+
+            sr = new StringReader(expected);
+            Console.SetIn(sr);
+
+            string result = subject.GetPlayerNameSelection(testPlayerNumber);
+
+            Assert.That(result, Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void GetPlayerTokenSelectionShouldReturnString()
+        {
+            var subject = new CLI();
+            var testPlayerNumber = 1;
+            var expected = "X";
+
+            sr = new StringReader(expected);
+            Console.SetIn(sr);
+
+            string result = subject.GetPlayerTokenSelection(testPlayerNumber);
+
+            Assert.That(result, Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void GetFirstPlayerSelectionShouldReturnIntInRange1To2()
+        {
+            var subject = new CLI();
+            var player1 = new Player();
+            var player2 = new Player();
+            var expected = "2";
+
+            sr = new StringReader(expected);
+            Console.SetIn(sr);
+
+            int result = subject.GetFirstPlayerSelection(player1, player2);
+
+            Assert.That(result, Is.EqualTo(Int32.Parse(expected)));
+        }
     }
 }
