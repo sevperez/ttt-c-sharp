@@ -63,7 +63,8 @@ namespace GameClass.UnitTests
         [TestCase(GameModes.PlayerVsPlayer)]
         public void InstantiatePlayersHandlesPlayerVsPlayer(GameModes mode)
         {
-            subject.InstantiatePlayers(mode);
+            subject.Mode = mode;
+            subject.InstantiatePlayers();
 
             bool result = subject.Player1 is Human && subject.Player2 is Human;
 
@@ -73,7 +74,8 @@ namespace GameClass.UnitTests
         [TestCase(GameModes.PlayerVsComputer)]
         public void InstantiatePlayersHandlesPlayerVsComputer(GameModes mode)
         {
-            subject.InstantiatePlayers(mode);
+            subject.Mode = mode;
+            subject.InstantiatePlayers();
 
             bool result = subject.Player1 is Human && subject.Player2 is Computer;
 

@@ -9,6 +9,7 @@ namespace CLI_Class.UnitTests
     public class CLI_Tests
     {
         public StringWriter sw { get; set; }
+        public StringReader sr { get; set; }
 
         [SetUp] public void Init()
         {
@@ -22,6 +23,13 @@ namespace CLI_Class.UnitTests
             stdout.AutoFlush = true;
             Console.SetOut(stdout);
             sw.Dispose();
+
+            if (sr != null)
+            {
+                var stdin = new StreamReader(Console.OpenStandardInput());
+                Console.SetIn(stdin);
+                sr.Dispose();
+            }
         }
 
         [Test]
@@ -31,7 +39,7 @@ namespace CLI_Class.UnitTests
 
             subject.WelcomeMessage();
             var result = sw.ToString();
-            var expected = Constants.Messages["welcome"];
+            var expected = Constants.Messages["banner"] + Constants.Messages["welcome"];
             
             Assert.That(result, Is.EqualTo(expected));
         }
