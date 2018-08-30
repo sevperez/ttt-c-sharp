@@ -39,7 +39,7 @@ namespace CLI_Class.UnitTests
 
             subject.WelcomeMessage();
             var result = sw.ToString();
-            var expected = Constants.Messages["banner"] + Constants.Messages["welcome"];
+            var expected = Constants.MainBanner + Constants.Messages["welcome"];
             
             Assert.That(result, Is.EqualTo(expected));
         }
@@ -116,6 +116,86 @@ namespace CLI_Class.UnitTests
             int result = subject.GetFirstPlayerSelection(player1, player2);
 
             Assert.That(result, Is.EqualTo(Int32.Parse(expected)));
+        }
+
+        [Test]
+        public void DrawRoundBannerShouldDrawCurrentScores()
+        {
+            var subject = new CLI();
+
+            var player1 = new Human();
+            player1.Name = "Fry";
+            player1.Token = "X";
+            player1.NumWins = 2;
+            
+            var player2 = new Human();
+            player2.Name = "Leela";
+            player2.Token = "O";
+            player2.NumWins = 5;
+            
+            var numRounds = 9;
+
+            var expected = "Fry (X): 2/9; Leela (O): 5/9\n\n";
+
+            subject.DrawRoundBanner(player1, player2, numRounds);
+            var result = sw.ToString();
+            
+            Assert.That(result, Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void DrawGameBoardShouldDrawBoardWithCurrentTokens()
+        {
+            var subject = new CLI();
+            string[] currentTokens = new string[] {
+                "X", "", "O", "O", "", "X", "X", "", "O"
+            };
+
+            var expected =
+                "             |     |     \n" +
+                "          X  |     |  O  \n" +
+                "             |     |     \n" +
+                "        -----------------\n" +
+                "             |     |     \n" +
+                "          O  |     |  X  \n" +
+                "             |     |     \n" +
+                "        -----------------\n" +
+                "             |     |     \n" +
+                "          X  |     |  O  \n" +
+                "             |     |     \n";
+
+            subject.DrawGameBoard(currentTokens);
+            var result = sw.ToString();
+            
+            Assert.That(result, Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void DrawGameBoardShouldDrawEmptyBoardIfNoTokens()
+        {
+            var subject = new CLI();
+            string[] currentTokens = new string[] {
+                "", "", "", "", "", "", "", "", ""
+            };
+
+            var expected =
+                "             |     |     \n" +
+                "             |     |     \n" +
+                "             |     |     \n" +
+                "        -----------------\n" +
+                "             |     |     \n" +
+                "             |     |     \n" +
+                "             |     |     \n" +
+                "        -----------------\n" +
+                "             |     |     \n" +
+                "             |     |     \n" +
+                "             |     |     \n";
+
+            subject.DrawGameBoard(currentTokens);
+            var result = sw.ToString();
+            
+            Assert.That(result, Is.EqualTo(expected));
+
         }
     }
 }

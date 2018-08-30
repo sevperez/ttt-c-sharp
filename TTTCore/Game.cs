@@ -17,6 +17,15 @@ namespace TTTCore
         {
             this.WelcomeScreen();
             this.GameSetup();
+
+            string[] tokens = new string[] {
+                "X", "", "O", "O", "", "X", "X", "", "O"
+            };
+
+            this.ConsoleInterface.DrawMainScreen
+            (
+                this.Player1, this.Player2, this.RoundsToWin, tokens
+            );
         }
 
         public void WelcomeScreen()

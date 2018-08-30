@@ -9,7 +9,6 @@ namespace TTTGame
         {
             var game = new Game();
             game.Play();
-            Console.WriteLine("finished");
         }
     }
 }

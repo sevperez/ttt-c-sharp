@@ -17,14 +17,31 @@ namespace TTTCore
             { 2, 4, 6 }
         };
 
+        public static string MainBanner =
+            "---------------------------------\n" +
+            "Tic-Tac-Toe\n" +
+            "---------------------------------\n";
+        
+        public static string RoundBanner =
+            "{0} ({1}): {2}/{6}; {3} ({4}): {5}/{6}\n\n";
+
+        public static string GameBoard =
+            "             |     |     \n" +
+            "          {0}  |  {1}  |  {2}  \n" +
+            "             |     |     \n" +
+            "        -----------------\n" +
+            "             |     |     \n" +
+            "          {3}  |  {4}  |  {5}  \n" +
+            "             |     |     \n" +
+            "        -----------------\n" +
+            "             |     |     \n" +
+            "          {6}  |  {7}  |  {8}  \n" +
+            "             |     |     \n";
+        
+        public static string Footer = "\n---------------------------------\n\n";
+
         public static Dictionary<string, string> Messages = new Dictionary<string, string>()
         {
-            {
-                "banner",
-                "--------------------------------\n" + 
-                "Tic-Tac-Toe\n" +
-                "--------------------------------\n"
-            },
             {
                 "welcome",
                 "Welcome to Tic-Tac-Toe!\n"
