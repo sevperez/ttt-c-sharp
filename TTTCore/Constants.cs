@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace TTTCore
 {
     public static class Constants
@@ -13,6 +15,11 @@ namespace TTTCore
             { 2, 5, 8 },
             { 0, 4, 8 },
             { 2, 4, 6 }
+        };
+
+        public static Dictionary<string, string> Messages = new Dictionary<string, string>()
+        {
+            {"welcome", "Welcome to Tic-Tac-Toe!\n"}
         };
     }
 }

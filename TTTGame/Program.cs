@@ -38,6 +38,7 @@ namespace TTTGame
             var result = ai.GetTopMoveIndex(board, true);
 
             Console.WriteLine(result);
+            Console.WriteLine(Constants.Messages["welcome"]);
         }
     }
 }
