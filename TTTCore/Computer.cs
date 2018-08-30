@@ -4,20 +4,22 @@ namespace TTTCore
 {
     public class Computer : Player
     {
-        private readonly string[] _validNames = { "GLaDOS", "Hal 9000", "Ava", "Cortana", "Alexa" };
+        private readonly string[] validNames = { 
+            "GLaDOS", "Hal 9000", "Ava", "Cortana", "Alexa"
+        };
         
         public string[] ValidNames
         { 
-            get { return _validNames; }
+            get { return validNames; }
         }
 
         public void SetPlayerName()
         {
-            Random rnd = new Random();
+            var random = new Random();
 
-            int r = rnd.Next(this.ValidNames.Length);
+            int index = random.Next(this.ValidNames.Length);
 
-            this.Name = this.ValidNames[r];
+            this.Name = this.ValidNames[index];
         }
 
         public void SetPlayerToken(string humanToken)

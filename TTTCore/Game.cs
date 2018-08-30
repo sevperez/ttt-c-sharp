@@ -4,13 +4,6 @@ namespace TTTCore
 {
     public class Game
     {
-        private int _roundsToWin;
-        private bool _gameOver;
-        private int _nextPlayerNumber;
-        private GameModes _mode;
-        private Player player1;
-        private Player player2;
-        
         public int RoundsToWin { get; set; }
         public int NextPlayerNumber { get; set; }
         public bool GameOver { get; set; }
@@ -25,7 +18,8 @@ namespace TTTCore
 
         public void SetGameMode(string gameModeNumber)
         {
-            GameModes mode = (GameModes)Enum.Parse(typeof(GameModes), gameModeNumber);
+            var mode = (GameModes)Enum.Parse(typeof(GameModes), gameModeNumber);
+            
             if (Enum.IsDefined(typeof(GameModes), mode))
             {
                 this.Mode = mode;
@@ -36,12 +30,11 @@ namespace TTTCore
             }
         }
 
-        public void SetRoundsToWin(string roundsToWinString)
+        public void SetRoundsToWin(int roundsToWin)
         {  
-            int value = System.Int32.Parse(roundsToWinString);
-            if (value >= 1 && value <= 9)
+            if (roundsToWin >= 1 && roundsToWin <= 9)
             {
-                this.RoundsToWin = value;
+                this.RoundsToWin = roundsToWin;
             }
             else
             {
@@ -63,13 +56,11 @@ namespace TTTCore
             }
         }
 
-        public void SetFirstPlayer(string playerNumberString)
+        public void SetFirstPlayer(int playerNumber)
         {
-            int value = System.Int32.Parse(playerNumberString);
-            
-            if (value == 1 || value == 2)
+            if (playerNumber == 1 || playerNumber == 2)
             {
-                this.NextPlayerNumber = value;
+                this.NextPlayerNumber = playerNumber;
             }
             else
             {

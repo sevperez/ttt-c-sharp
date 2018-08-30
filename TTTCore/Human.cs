@@ -4,9 +4,9 @@ namespace TTTCore
 {
     public class Human : Player
     {
-        public void SetPlayerName(string str)
+        public void SetPlayerName(string inputString)
         {
-            string trimmed = str.Trim();
+            var trimmed = inputString.Trim();
 
             if (trimmed.Length > 0)
             {
@@ -14,13 +14,13 @@ namespace TTTCore
             }
             else
             {
-                throw new ArgumentException("name must be greater than 0 length, trimmed");
+                throw new ArgumentException("Name must be greater than 0 length.");
             }
         }
 
-        public void SetPlayerToken(string str)
+        public void SetPlayerToken(string inputString)
         {
-            string trimmed = str.Trim();
+            var trimmed = inputString.Trim();
 
             if (trimmed.Length == 1)
             {
@@ -28,7 +28,7 @@ namespace TTTCore
             }
             else
             {
-                throw new ArgumentException("token must be greater 1 length");
+                throw new ArgumentException("Token must be greater 1 length.");
             }
         }
     }

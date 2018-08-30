@@ -6,29 +6,29 @@ namespace ComputerClass.UnitTests
     [TestFixture]
     public class Computer_Tests
     {
-        private readonly Computer _subject;
+        private Computer subject;
 
-        public Computer_Tests()
+        [SetUp] public void Init()
         {
-            _subject = new Computer();
+            subject = new Computer();
         }
 
         [Test]
         public void SetPlayerNameShouldChooseValidName()
         {
-            _subject.SetPlayerName();
+            subject.SetPlayerName();
 
-            string result = _subject.Name;
+            var result = subject.Name;
 
-            Assert.That(_subject.ValidNames, Has.Member(_subject.Name));
+            Assert.That(subject.ValidNames, Has.Member(subject.Name));
         }
 
         [TestCase("O")]
         public void SetPlayerTokenChoosesXIfPlayerIsO(string humanToken)
         {
-            _subject.SetPlayerToken(humanToken);
+            subject.SetPlayerToken(humanToken);
 
-            string result = _subject.Token;
+            var result = subject.Token;
 
             Assert.That(result, Is.EqualTo("X"));
         }
@@ -37,9 +37,9 @@ namespace ComputerClass.UnitTests
         [TestCase("q")]
         public void SetPlayerTokenChoosesOIfPlayerIsNotO(string humanToken)
         {
-            _subject.SetPlayerToken(humanToken);
+            subject.SetPlayerToken(humanToken);
 
-            string result = _subject.Token;
+            var result = subject.Token;
 
             Assert.That(result, Is.EqualTo("O"));
         }

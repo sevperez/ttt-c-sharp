@@ -7,9 +7,9 @@ namespace TTTGame
     {
         static void Main(string[] args)
         {
-            Game game = new Game();
-            Human human = new Human();
-            Computer computer = new Computer();
+            var game = new Game();
+            var human = new Human();
+            var computer = new Computer();
 
             human.SetPlayerName("Fry");
             human.SetPlayerToken("O");
@@ -24,8 +24,21 @@ namespace TTTGame
             game.SetGameMode("2");
             Console.WriteLine(game.Mode);
 
-            game.SetRoundsToWin("5");
+            game.SetRoundsToWin(5);
             Console.WriteLine(game.RoundsToWin);
+
+            string[] testTokens = new string[] {
+                "O", "", "O",
+                "", "X", "O",
+                "X", "X", ""
+            };
+            var board = new Board(testTokens);
+            var ai = new AI("X", "O");
+            
+            var result = ai.GetTopMoveIndex(board, true);
+
+            Console.WriteLine(result);
+            Console.WriteLine(Constants.Messages["welcome"]);
         }
     }
 }

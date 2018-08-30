@@ -6,19 +6,19 @@ namespace HumanClass.UnitTests
     [TestFixture]
     public class Human_Tests
     {
-        private readonly Human _subject;
+        private Human subject;
 
-        public Human_Tests()
+        [SetUp] public void Init()
         {
-            _subject = new Human();
+            subject = new Human();
         }
 
         [TestCase("Fry")]
         public void SetPlayerNameShouldHandleValidInput(string name)
         {
-            _subject.SetPlayerName(name);
+            subject.SetPlayerName(name);
 
-            string result = _subject.Name;
+            var result = subject.Name;
 
             Assert.That(result, Is.EqualTo(name));
         }
@@ -27,27 +27,31 @@ namespace HumanClass.UnitTests
         [TestCase("  Fry    ")]
         public void SetPlayerNameShouldTrimInput(string name)
         {
-            _subject.SetPlayerName(name);
+            subject.SetPlayerName(name);
 
-            string result = _subject.Name;
-            string expected = name.Trim();
+            var result = subject.Name;
+            var expected = name.Trim();
 
             Assert.That(result, Is.EqualTo(expected));
         }
 
-        [TestCase("")]              // empty string
-        [TestCase("     ")]         // empty string after trimming
+        [TestCase("")]
+        [TestCase("     ")]
         public void SetPlayerNameShouldThrowErrorIfEmptyInput(string name)
         {
-            Assert.That(() => _subject.SetPlayerName(name), Throws.ArgumentException);
+            Assert.That
+            (
+                () => subject.SetPlayerName(name),
+                Throws.ArgumentException
+            );
         }
 
         [TestCase("X")]
         public void SetPlayerTokenShouldHandleValidInput(string token)
         {
-            _subject.SetPlayerToken(token);
+            subject.SetPlayerToken(token);
 
-            string result = _subject.Token;
+            var result = subject.Token;
 
             Assert.That(result, Is.EqualTo(token));
         }
@@ -55,10 +59,10 @@ namespace HumanClass.UnitTests
         [TestCase(" X   ")]
         public void SetPlayerTokenShouldTrimInput(string token)
         {
-            _subject.SetPlayerToken(token);
+            subject.SetPlayerToken(token);
 
-            string result = _subject.Token;
-            string expected = token.Trim();
+            var result = subject.Token;
+            var expected = token.Trim();
 
             Assert.That(result, Is.EqualTo(expected));
         }
@@ -67,7 +71,11 @@ namespace HumanClass.UnitTests
         [TestCase("xo")]
         public void SetPlayerTokenShouldThrowErrorIfInvalidInput(string token)
         {
-            Assert.That(() => _subject.SetPlayerToken(token), Throws.ArgumentException);
+            Assert.That
+            (
+                () => subject.SetPlayerToken(token),
+                Throws.ArgumentException
+            );
         }
     }
 }
