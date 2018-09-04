@@ -37,6 +37,23 @@ namespace AIClass.UnitTests
         }
 
         [Test]
+        public void GetTopMoveIndexShouldReturnIndexOfABlockingMoveIfLoseImminent()
+        {
+            string[] testTokens = new string[] {
+                "", "", "O", 
+                "", "X", "O", 
+                "X", "", ""
+            };
+            var testBoard = new Board(testTokens);
+            var ownerMovesNext = true;
+            
+            var result = subject.GetTopMoveIndex(testBoard, ownerMovesNext);
+            var expected = 8;
+
+            Assert.That(result, Is.EqualTo(expected));
+        }
+
+        [Test]
         public void GetMoveOptionsShouldReturnArrayOfMoveOptionObjects()
         {
             string[] testTokens = new string[] {

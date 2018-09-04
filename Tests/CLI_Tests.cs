@@ -150,6 +150,7 @@ namespace CLI_Class.UnitTests
             string[] currentTokens = new string[] {
                 "X", "", "O", "O", "", "X", "X", "", "O"
             };
+            var board = new Board(currentTokens);
 
             var expected =
                 "             |     |     \n" +
@@ -162,7 +163,7 @@ namespace CLI_Class.UnitTests
                 "        -----------------\n" +
                 "             |     |     \n" +
                 "          X  |     |  O  \n" +
-                "             |     |     \n";
+                "             |     |     \n\n";
 
             subject.DrawGameBoard(currentTokens);
             var result = sw.ToString();
@@ -189,13 +190,68 @@ namespace CLI_Class.UnitTests
                 "        -----------------\n" +
                 "             |     |     \n" +
                 "             |     |     \n" +
-                "             |     |     \n";
+                "             |     |     \n\n";
 
             subject.DrawGameBoard(currentTokens);
             var result = sw.ToString();
             
             Assert.That(result, Is.EqualTo(expected));
+        }
 
+        [Test]
+        public void RequestMoveOptionsShouldDisplayAllOptionsOnEmptyBoard()
+        {
+            var subject = new CLI();
+            var board = new Board();
+            var emptyIndices = board.GetEmptySquareIndices();
+            var player = new Human();
+            player.Name = "Fry";
+
+            subject.RequestMoveMessage(player, emptyIndices);
+            var result = sw.ToString();
+            var expected = "Fry's Move!\n" + 
+                           "Please choose a square:\n" +
+                           "1, 2, 3, 4, 5, 6, 7, 8, 9\n";
+
+            Assert.That(result, Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void RequestMoveOptionsShouldDisplayAvailableOptionsOnBoard()
+        {
+            var subject = new CLI();
+            string[] currentTokens = new string[] {
+                "X", "", "O", "O", "", "X", "X", "", "O"
+            };
+            var board = new Board(currentTokens);
+            var emptyIndices = board.GetEmptySquareIndices();
+            var player = new Human();
+            player.Name = "Fry";
+
+            subject.RequestMoveMessage(player, emptyIndices);
+            var result = sw.ToString();
+            var expected = "Fry's Move!\n" + 
+                           "Please choose a square:\n" +
+                           "2, 5, 8\n";
+
+            Assert.That(result, Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void GetPlayerMoveSelectionShouldReturnInt()
+        {
+            var subject = new CLI();
+            var board = new Board();
+            var player = new Human();
+            int expected = 0;
+            player.Name = "Fry";
+
+            sr = new StringReader("1");
+            Console.SetIn(sr);
+
+            int result = subject.GetPlayerMoveSelection(player, board);
+
+            Assert.That(result, Is.EqualTo(expected));
         }
     }
 }

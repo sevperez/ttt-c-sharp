@@ -106,12 +106,83 @@ namespace TTTCore
             return Int32.Parse(selection);
         }
 
-        public void DrawMainScreen(Player player1, Player player2, int numRounds, string[] tokens)
+        public int GetPlayerMoveSelection(Player player, Board board)
         {
+            var emptyIndices = board.GetEmptySquareIndices();
+
+            string input = Console.ReadLine();
+            int selection;
+            bool successfulParse = Int32.TryParse(input, out selection);
+
+            while (!successfulParse || !emptyIndices.Contains(selection - 1))
+            {
+                input = Console.ReadLine();
+                successfulParse = Int32.TryParse(input, out selection);
+            }
+
+            return selection - 1;
+        }
+
+        public void RequestMoveMessage(Player player, int[] emptyIndices)
+        {
+            var updatedIndices = (int[])emptyIndices.Select( index => index + 1 ).ToArray();
+            Console.Write
+            (
+                Constants.Messages["requestPlayerMove"],
+                player.Name, string.Join(", ", updatedIndices)
+            );
+        }
+
+        public void DrawMainScreen(
+            Player player1, Player player2, int numRounds, Board board, int nextPlayerNumber
+        )
+        {
+            var tokens = board.GetTokenArray();
+            var emptyIndices = board.GetEmptySquareIndices();
+            var nextPlayer = nextPlayerNumber == 1 ? player1 : player2;
+
             Console.Clear();
             Console.Write(Constants.MainBanner);
             this.DrawRoundBanner(player1, player2, numRounds);
             this.DrawGameBoard(tokens);
+            this.RequestMoveMessage(nextPlayer, emptyIndices);
+            Console.Write(Constants.Footer);
+        }
+
+        public void DrawRoundEnd(
+            Player player1, Player player2, int numRounds, Board board, string winnerName
+        )
+        {
+            var tokens = board.GetTokenArray();
+            string message;
+            if (winnerName == null)
+            {
+                message = Constants.Messages["roundDrawMessage"];
+            }
+            else
+            {
+                message = Constants.Messages["playerRoundWinMessage"];
+            }
+
+            Console.Clear();
+            Console.Write(Constants.MainBanner);
+            this.DrawRoundBanner(player1, player2, numRounds);
+            this.DrawGameBoard(tokens);
+            Console.Write(message, winnerName);
+            Console.Write(Constants.Footer);
+        }
+
+        public void DrawGameEnd(
+            Player player1, Player player2, int numRounds, Board board, string winnerName
+        )
+        {
+            var tokens = board.GetTokenArray();
+
+            Console.Clear();
+            Console.Write(Constants.MainBanner);
+            this.DrawRoundBanner(player1, player2, numRounds);
+            this.DrawGameBoard(tokens);
+            Console.Write(Constants.Messages["playerGameWinMessage"], winnerName);
             Console.Write(Constants.Footer);
         }
 

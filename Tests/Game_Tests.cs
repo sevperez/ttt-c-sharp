@@ -103,5 +103,24 @@ namespace GameClass.UnitTests
                 Throws.Exception
             );
         }
+
+        [Test]
+        public void IncrementWinnerScoreShouldUpdateWinnerNumWins()
+        {
+            var player1 = new Human();
+            player1.Token = "X";
+            player1.NumWins = 2;
+            var player2 = new Human();
+            player2.Token = "O";
+            player2.NumWins = 0;
+            subject.Player1 = player1;
+            subject.Player2 = player2;
+
+
+            subject.IncrementWinnerScore(player1.Token);
+            var result = player1.NumWins;
+
+            Assert.That(result, Is.EqualTo(3));
+        }
     }
 }

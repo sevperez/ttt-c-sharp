@@ -36,7 +36,7 @@ namespace TTTCore
             "        -----------------\n" +
             "             |     |     \n" +
             "          {6}  |  {7}  |  {8}  \n" +
-            "             |     |     \n";
+            "             |     |     \n\n";
         
         public static string Footer = "\n---------------------------------\n\n";
 
@@ -98,6 +98,24 @@ namespace TTTCore
                 "Please choose a first player:\n" +
                 "1. {0}\n" +
                 "2. {1}\n"
+            },
+            {
+                "requestPlayerMove",
+                "{0}'s Move!\n" +
+                "Please choose a square:\n" +
+                "{1}\n"
+            },
+            {
+                "roundDrawMessage",
+                "Draw!"
+            },
+            {
+                "playerRoundWinMessage",
+                "{0} wins the round!!!"
+            },
+            {
+                "playerGameWinMessage",
+                "{0} wins the game!!!"
             }
         };
     }

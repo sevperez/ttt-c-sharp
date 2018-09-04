@@ -12,24 +12,118 @@ namespace TTTCore
         public GameModes Mode { get; set; }
         public Player Player1 { get; set; }
         public Player Player2 { get; set; }
+        public Board Board { get; set; }
         
         public void Play()
         {
             this.WelcomeScreen();
             this.GameSetup();
-            this.PlayRound();
+            this.PlayGame();
+        }
+
+        public void PlayGame()
+        {
+            while (this.RoundsToWin != this.Player1.NumWins &&
+                   this.RoundsToWin != this.Player2.NumWins)
+            {
+                this.PlayRound();
+                Thread.Sleep(1000);
+            }
+
+            string winnerName;
+            if (this.Player1.NumWins == this.RoundsToWin)
+            {
+                winnerName = this.Player1.Name;
+            }
+            else
+            {
+                winnerName = this.Player2.Name;
+            }
+
+            this.ConsoleInterface.DrawGameEnd
+            (
+                this.Player1, this.Player2,
+                this.RoundsToWin, this.Board, winnerName
+            );
         }
 
         public void PlayRound()
         {
-            string[] tokens = new string[] {
-                "X", "", "O", "O", "", "X", "X", "", "O"
-            };
+            this.Board = new Board();
 
-            this.ConsoleInterface.DrawMainScreen
+            while (this.Board.GetWinningToken() == null && !this.Board.IsFull())
+            {
+                this.HandlePlayerMove();
+            }
+
+            var winningToken = this.Board.GetWinningToken();
+            this.IncrementWinnerScore(winningToken);
+
+            string winnerName;
+            if (winningToken == Player1.Token)
+            {
+                winnerName = Player1.Name;
+            }
+            else
+            {
+                winnerName = Player2.Name;
+            }
+
+            this.ConsoleInterface.DrawRoundEnd
             (
-                this.Player1, this.Player2, this.RoundsToWin, tokens
+                this.Player1, this.Player2,
+                this.RoundsToWin, this.Board, winnerName
             );
+        }
+
+        public void IncrementWinnerScore(string winningToken)
+        {
+            if (winningToken == null) return;
+
+            if (winningToken == this.Player1.Token)
+            {
+                this.Player1.NumWins += 1;
+            }
+
+            if (winningToken == this.Player2.Token)
+            {
+                this.Player2.NumWins += 1;
+            }   
+        }
+
+        public void HandlePlayerMove()
+        {
+            if (this.NextPlayerNumber == 1)
+            {
+                this.ConsoleInterface.DrawMainScreen
+                (
+                    this.Player1, this.Player2,
+                    this.RoundsToWin, this.Board, this.NextPlayerNumber
+                );
+                int moveSelection = 
+                    this.ConsoleInterface.GetPlayerMoveSelection(this.Player1, this.Board);
+                this.Board.Squares[moveSelection].Fill(this.Player1.Token);
+                this.NextPlayerNumber = 2;
+            }
+            else if (this.NextPlayerNumber == 2 && this.Mode == GameModes.PlayerVsPlayer)
+            {
+                this.ConsoleInterface.DrawMainScreen
+                (
+                    this.Player1, this.Player2,
+                    this.RoundsToWin, this.Board, this.NextPlayerNumber
+                );
+                int moveSelection = 
+                    this.ConsoleInterface.GetPlayerMoveSelection(this.Player1, this.Board);
+                this.Board.Squares[moveSelection].Fill(this.Player2.Token);
+                this.NextPlayerNumber = 1;
+            }
+            else
+            {
+                int moveSelection =
+                    this.Player2.ai.GetTopMoveIndex(this.Board, true);
+                this.Board.Squares[moveSelection].Fill(this.Player2.Token);
+                this.NextPlayerNumber = 1;
+            }
         }
 
         public void WelcomeScreen()
@@ -47,6 +141,11 @@ namespace TTTCore
             this.HandlePlayerTokenSetup();
             this.HandleNumRoundsSetup();
             this.HandleFirstPlayerChoice();
+
+            if (this.Mode == GameModes.PlayerVsComputer)
+            {
+                this.Player2.ai = new AI(this.Player2.Token, this.Player1.Token);
+            }
         }
 
         public void HandleGameModeSetup()

@@ -93,6 +93,19 @@ namespace BoardClass.UnitTests
         }
 
         [Test]
+        public void GetWinningTokenShouldReturnNullForEmptyBoard()
+        {
+            string[] existingTokens = new string[] {
+                "", "", "", "", "", "", "", "", ""
+            };
+            var subject = new Board(existingTokens);
+
+            var result = subject.GetWinningToken();
+
+            Assert.IsNull(result);
+        }
+
+        [Test]
         public void IsWinningLineShouldReturnTrueIfWinningLine()
         {
             var inputLine = new string[] { "X", "X", "X"};
@@ -154,6 +167,19 @@ namespace BoardClass.UnitTests
             bool result = subject == compare;
 
             Assert.IsFalse(result);
+        }
+
+        [Test]
+        public void GetTokenArrayShouldReturnCurrentTokens()
+        {
+            string[] subjectTokens = new string[] {
+                "X", "", "X", "O", "X", "O", "", "", "O"
+            };
+            var subject = new Board(subjectTokens);
+
+            string[] result = subject.GetTokenArray();
+
+            Assert.That(result, Is.EquivalentTo(subjectTokens));
         }
     }
 }
