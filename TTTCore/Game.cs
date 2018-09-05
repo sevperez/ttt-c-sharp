@@ -59,12 +59,12 @@ namespace TTTCore
             var winningToken = this.Board.GetWinningToken();
             this.IncrementWinnerScore(winningToken);
 
-            string winnerName;
+            string winnerName = null;
             if (winningToken == Player1.Token)
             {
                 winnerName = Player1.Name;
             }
-            else
+            else if (winningToken == Player2.Token)
             {
                 winnerName = Player2.Name;
             }

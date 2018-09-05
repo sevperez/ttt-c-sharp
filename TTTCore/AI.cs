@@ -131,9 +131,9 @@ namespace TTTCore
             }
             
             var nextMoveToken = ownerMovesNext ? this.OwnerToken : this.OpponentToken;
-            ownerMovesNext = !ownerMovesNext;
-
             Board[] nextBoardStates = this.GetPossibleBoardStates(board, nextMoveToken);
+            
+            ownerMovesNext = !ownerMovesNext;
             int[] miniMaxScores = nextBoardStates.Select
             (
                 nextBoard => this.GetMiniMaxScore(nextBoard, ownerMovesNext)
@@ -141,11 +141,11 @@ namespace TTTCore
             
             if (ownerMovesNext)
             {
-                return miniMaxScores.Max();
+                return miniMaxScores.Min();
             }
             else
             {
-                return miniMaxScores.Min();
+                return miniMaxScores.Max();
             }
         }
     }
