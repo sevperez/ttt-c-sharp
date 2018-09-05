@@ -116,39 +116,64 @@ namespace TTTCore
             var game = new Game();
             game.Board = board;
 
+            if (game.CheckRoundOver())
+            {
+                return this.GetRoundOverMiniMaxScore(game);
+            }
+            
+            int[] miniMaxScores = this.GetMiniMaxScoreArray(board, ownerMovesNext);
+            // ownerMovesNext = !ownerMovesNext;
+
+            if (ownerMovesNext)
+            {
+                return miniMaxScores.Max();
+            }
+            else
+            {
+                return miniMaxScores.Min();
+            }
+        }
+
+        public int GetRoundOverMiniMaxScore(Game game)
+        {
             var winner = game.GetWinningToken();
             if (winner == this.OwnerToken)
             {
                 return 10;
             }
-
-            if (winner == this.OpponentToken)
+            else if (winner == this.OpponentToken)
             {
                 return -10;
             }
-
-            if (winner == null && board.IsFull())
+            else
             {
                 return 0;
             }
-            
-            var nextMoveToken = ownerMovesNext ? this.OwnerToken : this.OpponentToken;
-            Board[] nextBoardStates = this.GetPossibleBoardStates(board, nextMoveToken);
-            
-            ownerMovesNext = !ownerMovesNext;
-            int[] miniMaxScores = nextBoardStates.Select
-            (
-                nextBoard => this.GetMiniMaxScore(nextBoard, ownerMovesNext)
-            ).ToArray();
-            
+        }
+
+        public string GetNextMoveToken(bool ownerMovesNext)
+        {
             if (ownerMovesNext)
             {
-                return miniMaxScores.Min();
+                return this.OwnerToken;
             }
             else
             {
-                return miniMaxScores.Max();
+                return this.OpponentToken;
             }
+        }
+
+        public int[] GetMiniMaxScoreArray(Board board, bool ownerMovesNext)
+        {
+            var nextMoveToken = this.GetNextMoveToken(ownerMovesNext);
+            Board[] nextBoardStates = this.GetPossibleBoardStates(board, nextMoveToken);
+
+            int[] miniMaxScores = nextBoardStates.Select
+            (
+                nextBoard => this.GetMiniMaxScore(nextBoard, !ownerMovesNext)
+            ).ToArray();
+
+            return miniMaxScores;
         }
     }
 }
