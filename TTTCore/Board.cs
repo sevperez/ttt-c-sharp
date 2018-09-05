@@ -62,7 +62,27 @@ namespace TTTCore
 
         public bool IsWinningLine(string[] line)
         {
-            return line.All( token => token == line[0] );
+            return line.All( token => line[0] != "" && token == line[0] );
+        }
+
+        public string[] GetTokenArray()
+        {
+            return (string[])this.Squares.Select( square => square.CurrentToken ).ToArray();
+        }
+
+        public int[] GetEmptySquareIndices()
+        {
+            var emptyIndices = new ArrayList();
+
+            for (var i = 0; i < this.Squares.Count; i += 1)
+            {
+                if (this.Squares[i].CurrentToken == "")
+                {
+                emptyIndices.Add(i);
+                }
+            }
+
+            return (int[])emptyIndices.ToArray(typeof(int));
         }
 
         // IEquatable Implementation

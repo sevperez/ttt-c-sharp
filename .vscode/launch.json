@@ -14,7 +14,8 @@
             "args": [],
             "cwd": "${workspaceRoot}",
             "stopAtEntry": false,
-            "console": "internalConsole"
+            "console": "integratedTerminal"
+            // "console": "internalConsole"
         },
         {
             "name": ".NET Test Launch (console)",

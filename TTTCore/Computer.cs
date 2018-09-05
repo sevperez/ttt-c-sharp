@@ -7,13 +7,15 @@ namespace TTTCore
         private readonly string[] validNames = { 
             "GLaDOS", "Hal 9000", "Ava", "Cortana", "Alexa"
         };
+
+        public AI ai { get; set; }
         
         public string[] ValidNames
         { 
             get { return validNames; }
         }
 
-        public void SetPlayerName()
+        public override void SetPlayerName()
         {
             var random = new Random();
 
@@ -22,7 +24,7 @@ namespace TTTCore
             this.Name = this.ValidNames[index];
         }
 
-        public void SetPlayerToken(string humanToken)
+        public override void SetPlayerToken(string humanToken)
         {
             if (humanToken == "O")
             {

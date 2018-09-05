@@ -4,7 +4,7 @@ namespace TTTCore
 {
     public class Human : Player
     {
-        public void SetPlayerName(string inputString)
+        public override void SetPlayerName(string inputString)
         {
             var trimmed = inputString.Trim();
 
@@ -18,7 +18,7 @@ namespace TTTCore
             }
         }
 
-        public void SetPlayerToken(string inputString)
+        public override void SetPlayerToken(string inputString)
         {
             var trimmed = inputString.Trim();
 

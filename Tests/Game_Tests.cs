@@ -63,7 +63,8 @@ namespace GameClass.UnitTests
         [TestCase(GameModes.PlayerVsPlayer)]
         public void InstantiatePlayersHandlesPlayerVsPlayer(GameModes mode)
         {
-            subject.InstantiatePlayers(mode);
+            subject.Mode = mode;
+            subject.InstantiatePlayers();
 
             bool result = subject.Player1 is Human && subject.Player2 is Human;
 
@@ -73,7 +74,8 @@ namespace GameClass.UnitTests
         [TestCase(GameModes.PlayerVsComputer)]
         public void InstantiatePlayersHandlesPlayerVsComputer(GameModes mode)
         {
-            subject.InstantiatePlayers(mode);
+            subject.Mode = mode;
+            subject.InstantiatePlayers();
 
             bool result = subject.Player1 is Human && subject.Player2 is Computer;
 
@@ -100,6 +102,25 @@ namespace GameClass.UnitTests
                 () => subject.SetFirstPlayer(playerNumber),
                 Throws.Exception
             );
+        }
+
+        [Test]
+        public void IncrementWinnerScoreShouldUpdateWinnerNumWins()
+        {
+            var player1 = new Human();
+            player1.Token = "X";
+            player1.NumWins = 2;
+            var player2 = new Human();
+            player2.Token = "O";
+            player2.NumWins = 0;
+            subject.Player1 = player1;
+            subject.Player2 = player2;
+
+
+            subject.IncrementWinnerScore(player1.Token);
+            var result = player1.NumWins;
+
+            Assert.That(result, Is.EqualTo(3));
         }
     }
 }

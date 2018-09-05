@@ -37,10 +37,29 @@ namespace AIClass.UnitTests
         }
 
         [Test]
+        public void GetTopMoveIndexShouldReturnIndexOfABlockingMoveIfLoseImminent()
+        {
+            string[] testTokens = new string[] {
+                "", "", "O", 
+                "", "X", "O", 
+                "X", "", ""
+            };
+            var testBoard = new Board(testTokens);
+            var ownerMovesNext = true;
+            
+            var result = subject.GetTopMoveIndex(testBoard, ownerMovesNext);
+            var expected = 8;
+
+            Assert.That(result, Is.EqualTo(expected));
+        }
+
+        [Test]
         public void GetMoveOptionsShouldReturnArrayOfMoveOptionObjects()
         {
             string[] testTokens = new string[] {
-                "O", "X", "X", "O", "", "X", "", "X", "O"
+                "O", "X", "X", 
+                "O", "", "X", 
+                "", "X", "O"
             };
             var testBoard = new Board(testTokens);
             var ownerMovesNext = true;
@@ -151,7 +170,9 @@ namespace AIClass.UnitTests
         public void GetMiniMaxScoreShouldReturnNegativeIfOpponentWin()
         {
             string[] testTokens = new string[] {
-                "O", "X", "X", "X", "", "X", "", "O", "O"
+                "X", "", "O",
+                "", "X", "O",
+                "X", "", ""
             };
             var testBoard = new Board(testTokens);
             var ownerMovesNext = false;
