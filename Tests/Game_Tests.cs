@@ -303,5 +303,44 @@ namespace GameClass.UnitTests
 
             Assert.That(result, Is.EqualTo(expected));
         }
+
+        [Test]
+        public void GetWinningTokenShouldReturnTokenIfWinner()
+        {
+            string[] existingTokens = new string[] {
+                "X", "X", "X", "O", "X", "O", "", "", "O"
+            };
+            subject.Board = new Board(existingTokens);
+
+            var result = subject.GetWinningToken();
+
+            Assert.That(result, Is.EqualTo("X"));
+        }
+
+        [Test]
+        public void GetWinningTokenShouldReturnNullIfNoWinner()
+        {
+            string[] existingTokens = new string[] {
+                "X", "", "X", "O", "X", "O", "", "", "O"
+            };
+            subject.Board = new Board(existingTokens);
+
+            var result = subject.GetWinningToken();
+
+            Assert.IsNull(result);
+        }
+
+        [Test]
+        public void GetWinningTokenShouldReturnNullForEmptyBoard()
+        {
+            string[] existingTokens = new string[] {
+                "", "", "", "", "", "", "", "", ""
+            };
+            subject.Board = new Board(existingTokens);
+
+            var result = subject.GetWinningToken();
+
+            Assert.IsNull(result);
+        }
     }
 }

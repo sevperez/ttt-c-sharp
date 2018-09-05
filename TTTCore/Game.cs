@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Linq;
 using System.Threading;
 
 namespace TTTCore
@@ -32,6 +34,14 @@ namespace TTTCore
             this.HandleGameEnd();
         }
 
+        public bool CheckGameOver()
+        {
+            var gameOver = this.RoundsToWin == this.Player1.NumWins ||
+                this.RoundsToWin == this.Player2.NumWins;
+            
+            return gameOver;
+        }
+
         public void HandleGameEnd()
         {
             string winnerName = this.GetGameWinnerName();
@@ -55,14 +65,6 @@ namespace TTTCore
             }
         }
 
-        public bool CheckGameOver()
-        {
-            var gameOver = this.RoundsToWin == this.Player1.NumWins ||
-                this.RoundsToWin == this.Player2.NumWins;
-            
-            return gameOver;
-        }
-
         public void PlayRound()
         {
             this.Board = new Board();
@@ -75,9 +77,21 @@ namespace TTTCore
             this.HandleRoundEnd();
         }
 
+        public bool CheckRoundOver()
+        {
+            if (this.GetWinningToken() != null || this.Board.IsFull())
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public void HandleRoundEnd()
         {
-            var winningToken = this.Board.GetWinningToken();
+            var winningToken = this.GetWinningToken();
             var winnerName = this.GetRoundWinnerName(winningToken);
 
             this.IncrementWinnerScore(winningToken);
@@ -87,6 +101,32 @@ namespace TTTCore
                 this.Player1, this.Player2,
                 this.RoundsToWin, this.Board, winnerName
             );
+        }
+
+        public string GetWinningToken()
+        {
+            for (var i = 0; i < Constants.WinningLines.GetLength(0); i += 1)
+            {
+                ArrayList lineTokens = new ArrayList();
+                for (var j = 0; j < Constants.WinningLines.GetLength(1); j += 1)
+                {
+                    var index = Constants.WinningLines[i, j];
+                    lineTokens.Add(this.Board.Squares[index].CurrentToken);
+                }
+
+                string[] tokenStrings = (string[])lineTokens.ToArray(typeof(string));
+                if (this.IsWinningLine(tokenStrings))
+                {
+                    return tokenStrings[0];
+                }
+            }
+
+            return null;
+        }
+
+        public bool IsWinningLine(string[] line)
+        {
+            return line.All(token => line[0] != "" && token == line[0]);
         }
 
         public string GetRoundWinnerName(string winningToken)
@@ -102,22 +142,6 @@ namespace TTTCore
             else
             {
                 return null;
-            }
-        }
-
-        public bool CheckRoundOver()
-        {
-            if (this.Board.GetWinningToken() != null)
-            {
-                return true;
-            }
-            else if (this.Board.IsFull())
-            {
-                return true;
-            }
-            else
-            {
-                return false;
             }
         }
 
@@ -149,20 +173,29 @@ namespace TTTCore
             int moveSelection;
             if (currentPlayer == this.Player2 && this.Mode == GameModes.PlayerVsComputer)
             {
-                moveSelection = this.Player2.ai.GetTopMoveIndex(this.Board, true);
+                moveSelection = this.HandleComputerMoveAction(currentPlayer);
             }
             else
             {
-                this.ConsoleInterface.DrawMainScreen
-                (
-                    this.Player1, this.Player2, this.RoundsToWin, 
-                    this.Board, this.NextPlayerNumber
-                );
-                moveSelection =
-                    this.ConsoleInterface.GetPlayerMoveSelection(currentPlayer, this.Board);
+                moveSelection = this.HandleHumanMoveAction(currentPlayer);
             }
             
             this.Board.Squares[moveSelection].Fill(currentPlayer.Token);
+        }
+
+        public int HandleHumanMoveAction(Player currentPlayer)
+        {
+            this.ConsoleInterface.DrawMainScreen
+            (
+                this.Player1, this.Player2, this.RoundsToWin, 
+                this.Board, this.NextPlayerNumber
+            );
+            return this.ConsoleInterface.GetPlayerMoveSelection(currentPlayer, this.Board);
+        }
+
+        public int HandleComputerMoveAction(Player currentPlayer)
+        {
+            return currentPlayer.ai.GetTopMoveIndex(this.Board, true);
         }
 
         public void AlternateNextPlayer()

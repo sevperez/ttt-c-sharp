@@ -113,8 +113,10 @@ namespace TTTCore
 
         public int GetMiniMaxScore(Board board, bool ownerMovesNext)
         {
-            var winner = board.GetWinningToken();
+            var game = new Game();
+            game.Board = board;
 
+            var winner = game.GetWinningToken();
             if (winner == this.OwnerToken)
             {
                 return 10;
