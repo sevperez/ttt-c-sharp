@@ -39,32 +39,6 @@ namespace TTTCore
             }
         }
 
-        public string GetWinningToken()
-        {
-            for (var i = 0; i < Constants.WinningLines.GetLength(0); i += 1)
-            {
-                ArrayList lineTokens = new ArrayList();
-                for (var j = 0; j < Constants.WinningLines.GetLength(1); j += 1)
-                {
-                    var index = Constants.WinningLines[i, j];
-                    lineTokens.Add(this.Squares[index].CurrentToken);
-                }
-                
-                string[] tokenStrings = (string[]) lineTokens.ToArray(typeof(string));
-                if (this.IsWinningLine(tokenStrings))
-                {
-                    return tokenStrings[0];
-                }
-            }
-
-            return null;
-        }
-
-        public bool IsWinningLine(string[] line)
-        {
-            return line.All( token => line[0] != "" && token == line[0] );
-        }
-
         public string[] GetTokenArray()
         {
             return (string[])this.Squares.Select( square => square.CurrentToken ).ToArray();
@@ -78,7 +52,7 @@ namespace TTTCore
             {
                 if (this.Squares[i].CurrentToken == "")
                 {
-                emptyIndices.Add(i);
+                    emptyIndices.Add(i);
                 }
             }
 

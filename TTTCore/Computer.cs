@@ -24,9 +24,9 @@ namespace TTTCore
             this.Name = this.ValidNames[index];
         }
 
-        public override void SetPlayerToken(string humanToken)
+        public override void SetPlayerToken(string invalidToken)
         {
-            if (humanToken == "O")
+            if (invalidToken == "O")
             {
                 this.Token = "X";
             }

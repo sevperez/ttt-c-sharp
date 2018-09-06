@@ -18,13 +18,23 @@ namespace TTTCore
         
         public int GetTopMoveIndex(Board board, bool ownerMovesNext)
         {
-            var moveOptions = this.GetMoveOptions(board, ownerMovesNext);
-            ArrayList topMoves = new ArrayList();
-            var bestMiniMaxScore = moveOptions[0].MiniMaxScore;
+            var allMoveOptions = this.GetMoveOptions(board, ownerMovesNext);
+            var topMoves = this.GetTopMoveOptions(allMoveOptions);
 
-            for (var i = 0; i < moveOptions.Length; i += 1)
+            var random = new Random();
+            var randomIndex = random.Next(topMoves.Length);
+
+            return topMoves[randomIndex].SquareIndex;
+        }
+
+        public MoveOption[] GetTopMoveOptions(MoveOption[] allMoveOptions)
+        {
+            ArrayList topMoves = new ArrayList();
+            var bestMiniMaxScore = allMoveOptions[0].MiniMaxScore;
+
+            for (var i = 0; i < allMoveOptions.Length; i += 1)
             {
-                var currentMoveOption = moveOptions[i];
+                var currentMoveOption = allMoveOptions[i];
                 if (currentMoveOption.MiniMaxScore > bestMiniMaxScore)
                 {
                     topMoves = new ArrayList();
@@ -37,16 +47,12 @@ namespace TTTCore
                 }
             }
 
-            var random = new Random();
-            var randomIndex = random.Next(topMoves.Count);
-            MoveOption[] goodMoves = (MoveOption[])topMoves.ToArray(typeof(MoveOption));
-            
-            return goodMoves[randomIndex].SquareIndex;
+            return (MoveOption[])topMoves.ToArray(typeof(MoveOption));
         }
 
         public MoveOption[] GetMoveOptions(Board board, bool ownerMovesNext)
         {
-            int[] emptyIndices = this.GetEmptySquareIndices(board);
+            int[] emptyIndices = board.GetEmptySquareIndices();
             var nextMoveToken = ownerMovesNext ? this.OwnerToken : this.OpponentToken;
             
             var moveOptions = new ArrayList();
@@ -62,21 +68,6 @@ namespace TTTCore
             }
             
             return (MoveOption[])moveOptions.ToArray(typeof(MoveOption));
-        }
-
-        public int[] GetEmptySquareIndices(Board board)
-        {
-            var emptyIndices = new ArrayList();
-
-            for (var i = 0; i < board.Squares.Count; i += 1)
-            {
-                if (board.Squares[i].CurrentToken == "")
-                {
-                    emptyIndices.Add(i);
-                }
-            }
-
-            return (int[])emptyIndices.ToArray(typeof(int));
         }
 
         public Board SimulateMove(Board inputBoard, int moveIndex, string moveToken)
@@ -97,12 +88,12 @@ namespace TTTCore
 
         public Board[] GetPossibleBoardStates(Board currentBoard, string nextMoveToken)
         {
-            int[] emptySquareIndices = this.GetEmptySquareIndices(currentBoard);
+            int[] emptyIndices = currentBoard.GetEmptySquareIndices();
             ArrayList possibleBoardStates = new ArrayList();
             
-            for (var i = 0; i < emptySquareIndices.Length; i += 1)
+            for (var i = 0; i < emptyIndices.Length; i += 1)
             {
-                var emptyIndex = emptySquareIndices[i];
+                var emptyIndex = emptyIndices[i];
                 Board boardState = this.SimulateMove(currentBoard, emptyIndex, nextMoveToken);
                 possibleBoardStates.Add(boardState);
             }
@@ -113,40 +104,65 @@ namespace TTTCore
 
         public int GetMiniMaxScore(Board board, bool ownerMovesNext)
         {
-            var winner = board.GetWinningToken();
+            var game = new Game();
+            game.Board = board;
 
+            if (game.CheckRoundOver())
+            {
+                return this.GetRoundOverMiniMaxScore(game);
+            }
+            
+            int[] miniMaxScores = this.GetMiniMaxScoreArray(board, ownerMovesNext);
+            if (ownerMovesNext)
+            {
+                return miniMaxScores.Max();
+            }
+            else
+            {
+                return miniMaxScores.Min();
+            }
+        }
+
+        public int GetRoundOverMiniMaxScore(Game game)
+        {
+            var winner = game.GetWinningToken();
             if (winner == this.OwnerToken)
             {
                 return 10;
             }
-
-            if (winner == this.OpponentToken)
+            else if (winner == this.OpponentToken)
             {
                 return -10;
             }
-
-            if (winner == null && board.IsFull())
+            else
             {
                 return 0;
             }
-            
-            var nextMoveToken = ownerMovesNext ? this.OwnerToken : this.OpponentToken;
-            Board[] nextBoardStates = this.GetPossibleBoardStates(board, nextMoveToken);
-            
-            ownerMovesNext = !ownerMovesNext;
-            int[] miniMaxScores = nextBoardStates.Select
-            (
-                nextBoard => this.GetMiniMaxScore(nextBoard, ownerMovesNext)
-            ).ToArray();
-            
+        }
+
+        public string GetNextMoveToken(bool ownerMovesNext)
+        {
             if (ownerMovesNext)
             {
-                return miniMaxScores.Min();
+                return this.OwnerToken;
             }
             else
             {
-                return miniMaxScores.Max();
+                return this.OpponentToken;
             }
+        }
+
+        public int[] GetMiniMaxScoreArray(Board board, bool ownerMovesNext)
+        {
+            var nextMoveToken = this.GetNextMoveToken(ownerMovesNext);
+            Board[] nextBoardStates = this.GetPossibleBoardStates(board, nextMoveToken);
+
+            int[] miniMaxScores = nextBoardStates.Select
+            (
+                nextBoard => this.GetMiniMaxScore(nextBoard, !ownerMovesNext)
+            ).ToArray();
+
+            return miniMaxScores;
         }
     }
 }
