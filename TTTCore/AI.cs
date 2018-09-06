@@ -122,8 +122,6 @@ namespace TTTCore
             }
             
             int[] miniMaxScores = this.GetMiniMaxScoreArray(board, ownerMovesNext);
-            // ownerMovesNext = !ownerMovesNext;
-
             if (ownerMovesNext)
             {
                 return miniMaxScores.Max();

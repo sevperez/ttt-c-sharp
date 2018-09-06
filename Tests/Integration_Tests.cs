@@ -1,21 +1,21 @@
 using System;
 using System.IO;
+using System.Collections.Generic;
 using NUnit.Framework;
 using TTTCore;
 
-namespace GameClass.IntegrationTests
+namespace TTTGame.IntegrationTests
 {
     [TestFixture]
     public class Integration_Tests
     {
-        public StringWriter sw { get; set; }
-        public StringReader sr { get; set; }
+        public FakeConsole TestConsole { get; set; }
 
         [SetUp]
         public void Init()
         {
-            sw = new StringWriter();
-            Console.SetOut(sw);
+            this.TestConsole = new FakeConsole();
+            Console.SetOut(TestConsole);
         }
 
         [TearDown]
@@ -24,43 +24,35 @@ namespace GameClass.IntegrationTests
             var stdout = new StreamWriter(Console.OpenStandardOutput());
             stdout.AutoFlush = true;
             Console.SetOut(stdout);
-            sw.Dispose();
+            this.TestConsole.SW.Dispose();
 
-            if (sr != null)
+            if (this.TestConsole.SR != null)
             {
                 var stdin = new StreamReader(Console.OpenStandardInput());
                 Console.SetIn(stdin);
-                sr.Dispose();
+                this.TestConsole.SR.Dispose();
             }
         }
 
         [Test]
-        [Ignore("temporarily ignoring integration tests")]
         public void PlayIntegrationTest()
         {
             var subject = new Game();
-            var gameModeSelection = "1\n";        // PlayerVsPlayer
-            var player1NameSelection = "player1\n";
-            var player2NameSelection = "player2\n";
-            var player1TokenSelection = "X\n";
-            var player2TokenSelection = "O\n";
-            var roundSelection = "2\n";
-            var firstPlayerSelection = "1\n";     // player1
-            string[] round1moves = { "1", "2", "3", "4", "5", "6", "7" }; //player1 wins
-            string[] round2moves = { "9", "8", "7", "6", "5", "4", "3" }; //player2 wins
-            string[] round3moves = { "3", "5", "1", "2", "4", "6", "7" }; //player2 wins
-            var operations = gameModeSelection + player1NameSelection + player2NameSelection
-                + player1TokenSelection + player2TokenSelection + roundSelection
-                + firstPlayerSelection + string.Join("\n", round1moves) + "\n"
-                + string.Join("\n", round2moves) + "\n" + string.Join("\n", round3moves);
+            var operations = "";
+            foreach(KeyValuePair<string, string> entry in TestValues.inputs)
+            {
+                operations += entry.Value;
+            }
+            this.TestConsole.SR = new StringReader(operations);
+            Console.SetIn(TestConsole.SR);
 
-            sr = new StringReader(operations);
-            Console.SetIn(sr);
-            
             subject.Play();
-            var result = sw.ToString();
+            var result = (string[])TestConsole.ConsoleOutputList.ToArray();
 
-            Assert.That(result, Is.EqualTo(""));
+            foreach (string output in TestValues.expectedOutputs)
+            {
+                Assert.That(result, Has.Member(output));
+            }
         }
     }
 }
