@@ -35,7 +35,6 @@ namespace TTTGame.IntegrationTests
         }
 
         [Test]
-        [Ignore("ignore integration test")]
         public void PlayIntegrationTest()
         {
             var subject = new Game();

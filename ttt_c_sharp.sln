@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TTTCore", "TTTCore\TTTCore.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TTTGame", "TTTGame\TTTGame.csproj", "{AA159615-D309-416C-A40D-2608FD1A628D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTests", "IntegrationTests\IntegrationTests.csproj", "{C5D92464-3B8D-4B8A-95E1-2B760134F0FD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -58,5 +60,17 @@ Global
 		{AA159615-D309-416C-A40D-2608FD1A628D}.Release|x64.Build.0 = Release|Any CPU
 		{AA159615-D309-416C-A40D-2608FD1A628D}.Release|x86.ActiveCfg = Release|Any CPU
 		{AA159615-D309-416C-A40D-2608FD1A628D}.Release|x86.Build.0 = Release|Any CPU
+		{C5D92464-3B8D-4B8A-95E1-2B760134F0FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5D92464-3B8D-4B8A-95E1-2B760134F0FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5D92464-3B8D-4B8A-95E1-2B760134F0FD}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C5D92464-3B8D-4B8A-95E1-2B760134F0FD}.Debug|x64.Build.0 = Debug|Any CPU
+		{C5D92464-3B8D-4B8A-95E1-2B760134F0FD}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C5D92464-3B8D-4B8A-95E1-2B760134F0FD}.Debug|x86.Build.0 = Debug|Any CPU
+		{C5D92464-3B8D-4B8A-95E1-2B760134F0FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5D92464-3B8D-4B8A-95E1-2B760134F0FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5D92464-3B8D-4B8A-95E1-2B760134F0FD}.Release|x64.ActiveCfg = Release|Any CPU
+		{C5D92464-3B8D-4B8A-95E1-2B760134F0FD}.Release|x64.Build.0 = Release|Any CPU
+		{C5D92464-3B8D-4B8A-95E1-2B760134F0FD}.Release|x86.ActiveCfg = Release|Any CPU
+		{C5D92464-3B8D-4B8A-95E1-2B760134F0FD}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
