@@ -52,7 +52,7 @@ namespace TTTCore
             {
                 if (this.Squares[i].CurrentToken == "")
                 {
-                emptyIndices.Add(i);
+                    emptyIndices.Add(i);
                 }
             }
 

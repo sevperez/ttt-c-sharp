@@ -73,20 +73,6 @@ namespace AIClass.UnitTests
         }
 
         [Test]
-        public void GetEmptySquareIndicesShouldReturnEmptyIndices()
-        {
-            string[] existingTokens = new string[] {
-                "X", "", "X", "O", "X", "O", "", "", "O"
-            };
-            var testBoard = new Board(existingTokens);
-
-            var result = subject.GetEmptySquareIndices(testBoard);
-            var expected = new int[] { 1, 6, 7 };
-
-            Assert.That(result, Is.EquivalentTo(expected));
-        }
-
-        [Test]
         public void SimulateMoveShouldReturnNewBoardWithSquareFilledAtIndex()
         {
             string[] existingTokens = new string[] {

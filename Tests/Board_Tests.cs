@@ -109,5 +109,19 @@ namespace BoardClass.UnitTests
 
             Assert.That(result, Is.EquivalentTo(subjectTokens));
         }
-    }
+
+        [Test]
+        public void GetEmptySquareIndicesShouldReturnEmptyIndices()
+        {
+            string[] existingTokens = new string[] {
+                "X", "", "X", "O", "X", "O", "", "", "O"
+            };
+            var subject = new Board(existingTokens);
+
+            var result = subject.GetEmptySquareIndices();
+            var expected = new int[] { 1, 6, 7 };
+
+            Assert.That(result, Is.EquivalentTo(expected));
+        }
+  }
 }
