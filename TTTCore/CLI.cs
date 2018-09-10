@@ -8,12 +8,18 @@ namespace TTTCore
 {
     public class CLI
     {
-        public TextWriter TextOut { get; set; }
         public IConsole GameConsole { get; set; }
 
         public CLI(IConsole console = null)
         {
-            this.GameConsole = console;
+            if (console == null)
+            {
+                this.GameConsole = new GameConsole();
+            }
+            else
+            {
+                this.GameConsole = console;
+            }
         }
 
         public void WelcomeMessage()
@@ -26,14 +32,14 @@ namespace TTTCore
         {
             this.GameConsole.Write(Constants.MainBanner);
             this.GameConsole.Write(Constants.Messages["requestGameMode"]);
-            string selection = this.GameConsole.ReadLine();
+            string selection = this.GameConsole.ReadLine().Trim();
 
             while (selection != "1" && selection != "2")
             {
                 Console.Clear();
                 this.GameConsole.Write(Constants.MainBanner);
                 this.GameConsole.Write(Constants.Messages["gameModeInputError"]);
-                selection = this.GameConsole.ReadLine();
+                selection = this.GameConsole.ReadLine().Trim();
             }
             
             return selection;
@@ -44,7 +50,7 @@ namespace TTTCore
             this.GameConsole.Write(Constants.MainBanner);
             this.GameConsole.Write(Constants.Messages["requestRoundsToWin"]);
 
-            string input = this.GameConsole.ReadLine();
+            string input = this.GameConsole.ReadLine().Trim();
             int selection;
             bool successfulParse = Int32.TryParse(input, out selection);
 
@@ -53,7 +59,7 @@ namespace TTTCore
                 Console.Clear();
                 this.GameConsole.Write(Constants.MainBanner);
                 this.GameConsole.Write(Constants.Messages["roundsToWinInputError"]);
-                input = this.GameConsole.ReadLine();
+                input = this.GameConsole.ReadLine().Trim();
                 successfulParse = Int32.TryParse(input, out selection);
             }
             
@@ -64,14 +70,14 @@ namespace TTTCore
         {
             this.GameConsole.Write(Constants.MainBanner);
             this.GameConsole.Write(Constants.Messages["requestPlayerName"], playerNumber);
-            string selection = this.GameConsole.ReadLine();
+            string selection = this.GameConsole.ReadLine().Trim();
 
             while (selection == null || selection == "" || selection == invalidName)
             {
                 Console.Clear();
                 this.GameConsole.Write(Constants.MainBanner);
                 this.GameConsole.Write(Constants.Messages["playerNameInputError"], playerNumber);
-                selection = this.GameConsole.ReadLine();
+                selection = this.GameConsole.ReadLine().Trim();
             }
             
             return selection;
@@ -81,14 +87,14 @@ namespace TTTCore
         {
             this.GameConsole.Write(Constants.MainBanner);
             this.GameConsole.Write(Constants.Messages["requestPlayerToken"], playerNumber);
-            string selection = this.GameConsole.ReadLine();
+            string selection = this.GameConsole.ReadLine().Trim();
 
             while (selection == null || selection.Length != 1 || selection == invalidToken)
             {
                 Console.Clear();
                 this.GameConsole.Write(Constants.MainBanner);
                 this.GameConsole.Write(Constants.Messages["playerTokenInputError"], playerNumber);
-                selection = this.GameConsole.ReadLine();
+                selection = this.GameConsole.ReadLine().Trim();
             }
             
             return selection;
@@ -102,14 +108,14 @@ namespace TTTCore
             this.GameConsole.Write(Constants.MainBanner);
             this.GameConsole.Write(Constants.Messages["requestFirstPlayer"], name1, name2);
 
-            string selection = this.GameConsole.ReadLine();
+            string selection = this.GameConsole.ReadLine().Trim();
 
             while (selection != "1" && selection != "2")
             {
                 Console.Clear();
                 this.GameConsole.Write(Constants.MainBanner);
                 this.GameConsole.Write(Constants.Messages["firstPlayerInputError"], name1, name2);
-                selection = this.GameConsole.ReadLine();
+                selection = this.GameConsole.ReadLine().Trim();
             }
             
             return Int32.Parse(selection);
@@ -119,13 +125,13 @@ namespace TTTCore
         {
             var emptyIndices = board.GetEmptySquareIndices();
 
-            string input = this.GameConsole.ReadLine();
+            string input = this.GameConsole.ReadLine().Trim();
             int selection;
             bool successfulParse = Int32.TryParse(input, out selection);
 
             while (!successfulParse || !emptyIndices.Contains(selection - 1))
             {
-                input = this.GameConsole.ReadLine();
+                input = this.GameConsole.ReadLine().Trim();
                 successfulParse = Int32.TryParse(input, out selection);
             }
 

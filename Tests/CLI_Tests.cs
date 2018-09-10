@@ -24,13 +24,13 @@ namespace CLI_Class.UnitTests
         [Test]
         public void GetGameModeSelectionShouldReturnStringInRange1To2()
         {
-            var readInputs = new string[] { "1" };
+            var readInputs = new string[] { "1\n" };
             var testConsole = new FakeConsole(readInputs);
             var subject = new CLI(testConsole);
 
             string result = subject.GetGameModeSelection();
             int expectedIndex = testConsole.ConsoleOutputList.Count - 1;
-            string expected = readInputs[0];
+            string expected = readInputs[0].Trim();
 
             Assert.That(result, Is.EqualTo(expected));
         }
@@ -38,13 +38,13 @@ namespace CLI_Class.UnitTests
         [Test]
         public void GetRoundsToWinShouldReturnIntInRange1To9()
         {
-            var readInputs = new string[] { "5" };
+            var readInputs = new string[] { "5\n" };
             var testConsole = new FakeConsole(readInputs);
             var subject = new CLI(testConsole);
 
             int result = subject.GetRoundsToWinSelection();
             int expectedIndex = testConsole.ConsoleOutputList.Count - 1;
-            string expected = readInputs[0];
+            string expected = readInputs[0].Trim();
 
             Assert.That(result, Is.EqualTo(Int32.Parse(expected)));
         }
@@ -52,13 +52,14 @@ namespace CLI_Class.UnitTests
         [Test]
         public void GetPlayerNameSelectionShouldReturnString()
         {
-            var expected = "Fry";
+            var inputString = "Fry\n";
             var testPlayerNumber = 1;
-            var readInputs = new string[] { expected };
+            var readInputs = new string[] { inputString };
             var testConsole = new FakeConsole(readInputs);
             var subject = new CLI(testConsole);
 
             string result = subject.GetPlayerNameSelection(testPlayerNumber);
+            string expected = inputString.Trim();
 
             Assert.That(result, Is.EqualTo(expected));
         }
@@ -66,13 +67,14 @@ namespace CLI_Class.UnitTests
         [Test]
         public void GetPlayerTokenSelectionShouldReturnString()
         {
-            var expected = "X";
+            var inputString = "X\n";
             var testPlayerNumber = 1;
-            var readInputs = new string[] { expected };
+            var readInputs = new string[] { inputString };
             var testConsole = new FakeConsole(readInputs);
             var subject = new CLI(testConsole);
 
             string result = subject.GetPlayerTokenSelection(testPlayerNumber);
+            var expected = inputString.Trim();
 
             Assert.That(result, Is.EqualTo(expected));
         }
@@ -80,16 +82,17 @@ namespace CLI_Class.UnitTests
         [Test]
         public void GetFirstPlayerSelectionShouldReturnIntInRange1To2()
         {
-            var expected = "2";
-            var readInputs = new string[] { expected };
+            var inputString = "2\n";
+            var readInputs = new string[] { inputString };
             var testConsole = new FakeConsole(readInputs);
             var subject = new CLI(testConsole);
             var player1 = new Player();
             var player2 = new Player();
 
             int result = subject.GetFirstPlayerSelection(player1, player2);
+            var expected = Int32.Parse(inputString.Trim());
 
-            Assert.That(result, Is.EqualTo(Int32.Parse(expected)));
+            Assert.That(result, Is.EqualTo(expected));
         }
 
         [Test]
@@ -219,7 +222,8 @@ namespace CLI_Class.UnitTests
         [Test]
         public void GetPlayerMoveSelectionShouldReturnInt()
         {
-            var readInputs = new string[] { "1" };
+            var inputString = "1\n";
+            var readInputs = new string[] { inputString };
             var testConsole = new FakeConsole(readInputs);
             var subject = new CLI(testConsole);
             var board = new Board();

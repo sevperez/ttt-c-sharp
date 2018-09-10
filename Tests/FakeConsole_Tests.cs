@@ -8,8 +8,6 @@ namespace TTTGame.IntegrationTests
     [TestFixture]
     public class Fake_Console_Tests
     {
-        private FakeConsole subject;
-
         [Test]
         public void ReadLineShouldStoreNextLineInReadBuffer()
         {
@@ -17,7 +15,7 @@ namespace TTTGame.IntegrationTests
             var subject = new FakeConsole(testReadInputs);
             
             subject.ReadLine();
-            var result = subject.CurrentReadBuffer;
+            var result = subject.CurrentReadItem;
 
             Assert.That(result, Is.EqualTo(testReadInputs[0]));
         }

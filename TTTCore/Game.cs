@@ -7,7 +7,7 @@ namespace TTTCore
 {
     public class Game
     {
-        private CLI ConsoleInterface = new CLI();
+        public CLI ConsoleInterface;
         public int RoundsToWin { get; set; }
         public int NextPlayerNumber { get; set; }
         public bool GameOver { get; set; }
@@ -16,6 +16,18 @@ namespace TTTCore
         public Player Player2 { get; set; }
         public Board Board { get; set; }
         
+        public Game(CLI gameCLI = null)
+        {
+            if (gameCLI == null)
+            {
+                this.ConsoleInterface = new CLI();
+            }
+            else
+            {
+                this.ConsoleInterface = gameCLI;
+            }
+        }
+
         public void Play()
         {
             this.WelcomeScreen();

@@ -13,7 +13,7 @@ namespace TTTCore
         public List<String> ConsoleOutputList { get; set; }
         public string[] ConsoleInputList { get; set; }
         public int CurrentReadIndex { get; set; }
-        public string CurrentReadBuffer { get; set; }
+        public string CurrentReadItem { get; set; }
 
         public FakeConsole(string[] readInputs = null)
         {
@@ -26,7 +26,7 @@ namespace TTTCore
             this.TextOut = new StringWriter();
             this.ConsoleOutputList = new List<String>();
             this.ConsoleInputList = readInputs;
-            this.CurrentReadBuffer = "";
+            this.CurrentReadItem = "";
             this.CurrentReadIndex = 0;
         }
 
@@ -64,10 +64,10 @@ namespace TTTCore
 
         public string ReadLine()
         {
-            this.CurrentReadBuffer = this.ConsoleInputList[this.CurrentReadIndex];
+            this.CurrentReadItem = this.ConsoleInputList[this.CurrentReadIndex];
             this.IncrementCurrentReadIndex();
 
-            return this.CurrentReadBuffer;
+            return this.CurrentReadItem;
         }
 
         public void IncrementCurrentReadIndex()
