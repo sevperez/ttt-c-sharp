@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Threading;
 using System.Linq;
 using System.Collections.Generic;
@@ -7,24 +8,32 @@ namespace TTTCore
 {
     public class CLI
     {
+        public TextWriter TextOut { get; set; }
+        public IConsole GameConsole { get; set; }
+
+        public CLI(IConsole console = null)
+        {
+            this.GameConsole = console;
+        }
+
         public void WelcomeMessage()
         {
-            Console.Write(Constants.MainBanner);
-            Console.Write(Constants.Messages["welcome"]);
+            this.GameConsole.Write(Constants.MainBanner);
+            this.GameConsole.Write(Constants.Messages["welcome"]);
         }
 
         public string GetGameModeSelection()
         {
-            Console.Write(Constants.MainBanner);
-            Console.Write(Constants.Messages["requestGameMode"]);
-            string selection = Console.ReadLine();
+            this.GameConsole.Write(Constants.MainBanner);
+            this.GameConsole.Write(Constants.Messages["requestGameMode"]);
+            string selection = this.GameConsole.ReadLine();
 
             while (selection != "1" && selection != "2")
             {
                 Console.Clear();
-                Console.Write(Constants.MainBanner);
-                Console.Write(Constants.Messages["gameModeInputError"]);
-                selection = Console.ReadLine();
+                this.GameConsole.Write(Constants.MainBanner);
+                this.GameConsole.Write(Constants.Messages["gameModeInputError"]);
+                selection = this.GameConsole.ReadLine();
             }
             
             return selection;
@@ -32,19 +41,19 @@ namespace TTTCore
 
         public int GetRoundsToWinSelection()
         {
-            Console.Write(Constants.MainBanner);
-            Console.Write(Constants.Messages["requestRoundsToWin"]);
+            this.GameConsole.Write(Constants.MainBanner);
+            this.GameConsole.Write(Constants.Messages["requestRoundsToWin"]);
 
-            string input = Console.ReadLine();
+            string input = this.GameConsole.ReadLine();
             int selection;
             bool successfulParse = Int32.TryParse(input, out selection);
 
             while (!successfulParse || selection < 1 || selection > 9)
             {
                 Console.Clear();
-                Console.Write(Constants.MainBanner);
-                Console.Write(Constants.Messages["roundsToWinInputError"]);
-                input = Console.ReadLine();
+                this.GameConsole.Write(Constants.MainBanner);
+                this.GameConsole.Write(Constants.Messages["roundsToWinInputError"]);
+                input = this.GameConsole.ReadLine();
                 successfulParse = Int32.TryParse(input, out selection);
             }
             
@@ -53,16 +62,16 @@ namespace TTTCore
 
         public string GetPlayerNameSelection(int playerNumber, string invalidName = "")
         {
-            Console.Write(Constants.MainBanner);
-            Console.Write(Constants.Messages["requestPlayerName"], playerNumber);
-            string selection = Console.ReadLine();
+            this.GameConsole.Write(Constants.MainBanner);
+            this.GameConsole.Write(Constants.Messages["requestPlayerName"], playerNumber);
+            string selection = this.GameConsole.ReadLine();
 
             while (selection == null || selection == "" || selection == invalidName)
             {
                 Console.Clear();
-                Console.Write(Constants.MainBanner);
-                Console.Write(Constants.Messages["playerNameInputError"], playerNumber);
-                selection = Console.ReadLine();
+                this.GameConsole.Write(Constants.MainBanner);
+                this.GameConsole.Write(Constants.Messages["playerNameInputError"], playerNumber);
+                selection = this.GameConsole.ReadLine();
             }
             
             return selection;
@@ -70,16 +79,16 @@ namespace TTTCore
 
         public string GetPlayerTokenSelection(int playerNumber, string invalidToken = "")
         {
-            Console.Write(Constants.MainBanner);
-            Console.Write(Constants.Messages["requestPlayerToken"], playerNumber);
-            string selection = Console.ReadLine();
+            this.GameConsole.Write(Constants.MainBanner);
+            this.GameConsole.Write(Constants.Messages["requestPlayerToken"], playerNumber);
+            string selection = this.GameConsole.ReadLine();
 
             while (selection == null || selection.Length != 1 || selection == invalidToken)
             {
                 Console.Clear();
-                Console.Write(Constants.MainBanner);
-                Console.Write(Constants.Messages["playerTokenInputError"], playerNumber);
-                selection = Console.ReadLine();
+                this.GameConsole.Write(Constants.MainBanner);
+                this.GameConsole.Write(Constants.Messages["playerTokenInputError"], playerNumber);
+                selection = this.GameConsole.ReadLine();
             }
             
             return selection;
@@ -90,17 +99,17 @@ namespace TTTCore
             var name1 = player1.Name;
             var name2 = player2.Name;
 
-            Console.Write(Constants.MainBanner);
-            Console.Write(Constants.Messages["requestFirstPlayer"], name1, name2);
+            this.GameConsole.Write(Constants.MainBanner);
+            this.GameConsole.Write(Constants.Messages["requestFirstPlayer"], name1, name2);
 
-            string selection = Console.ReadLine();
+            string selection = this.GameConsole.ReadLine();
 
             while (selection != "1" && selection != "2")
             {
                 Console.Clear();
-                Console.Write(Constants.MainBanner);
-                Console.Write(Constants.Messages["firstPlayerInputError"], name1, name2);
-                selection = Console.ReadLine();
+                this.GameConsole.Write(Constants.MainBanner);
+                this.GameConsole.Write(Constants.Messages["firstPlayerInputError"], name1, name2);
+                selection = this.GameConsole.ReadLine();
             }
             
             return Int32.Parse(selection);
@@ -110,13 +119,13 @@ namespace TTTCore
         {
             var emptyIndices = board.GetEmptySquareIndices();
 
-            string input = Console.ReadLine();
+            string input = this.GameConsole.ReadLine();
             int selection;
             bool successfulParse = Int32.TryParse(input, out selection);
 
             while (!successfulParse || !emptyIndices.Contains(selection - 1))
             {
-                input = Console.ReadLine();
+                input = this.GameConsole.ReadLine();
                 successfulParse = Int32.TryParse(input, out selection);
             }
 
@@ -126,7 +135,7 @@ namespace TTTCore
         public void RequestMoveMessage(Player player, int[] emptyIndices)
         {
             var updatedIndices = (int[])emptyIndices.Select( index => index + 1 ).ToArray();
-            Console.Write
+            this.GameConsole.Write
             (
                 Constants.Messages["requestPlayerMove"],
                 player.Name, string.Join(", ", updatedIndices)
@@ -142,11 +151,11 @@ namespace TTTCore
             var nextPlayer = nextPlayerNumber == 1 ? player1 : player2;
 
             Console.Clear();
-            Console.Write(Constants.MainBanner);
+            this.GameConsole.Write(Constants.MainBanner);
             this.DrawRoundBanner(player1, player2, numRounds);
             this.DrawGameBoard(tokens);
             this.RequestMoveMessage(nextPlayer, emptyIndices);
-            Console.Write(Constants.Footer);
+            this.GameConsole.Write(Constants.Footer);
         }
 
         public void DrawRoundEnd(
@@ -165,11 +174,11 @@ namespace TTTCore
             }
 
             Console.Clear();
-            Console.Write(Constants.MainBanner);
+            this.GameConsole.Write(Constants.MainBanner);
             this.DrawRoundBanner(player1, player2, numRounds);
             this.DrawGameBoard(tokens);
-            Console.Write(message, winnerName);
-            Console.Write(Constants.Footer);
+            this.GameConsole.Write(message, winnerName);
+            this.GameConsole.Write(Constants.Footer);
         }
 
         public void DrawGameEnd(
@@ -179,11 +188,11 @@ namespace TTTCore
             var tokens = board.GetTokenArray();
 
             Console.Clear();
-            Console.Write(Constants.MainBanner);
+            this.GameConsole.Write(Constants.MainBanner);
             this.DrawRoundBanner(player1, player2, numRounds);
             this.DrawGameBoard(tokens);
-            Console.Write(Constants.Messages["playerGameWinMessage"], winnerName);
-            Console.Write(Constants.Footer);
+            this.GameConsole.Write(Constants.Messages["playerGameWinMessage"], winnerName);
+            this.GameConsole.Write(Constants.Footer);
         }
 
         public void DrawRoundBanner(Player player1, Player player2, int numRounds)
@@ -194,11 +203,11 @@ namespace TTTCore
             var name2 = player2.Name;
             var token2 = player2.Token;
             var numWins2 = player2.NumWins;
+            var writeArgs = new object[] { name1, token1, numWins1, 
+                                           name2, token2, numWins2,
+                                           numRounds };
 
-            Console.Write
-            (
-                Constants.RoundBanner, name1, token1, numWins1, name2, token2, numWins2, numRounds
-            );
+            this.GameConsole.Write(Constants.RoundBanner, writeArgs);
         }
 
         public void DrawGameBoard(string[] tokens)
@@ -207,7 +216,7 @@ namespace TTTCore
             (
                 token => token == "" ? " " : token
             ).ToArray();
-            Console.Write(Constants.GameBoard, adjustedTokens);
+            this.GameConsole.Write(Constants.GameBoard, adjustedTokens);
         }
     }
 }
