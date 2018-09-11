@@ -3,52 +3,28 @@ using System.IO;
 using System.Collections.Generic;
 using NUnit.Framework;
 using TTTCore;
+using IConsoleInterface.Tests;
 
 namespace TTTGame.IntegrationTests
 {
     [TestFixture]
     public class Integration_Tests
     {
-        public FakeConsole TestConsole { get; set; }
-
-        [SetUp]
-        public void Init()
-        {
-            this.TestConsole = new FakeConsole();
-            Console.SetOut(TestConsole);
-        }
-
-        [TearDown]
-        public void Cleanup()
-        {
-            var stdout = new StreamWriter(Console.OpenStandardOutput());
-            stdout.AutoFlush = true;
-            Console.SetOut(stdout);
-            this.TestConsole.SW.Dispose();
-
-            if (this.TestConsole.SR != null)
-            {
-                var stdin = new StreamReader(Console.OpenStandardInput());
-                Console.SetIn(stdin);
-                this.TestConsole.SR.Dispose();
-            }
-        }
-
         [Test]
         public void PlayIntegrationTest()
         {
-            var subject = new Game();
-            var operations = "";
+            var readInputs = new List<String>();
             foreach(KeyValuePair<string, string> entry in TestValues.inputs)
             {
-                operations += entry.Value;
-            }
-            this.TestConsole.SR = new StringReader(operations);
-            Console.SetIn(TestConsole.SR);
+                readInputs.Add(entry.Value);
+            };
+            var testConsole = new FakeConsole(readInputs);
+            var testCLI = new CLI(testConsole);
+            var subject = new Game(testCLI);
 
             subject.Play();
-            var result = (string[])TestConsole.ConsoleOutputList.ToArray();
 
+            var result = testConsole.ConsoleOutputList;
             foreach (string output in TestValues.expectedOutputs)
             {
                 Assert.That(result, Has.Member(output));

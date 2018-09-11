@@ -35,16 +35,88 @@ namespace TTTGame.IntegrationTests
                 "1\n"
             },
             {
-                "round1Moves",
-                "1\n2\n3\n4\n5\n6\n7\n"
+                "round1Move1",
+                "1\n"
             },
             {
-                "round2Moves",
-                "9\n8\n7\n6\n5\n4\n3\n"
+                "round1Move2",
+                "2\n"
             },
             {
-                "round3Moves",
-                "3\n5\n1\n2\n4\n6\n7\n"
+                "round1Move3",
+                "3\n"
+            },
+            {
+                "round1Move4",
+                "4\n"
+            },
+            {
+                "round1Move5",
+                "5\n"
+            },
+            {
+                "round1Move6",
+                "6\n"
+            },
+            {
+                "round1Move7",
+                "7\n"
+            },
+            {
+                "round2Move1",
+                "9\n"
+            },
+            {
+                "round2Move2",
+                "8\n"
+            },
+            {
+                "round2Move3",
+                "7\n"
+            },
+            {
+                "round2Move4",
+                "6\n"
+            },
+            {
+                "round2Move5",
+                "5\n"
+            },
+            {
+                "round2Move6",
+                "4\n"
+            },
+            {
+                "round2Move7",
+                "3\n"
+            },
+            {
+                "round3Move1",
+                "3\n"
+            },
+            {
+                "round3Move2",
+                "5\n"
+            },
+            {
+                "round3Move3",
+                "1\n"
+            },
+            {
+                "round3Move4",
+                "2\n"
+            },
+            {
+                "round3Move5",
+                "4\n"
+            },
+            {
+                "round3Move6",
+                "6\n"
+            },
+            {
+                "round3Move7",
+                "7\n"
             }
         };
 
@@ -95,5 +167,3 @@ namespace TTTGame.IntegrationTests
         };
     }
 }
-
-

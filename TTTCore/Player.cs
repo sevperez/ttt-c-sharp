@@ -6,7 +6,7 @@
         public string Token { get; set; }
         public int NumWins { get; set; }
 
-        public AI ai { get; set; }
+        public virtual AI ai { get; set; }
 
         public Player()
         {

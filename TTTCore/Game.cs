@@ -7,7 +7,7 @@ namespace TTTCore
 {
     public class Game
     {
-        private CLI ConsoleInterface = new CLI();
+        public IGameInterface GameInterface;
         public int RoundsToWin { get; set; }
         public int NextPlayerNumber { get; set; }
         public bool GameOver { get; set; }
@@ -16,6 +16,18 @@ namespace TTTCore
         public Player Player2 { get; set; }
         public Board Board { get; set; }
         
+        public Game(IGameInterface gameInterface = null)
+        {
+            if (gameInterface == null)
+            {
+                this.GameInterface = new CLI();
+            }
+            else
+            {
+                this.GameInterface = gameInterface;
+            }
+        }
+
         public void Play()
         {
             this.WelcomeScreen();
@@ -46,7 +58,7 @@ namespace TTTCore
         {
             string winnerName = this.GetGameWinnerName();
 
-            this.ConsoleInterface.DrawGameEnd
+            this.GameInterface.DrawGameEnd
             (
                 this.Player1, this.Player2,
                 this.RoundsToWin, this.Board, winnerName
@@ -96,7 +108,7 @@ namespace TTTCore
 
             this.IncrementWinnerScore(winningToken);
 
-            this.ConsoleInterface.DrawRoundEnd
+            this.GameInterface.DrawRoundEnd
             (
                 this.Player1, this.Player2,
                 this.RoundsToWin, this.Board, winnerName
@@ -185,12 +197,12 @@ namespace TTTCore
 
         public int HandleHumanMoveAction(Player currentPlayer)
         {
-            this.ConsoleInterface.DrawMainScreen
+            this.GameInterface.DrawMainScreen
             (
                 this.Player1, this.Player2, this.RoundsToWin, 
                 this.Board, this.NextPlayerNumber
             );
-            return this.ConsoleInterface.GetPlayerMoveSelection(currentPlayer, this.Board);
+            return this.GameInterface.GetPlayerMoveSelection(currentPlayer, this.Board);
         }
 
         public int HandleComputerMoveAction(Player currentPlayer)
@@ -213,7 +225,7 @@ namespace TTTCore
         public void WelcomeScreen()
         {
             Console.Clear();
-            ConsoleInterface.WelcomeMessage();
+            GameInterface.WelcomeMessage();
             Thread.Sleep(1000);
         }
 
@@ -235,7 +247,7 @@ namespace TTTCore
         public void HandleGameModeSetup()
         {
             Console.Clear();
-            this.SetGameMode(ConsoleInterface.GetGameModeSelection());
+            this.SetGameMode(GameInterface.GetGameModeSelection());
         }
 
         public void SetGameMode(string gameModeNumber)
@@ -285,7 +297,7 @@ namespace TTTCore
             var currentPlayer = playerNumber == 1 ? this.Player1 : this.Player2;
 
             Console.Clear();
-            var name = ConsoleInterface.GetPlayerNameSelection(playerNumber, invalidName);
+            var name = GameInterface.GetPlayerNameSelection(playerNumber, invalidName);
             currentPlayer.SetPlayerName(name);
         }
 
@@ -308,14 +320,14 @@ namespace TTTCore
             var currentPlayer = playerNumber == 1 ? this.Player1 : this.Player2;
 
             Console.Clear();
-            var token = ConsoleInterface.GetPlayerTokenSelection(playerNumber, invalidToken);
+            var token = GameInterface.GetPlayerTokenSelection(playerNumber, invalidToken);
             currentPlayer.SetPlayerToken(token);
         }
 
         public void HandleNumRoundsSetup()
         {
             Console.Clear();
-            this.SetRoundsToWin(ConsoleInterface.GetRoundsToWinSelection());
+            this.SetRoundsToWin(GameInterface.GetRoundsToWinSelection());
         }
 
         public void SetRoundsToWin(int roundsToWin)
@@ -333,7 +345,7 @@ namespace TTTCore
         public void HandleFirstPlayerChoice()
         {
             Console.Clear();
-            int choice = (ConsoleInterface.GetFirstPlayerSelection(this.Player1, this.Player2));
+            int choice = (GameInterface.GetFirstPlayerSelection(this.Player1, this.Player2));
             this.SetFirstPlayer(choice);
         }
 
