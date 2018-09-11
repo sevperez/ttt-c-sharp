@@ -98,6 +98,20 @@ namespace CLI_Class.UnitTests
         }
 
         [Test]
+        public void GetBoardSizeSelectionShouldReturnIntInRange1To3()
+        {
+            var inputString = "3\n";
+            var readInputs = new List<String>() { inputString };
+            var testConsole = new FakeConsole(readInputs);
+            var subject = new CLI(testConsole);
+
+            int result = subject.GetBoardSizeSelection();
+            var expected = Int32.Parse(inputString.Trim());
+
+            Assert.That(result, Is.EqualTo(expected));
+        }
+
+        [Test]
         public void DrawRoundBannerShouldDrawCurrentScores()
         {
             var testConsole = new FakeConsole();

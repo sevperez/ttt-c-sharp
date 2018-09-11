@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 
@@ -10,6 +11,7 @@ namespace TTTCore
         public IGameInterface GameInterface;
         public int RoundsToWin { get; set; }
         public int NextPlayerNumber { get; set; }
+        public int BoardSizeSelection { get; set; }
         public bool GameOver { get; set; }
         public GameModes Mode { get; set; }
         public Player Player1 { get; set; }
@@ -79,7 +81,7 @@ namespace TTTCore
 
         public void PlayRound()
         {
-            this.Board = new Board();
+            this.Board = new Board(this.BoardSizeSelection);
 
             while (!this.CheckRoundOver())
             {
@@ -117,12 +119,13 @@ namespace TTTCore
 
         public string GetWinningToken()
         {
-            for (var i = 0; i < Constants.WinningLines.GetLength(0); i += 1)
+            int[,] winningLines = this.GetWinningLines();
+            for (var i = 0; i < winningLines.GetLength(0); i += 1)
             {
                 ArrayList lineTokens = new ArrayList();
-                for (var j = 0; j < Constants.WinningLines.GetLength(1); j += 1)
+                for (var j = 0; j < winningLines.GetLength(1); j += 1)
                 {
-                    var index = Constants.WinningLines[i, j];
+                    var index = winningLines[i, j];
                     lineTokens.Add(this.Board.Squares[index].CurrentToken);
                 }
 
@@ -134,6 +137,86 @@ namespace TTTCore
             }
 
             return null;
+        }
+
+        public int[,] GetWinningLines()
+        {
+            var boardSize = this.Board.BoardSize;
+            var winningLineLists = new List<int[]>();
+
+            this.AddHorizontalWinningLines(boardSize, winningLineLists);
+            this.AddVerticalWinningLines(boardSize, winningLineLists);
+            this.AddDiagonalWinningLines(boardSize, winningLineLists);
+
+            return this.ConvertWinningLineListsToMDArray(winningLineLists, boardSize);
+        }
+
+        public int[,] ConvertWinningLineListsToMDArray(List<int[]> list, int boardSize)
+        {
+            int[,] mdArray = new int[boardSize * 2 + 2, boardSize];
+
+            for (var i = 0; i < list.Count; i += 1)
+            {
+                for (var j = 0; j < list[0].Length; j += 1)
+                {
+                    mdArray[i, j] = list[i][j];
+                }
+            }
+
+            return mdArray;
+        }
+
+        public void AddHorizontalWinningLines(int boardSize, List<int[]> lines)
+        {
+            for (var i = 0; i < boardSize; i += 1)
+            {
+                var currentLine = new List<int>();
+                for (var j = 0; j < boardSize; j += 1)
+                {
+                    currentLine.Add(j + i * boardSize);
+                }
+
+                lines.Add((int[])currentLine.ToArray());
+            }
+        }
+
+        public void AddVerticalWinningLines(int boardSize, List<int[]> lines)
+        {
+            for (var i = 0; i < boardSize; i += 1)
+            {
+                var currentLine = new List<int>();
+                for (var j = 0; j < boardSize; j += 1)
+                {
+                    currentLine.Add(i + j * boardSize);
+                }
+
+                lines.Add((int[])currentLine.ToArray());
+            }
+        }
+
+        public void AddDiagonalWinningLines(int boardSize, List<int[]> lines)
+        {
+            var diagonalLeft = new List<int>();
+            var diagonalRight = new List<int>();
+
+            for (var i = 0; i < boardSize; i += 1)
+            {
+                for (var j = 0; j < boardSize; j += 1)
+                {
+                    if (i == j)
+                    {
+                        diagonalLeft.Add(j + i * boardSize);
+                    }
+
+                    if (i + j == boardSize - 1)
+                    {
+                        diagonalRight.Add(j + i * boardSize);
+                    }
+                }
+            }
+
+            lines.Add((int[])diagonalLeft.ToArray());
+            lines.Add((int[])diagonalRight.ToArray());
         }
 
         public bool IsWinningLine(string[] line)
@@ -235,8 +318,9 @@ namespace TTTCore
             this.InstantiatePlayers();
             this.HandlePlayerNamesSetup();
             this.HandlePlayerTokensSetup();
+            this.HandleBoardSizeSelection();
             this.HandleNumRoundsSetup();
-            this.HandleFirstPlayerChoice();
+            this.HandleFirstPlayerSelection();
 
             if (this.Mode == GameModes.PlayerVsComputer)
             {
@@ -342,11 +426,26 @@ namespace TTTCore
             }
         }
 
-        public void HandleFirstPlayerChoice()
+        public void HandleFirstPlayerSelection()
         {
             Console.Clear();
-            int choice = (GameInterface.GetFirstPlayerSelection(this.Player1, this.Player2));
-            this.SetFirstPlayer(choice);
+            int selection = (GameInterface.GetFirstPlayerSelection(this.Player1, this.Player2));
+            this.SetFirstPlayer(selection);
+        }
+
+        public void HandleBoardSizeSelection()
+        {
+            Console.Clear();
+            int selection = (GameInterface.GetBoardSizeSelection());
+
+            if (selection == 1 || selection == 2 || selection == 3)
+            {
+                this.BoardSizeSelection = selection + 2;
+            }
+            else
+            {
+                throw new ArgumentException("Invalid board size selection.");
+            }
         }
 
         public void SetFirstPlayer(int playerNumber)

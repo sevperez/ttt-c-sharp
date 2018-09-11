@@ -16,6 +16,8 @@ namespace TTTCore
 
         int GetPlayerMoveSelection(Player player, Board board);
 
+        int GetBoardSizeSelection();
+
         void RequestMoveMessage(Player player, int[] emptyIndices);
 
         void DrawMainScreen(

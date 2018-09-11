@@ -121,6 +121,23 @@ namespace TTTCore
             return Int32.Parse(selection);
         }
 
+        public int GetBoardSizeSelection()
+        {
+            this.GameConsole.Write(Constants.MainBanner);
+            this.GameConsole.Write(Constants.Messages["requestBoardSize"]);
+            string selection = this.GameConsole.ReadLine().Trim();
+
+            while (selection != "1" && selection != "2" && selection != "3")
+            {
+                Console.Clear();
+                this.GameConsole.Write(Constants.MainBanner);
+                this.GameConsole.Write(Constants.Messages["boardSizeInputError"]);
+                selection = this.GameConsole.ReadLine().Trim();
+            }
+            
+            return Int32.Parse(selection);
+        }
+
         public int GetPlayerMoveSelection(Player player, Board board)
         {
             var emptyIndices = board.GetEmptySquareIndices();

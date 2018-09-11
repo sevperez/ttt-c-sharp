@@ -4,18 +4,7 @@ namespace TTTCore
 {
     public static class Constants
     {
-        public static int NumSquares = 9;
-
-        public static int[,] WinningLines = new int[8, 3] {
-            { 0, 1, 2 },
-            { 3, 4, 5 },
-            { 6, 7, 8 },
-            { 0, 3, 6 },
-            { 1, 4, 7 },
-            { 2, 5, 8 },
-            { 0, 4, 8 },
-            { 2, 4, 6 }
-        };
+        public static int DefaultBoardSize = 3;
 
         public static string MainBanner =
             "---------------------------------\n" +
@@ -98,6 +87,21 @@ namespace TTTCore
                 "Please choose a first player:\n" +
                 "1. {0}\n" +
                 "2. {1}\n"
+            },
+            {
+                "requestBoardSize",
+                "Please choose a board size:\n" +
+                "1. 3x3 Board\n" + 
+                "2. 4x4 Board\n" + 
+                "3. 5x5 Board\n"
+            },
+            {
+                "boardSizeInputError",
+                "Error: Invalid selection.\n" +
+                "Please choose a board size:\n" +
+                "1. 3x3 Board\n" + 
+                "2. 4x4 Board\n" + 
+                "3. 5x5 Board\n"
             },
             {
                 "requestPlayerMove",
