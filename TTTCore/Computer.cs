@@ -8,7 +8,7 @@ namespace TTTCore
             "GLaDOS", "Hal 9000", "Ava", "Cortana", "Alexa"
         };
 
-        public AI ai { get; set; }
+        public override AI ai { get; set; }
         
         public string[] ValidNames
         { 

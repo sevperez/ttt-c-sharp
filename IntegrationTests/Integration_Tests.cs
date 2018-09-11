@@ -13,12 +13,12 @@ namespace TTTGame.IntegrationTests
         [Test]
         public void PlayIntegrationTest()
         {
-            var operations = new List<String>();
+            var readInputs = new List<String>();
             foreach(KeyValuePair<string, string> entry in TestValues.inputs)
             {
-                operations.Add(entry.Value);
+                readInputs.Add(entry.Value);
             };
-            var testConsole = new FakeConsole(operations);
+            var testConsole = new FakeConsole(readInputs);
             var testCLI = new CLI(testConsole);
             var subject = new Game(testCLI);
 

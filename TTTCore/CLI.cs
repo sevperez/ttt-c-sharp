@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace TTTCore
 {
-    public class CLI
+    public class CLI : IGameInterface
     {
         public IConsole GameConsole { get; set; }
 
@@ -149,7 +149,8 @@ namespace TTTCore
         }
 
         public void DrawMainScreen(
-            Player player1, Player player2, int numRounds, Board board, int nextPlayerNumber
+            Player player1, Player player2, int numRounds, 
+            Board board, int nextPlayerNumber
         )
         {
             var tokens = board.GetTokenArray();
@@ -165,7 +166,8 @@ namespace TTTCore
         }
 
         public void DrawRoundEnd(
-            Player player1, Player player2, int numRounds, Board board, string winnerName
+            Player player1, Player player2, int numRounds, 
+            Board board, string winnerName
         )
         {
             var tokens = board.GetTokenArray();
@@ -188,7 +190,8 @@ namespace TTTCore
         }
 
         public void DrawGameEnd(
-            Player player1, Player player2, int numRounds, Board board, string winnerName
+            Player player1, Player player2, int numRounds, 
+            Board board, string winnerName
         )
         {
             var tokens = board.GetTokenArray();
