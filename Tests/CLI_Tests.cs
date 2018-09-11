@@ -1,7 +1,9 @@
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using TTTCore;
+using IConsoleInterface.Tests;
 
 namespace CLI_Class.UnitTests
 {
@@ -24,7 +26,7 @@ namespace CLI_Class.UnitTests
         [Test]
         public void GetGameModeSelectionShouldReturnStringInRange1To2()
         {
-            var readInputs = new string[] { "1\n" };
+            var readInputs = new List<String>() { "1\n" };
             var testConsole = new FakeConsole(readInputs);
             var subject = new CLI(testConsole);
 
@@ -38,7 +40,7 @@ namespace CLI_Class.UnitTests
         [Test]
         public void GetRoundsToWinShouldReturnIntInRange1To9()
         {
-            var readInputs = new string[] { "5\n" };
+            var readInputs = new List<String>() { "5\n" };
             var testConsole = new FakeConsole(readInputs);
             var subject = new CLI(testConsole);
 
@@ -54,7 +56,7 @@ namespace CLI_Class.UnitTests
         {
             var inputString = "Fry\n";
             var testPlayerNumber = 1;
-            var readInputs = new string[] { inputString };
+            var readInputs = new List<String>() { inputString };
             var testConsole = new FakeConsole(readInputs);
             var subject = new CLI(testConsole);
 
@@ -69,7 +71,7 @@ namespace CLI_Class.UnitTests
         {
             var inputString = "X\n";
             var testPlayerNumber = 1;
-            var readInputs = new string[] { inputString };
+            var readInputs = new List<String>() { inputString };
             var testConsole = new FakeConsole(readInputs);
             var subject = new CLI(testConsole);
 
@@ -83,7 +85,7 @@ namespace CLI_Class.UnitTests
         public void GetFirstPlayerSelectionShouldReturnIntInRange1To2()
         {
             var inputString = "2\n";
-            var readInputs = new string[] { inputString };
+            var readInputs = new List<String>() { inputString };
             var testConsole = new FakeConsole(readInputs);
             var subject = new CLI(testConsole);
             var player1 = new Player();
@@ -223,7 +225,7 @@ namespace CLI_Class.UnitTests
         public void GetPlayerMoveSelectionShouldReturnInt()
         {
             var inputString = "1\n";
-            var readInputs = new string[] { inputString };
+            var readInputs = new List<String>() { inputString };
             var testConsole = new FakeConsole(readInputs);
             var subject = new CLI(testConsole);
             var board = new Board();

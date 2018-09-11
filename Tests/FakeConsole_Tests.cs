@@ -1,9 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 using TTTCore;
 
-namespace TTTGame.IntegrationTests
+namespace IConsoleInterface.Tests
 {
     [TestFixture]
     public class Fake_Console_Tests
@@ -11,7 +12,7 @@ namespace TTTGame.IntegrationTests
         [Test]
         public void ReadLineShouldStoreNextLineInReadBuffer()
         {
-            var testReadInputs = new string[] { "testLine" };
+            var testReadInputs = new List<String>() { "testLine" };
             var subject = new FakeConsole(testReadInputs);
             
             subject.ReadLine();
@@ -23,7 +24,7 @@ namespace TTTGame.IntegrationTests
         [Test]
         public void IncrementCurrentReadIndexShouldUpdateCurrentReadIndex()
         {
-            var testReadInputs = new string[] { "testLine" };
+            var testReadInputs = new List<String>() { "testLine" };
             var subject = new FakeConsole(testReadInputs);
 
             subject.IncrementCurrentReadIndex();
@@ -35,7 +36,7 @@ namespace TTTGame.IntegrationTests
         [Test]
         public void WriteShouldAddNewItemToConsoleOutputList()
         {
-            var testReadInputs = new string[] { "" };
+            var testReadInputs = new List<String>() { "" };
             var subject = new FakeConsole(testReadInputs);
             var input = "test item";
 

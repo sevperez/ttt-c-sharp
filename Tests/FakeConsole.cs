@@ -2,8 +2,9 @@ using System;
 using System.IO;
 using System.Collections;
 using System.Collections.Generic;
+using TTTCore;
 
-namespace TTTCore
+namespace IConsoleInterface.Tests
 {
     public class FakeConsole : IConsole
     {
@@ -11,15 +12,15 @@ namespace TTTCore
         public TextWriter TextOut { get; set; }
 
         public List<String> ConsoleOutputList { get; set; }
-        public string[] ConsoleInputList { get; set; }
+        public List<String> ConsoleInputList { get; set; }
         public int CurrentReadIndex { get; set; }
         public string CurrentReadItem { get; set; }
 
-        public FakeConsole(string[] readInputs = null)
+        public FakeConsole(List<String> readInputs = null)
         {
             if (readInputs == null)
             {
-                readInputs = new string[] { "" };
+                readInputs = new List<String>();
             }
 
             this.TextIn = new StringReader(String.Join("\n", readInputs));
