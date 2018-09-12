@@ -9,16 +9,20 @@ namespace TTTCore
     {
         public string OwnerToken { get; set; }
         public string OpponentToken { get; set; }
+        public Dictionary<Board, int> MemoOwnerNext { get; set; }
+        public Dictionary<Board, int> MemoOpponentNext { get; set; }
 
         public AI(string ownerToken, string opponentToken)
         {
             this.OwnerToken = ownerToken;
             this.OpponentToken = opponentToken;
+            this.MemoOwnerNext = new Dictionary<Board, int>();
+            this.MemoOpponentNext = new Dictionary<Board, int>();
         }
         
         public int GetTopMoveIndex(Board board, bool ownerMovesNext)
         {
-            var allMoveOptions = this.GetMoveOptions(board, ownerMovesNext);
+            var allMoveOptions = this.GetAllMoveOptions(board, ownerMovesNext);
             var topMoves = this.GetTopMoveOptions(allMoveOptions);
 
             var random = new Random();
@@ -50,7 +54,7 @@ namespace TTTCore
             return (MoveOption[])topMoves.ToArray(typeof(MoveOption));
         }
 
-        public MoveOption[] GetMoveOptions(Board board, bool ownerMovesNext)
+        public MoveOption[] GetAllMoveOptions(Board board, bool ownerMovesNext)
         {
             int[] emptyIndices = board.GetEmptySquareIndices();
             var nextMoveToken = ownerMovesNext ? this.OwnerToken : this.OpponentToken;
@@ -109,17 +113,57 @@ namespace TTTCore
 
             if (game.CheckRoundOver())
             {
-                return this.GetRoundOverMiniMaxScore(game);
+                var score = this.GetRoundOverMiniMaxScore(game);
+                this.UpdateMemo(board, ownerMovesNext, score);
+                return score;
+            }
+
+            var memoScore = this.GetMiniMaxMemoScore(board, ownerMovesNext);
+            if (memoScore != -1)
+            {
+                return memoScore;
             }
             
             int[] miniMaxScores = this.GetMiniMaxScoreArray(board, ownerMovesNext);
             if (ownerMovesNext)
             {
-                return miniMaxScores.Max();
+                var score = miniMaxScores.Max();
+                this.UpdateMemo(board, ownerMovesNext, score);
+                return score;
             }
             else
             {
-                return miniMaxScores.Min();
+                var score = miniMaxScores.Min();
+                this.UpdateMemo(board, ownerMovesNext, score);
+                return score;
+            }
+        }
+
+        public int GetMiniMaxMemoScore(Board board, bool ownerMovesNext)
+        {
+            if (ownerMovesNext && this.MemoOwnerNext.ContainsKey(board))
+            {
+                return this.MemoOwnerNext[board];
+            }
+            else if (!ownerMovesNext && this.MemoOpponentNext.ContainsKey(board))
+            {
+                return this.MemoOpponentNext[board];
+            }
+            else
+            {
+                return -1;      // sentinel value
+            }
+        }
+
+        public void UpdateMemo(Board board, bool ownerMovesNext, int score)
+        {
+            if (ownerMovesNext && !this.MemoOwnerNext.ContainsKey(board))
+            {
+                this.MemoOwnerNext.Add(board, score);
+            }
+            else if (!ownerMovesNext && !this.MemoOpponentNext.ContainsKey(board))
+            {
+                this.MemoOpponentNext.Add(board, score);
             }
         }
 
@@ -157,12 +201,20 @@ namespace TTTCore
             var nextMoveToken = this.GetNextMoveToken(ownerMovesNext);
             Board[] nextBoardStates = this.GetPossibleBoardStates(board, nextMoveToken);
 
-            int[] miniMaxScores = nextBoardStates.Select
-            (
-                nextBoard => this.GetMiniMaxScore(nextBoard, !ownerMovesNext)
-            ).ToArray();
+            List<int> miniMaxScores = new List<int>();
+            foreach (Board currentBoard in nextBoardStates)
+            {
+                var score = this.GetMiniMaxScore(currentBoard, !ownerMovesNext);
+                miniMaxScores.Add(score);
 
-            return miniMaxScores;
+                if ((ownerMovesNext && miniMaxScores.Contains(10)) ||
+                    (!ownerMovesNext && miniMaxScores.Contains(-10)))
+                {
+                    break;
+                }
+            }
+
+            return (int[])miniMaxScores.ToArray();
         }
     }
 }

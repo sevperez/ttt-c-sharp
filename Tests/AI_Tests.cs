@@ -64,7 +64,7 @@ namespace AIClass.UnitTests
             var testBoard = new Board(testTokens);
             var ownerMovesNext = true;
             
-            var result = subject.GetMoveOptions(testBoard, ownerMovesNext);
+            var result = subject.GetAllMoveOptions(testBoard, ownerMovesNext);
             var moveOption1 = new MoveOption(4, 10);
             var moveOption2 = new MoveOption(6, -10);
             var expected = new MoveOption[] { moveOption1, moveOption2 };
@@ -208,6 +208,37 @@ namespace AIClass.UnitTests
             var expected = 0;
 
             Assert.That(result, Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void GetMiniMaxMemoScoreShouldReturnScoreIfExists()
+        {
+            string[] testTokens = new string[] {
+                "X", "", "X", "O", "X", "O", "", "", "O"
+            };
+            var testBoard = new Board(testTokens);
+            var ownerMovesNext = true;
+            var existingScore = 10;
+            subject.MemoOwnerNext.Add(testBoard, existingScore);
+
+            var result = subject.GetMiniMaxMemoScore(testBoard, ownerMovesNext);
+
+            Assert.That(result, Is.EqualTo(existingScore));
+        }
+
+        [Test]
+        public void GetMiniMaxMemoScoreShouldReturnSentinelValueIfNoExist()
+        {
+            string[] testTokens = new string[] {
+                "X", "", "X", "O", "X", "O", "", "", "O"
+            };
+            var testBoard = new Board(testTokens);
+            var ownerMovesNext = true;
+            var sentinelValue = -1;
+
+            var result = subject.GetMiniMaxMemoScore(testBoard, ownerMovesNext);
+
+            Assert.That(result, Is.EqualTo(sentinelValue));
         }
     }
 }
