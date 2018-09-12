@@ -177,7 +177,7 @@ namespace TTTCore
             Console.Clear();
             this.GameConsole.Write(Constants.MainBanner);
             this.DrawRoundBanner(player1, player2, numRounds);
-            this.DrawGameBoard(tokens);
+            this.DrawGameBoard(tokens, board.BoardSize);
             this.RequestMoveMessage(nextPlayer, emptyIndices);
             this.GameConsole.Write(Constants.Footer);
         }
@@ -201,7 +201,7 @@ namespace TTTCore
             Console.Clear();
             this.GameConsole.Write(Constants.MainBanner);
             this.DrawRoundBanner(player1, player2, numRounds);
-            this.DrawGameBoard(tokens);
+            this.DrawGameBoard(tokens, board.BoardSize);
             this.GameConsole.Write(message, winnerName);
             this.GameConsole.Write(Constants.Footer);
         }
@@ -216,7 +216,7 @@ namespace TTTCore
             Console.Clear();
             this.GameConsole.Write(Constants.MainBanner);
             this.DrawRoundBanner(player1, player2, numRounds);
-            this.DrawGameBoard(tokens);
+            this.DrawGameBoard(tokens, board.BoardSize);
             this.GameConsole.Write(Constants.Messages["playerGameWinMessage"], winnerName);
             this.GameConsole.Write(Constants.Footer);
         }
@@ -236,13 +236,80 @@ namespace TTTCore
             this.GameConsole.Write(Constants.RoundBanner, writeArgs);
         }
 
-        public void DrawGameBoard(string[] tokens)
+        public void DrawGameBoard(string[] tokens, int boardSize)
         {
             var adjustedTokens = (string[])tokens.Select
             (
                 token => token == "" ? " " : token
             ).ToArray();
-            this.GameConsole.Write(Constants.GameBoard, adjustedTokens);
+
+            var gameBoard = this.BuildGameBoard(boardSize);
+
+            this.GameConsole.Write(gameBoard, adjustedTokens);
+        }
+
+        public string BuildGameBoard(int boardSize)
+        {
+            var boardString = "";
+            for (var i = 0; i < boardSize; i += 1)
+            {
+                boardString += this.BuildSectionEmptyLine(boardSize);
+                boardString += this.BuildSectionFillLine(boardSize, i);
+                boardString += this.BuildSectionEmptyLine(boardSize);
+
+                if (i < boardSize - 1)
+                {
+                    boardString += this.BuildHorizontalEdgeLine(boardSize);
+                }
+            }
+            boardString += "\n";
+
+            return boardString;
+        }
+
+        public string BuildSectionEmptyLine(int boardSize)
+        {
+            var line = Constants.BoardPieces["leftPadding"];
+            for (var i = 0; i < boardSize - 1; i += 1)
+            {
+                line += String.Format(Constants.BoardPieces["leftAndCenterSection"], " ");
+            }
+            line += String.Format(Constants.BoardPieces["rightSection"], " ");
+
+            return line;
+        }
+
+        public string BuildSectionFillLine(int boardSize, int rowNumber)
+        {
+            var line = Constants.BoardPieces["leftPadding"];
+            for (var i = 0; i < boardSize - 1; i += 1)
+            {
+                var cellNumber = rowNumber * boardSize + i;
+                var cellNumberHolder = "{" + cellNumber.ToString() + "}";
+                line += String.Format(Constants.BoardPieces["leftAndCenterSection"], cellNumberHolder);
+            }
+            var lastCellNumber = (rowNumber + 1) * boardSize - 1;
+            var lastCellNumberHolder = "{" + lastCellNumber.ToString() + "}";
+            line += String.Format(Constants.BoardPieces["rightSection"], lastCellNumberHolder);
+
+            return line;
+        }
+
+        public string BuildHorizontalEdgeLine(int boardSize)
+        {
+            var line = Constants.BoardPieces["leftPadding"];
+            for (var i = 0; i < boardSize; i += 1)
+            {
+                line += Constants.BoardPieces["horizontalEdge"];
+
+                if (i < boardSize - 1)
+                {
+                    line += "-";
+                }
+            }
+            line += "\n";
+
+            return line;
         }
     }
 }

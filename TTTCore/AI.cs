@@ -72,7 +72,7 @@ namespace TTTCore
 
         public Board SimulateMove(Board inputBoard, int moveIndex, string moveToken)
         {
-            var simulatedBoard = new Board();
+            var simulatedBoard = new Board(inputBoard.BoardSize);
             for (var i = 0; i < inputBoard.Squares.Count; i += 1)
             {
                 var fillToken = inputBoard.Squares[i].CurrentToken;

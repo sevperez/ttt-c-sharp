@@ -14,19 +14,28 @@ namespace TTTCore
         public static string RoundBanner =
             "{0} ({1}): {2}/{6}; {3} ({4}): {5}/{6}\n\n";
 
-        public static string GameBoard =
-            "             |     |     \n" +
-            "          {0}  |  {1}  |  {2}  \n" +
-            "             |     |     \n" +
-            "        -----------------\n" +
-            "             |     |     \n" +
-            "          {3}  |  {4}  |  {5}  \n" +
-            "             |     |     \n" +
-            "        -----------------\n" +
-            "             |     |     \n" +
-            "          {6}  |  {7}  |  {8}  \n" +
-            "             |     |     \n\n";
+        public static Dictionary<string, string> BoardPieces = new Dictionary<string, string>()
+        {
+            {
+                "leftPadding",
+                "        "
+            },
+            {
+                "horizontalEdge",
+                "-----"
+            },
+            {
+                "leftAndCenterSection",
+                "  {0}  |"
+            },
+            {
+                "rightSection",
+                "  {0}  \n"
+            }
+        };
         
+        public static int SquareHeight = 3;
+
         public static string Footer = "\n---------------------------------\n\n";
 
         public static Dictionary<string, string> Messages = new Dictionary<string, string>()

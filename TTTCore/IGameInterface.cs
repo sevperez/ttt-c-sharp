@@ -35,6 +35,6 @@ namespace TTTCore
             Board board, string winnerName
         );
 
-        void DrawGameBoard(string[] tokens);
+        void DrawGameBoard(string[] tokens, int boardSize);
     }
 }
