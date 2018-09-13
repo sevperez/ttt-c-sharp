@@ -1,9 +1,13 @@
+using System;
 using System.Collections.Generic;
 
 namespace TTTCore
 {
     public static class Constants
     {
+        public static int MAX = Int32.MaxValue;
+        public static int MIN = Int32.MinValue;
+        
         public static int DefaultBoardSize = 3;
 
         public static string MainBanner =

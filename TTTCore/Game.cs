@@ -290,7 +290,7 @@ namespace TTTCore
 
         public int HandleComputerMoveAction(Player currentPlayer)
         {
-            return currentPlayer.ai.GetTopMoveIndex(this.Board, true);
+            return currentPlayer.ai.GetMiniMaxMove(this.Board, true);
         }
 
         public void AlternateNextPlayer()
