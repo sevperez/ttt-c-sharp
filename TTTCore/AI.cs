@@ -170,7 +170,8 @@ namespace TTTCore
         {
             var game = new Game();
             game.Board = board;
-            int[,] winningLines = game.GetWinningLines();
+            var wlm = new WinningLineGenerator(game.Board.BoardSize);
+            int[,] winningLines = wlm.GetWinningLines();
 
             var score = 0;
             for (var i = 0; i < winningLines.GetLength(0); i += 1)

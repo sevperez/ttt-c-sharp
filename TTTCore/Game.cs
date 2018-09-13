@@ -119,7 +119,9 @@ namespace TTTCore
 
         public string GetWinningToken()
         {
-            int[,] winningLines = this.GetWinningLines();
+            var wlm = new WinningLineGenerator(this.Board.BoardSize);
+            int[,] winningLines = wlm.GetWinningLines();
+
             for (var i = 0; i < winningLines.GetLength(0); i += 1)
             {
                 ArrayList lineTokens = new ArrayList();
@@ -137,86 +139,6 @@ namespace TTTCore
             }
 
             return null;
-        }
-
-        public int[,] GetWinningLines()
-        {
-            var boardSize = this.Board.BoardSize;
-            var winningLineLists = new List<int[]>();
-
-            this.AddHorizontalWinningLines(boardSize, winningLineLists);
-            this.AddVerticalWinningLines(boardSize, winningLineLists);
-            this.AddDiagonalWinningLines(boardSize, winningLineLists);
-
-            return this.ConvertWinningLineListsToMDArray(winningLineLists, boardSize);
-        }
-
-        public int[,] ConvertWinningLineListsToMDArray(List<int[]> list, int boardSize)
-        {
-            int[,] mdArray = new int[boardSize * 2 + 2, boardSize];
-
-            for (var i = 0; i < list.Count; i += 1)
-            {
-                for (var j = 0; j < list[0].Length; j += 1)
-                {
-                    mdArray[i, j] = list[i][j];
-                }
-            }
-
-            return mdArray;
-        }
-
-        public void AddHorizontalWinningLines(int boardSize, List<int[]> lines)
-        {
-            for (var i = 0; i < boardSize; i += 1)
-            {
-                var currentLine = new List<int>();
-                for (var j = 0; j < boardSize; j += 1)
-                {
-                    currentLine.Add(j + i * boardSize);
-                }
-
-                lines.Add((int[])currentLine.ToArray());
-            }
-        }
-
-        public void AddVerticalWinningLines(int boardSize, List<int[]> lines)
-        {
-            for (var i = 0; i < boardSize; i += 1)
-            {
-                var currentLine = new List<int>();
-                for (var j = 0; j < boardSize; j += 1)
-                {
-                    currentLine.Add(i + j * boardSize);
-                }
-
-                lines.Add((int[])currentLine.ToArray());
-            }
-        }
-
-        public void AddDiagonalWinningLines(int boardSize, List<int[]> lines)
-        {
-            var diagonalLeft = new List<int>();
-            var diagonalRight = new List<int>();
-
-            for (var i = 0; i < boardSize; i += 1)
-            {
-                for (var j = 0; j < boardSize; j += 1)
-                {
-                    if (i == j)
-                    {
-                        diagonalLeft.Add(j + i * boardSize);
-                    }
-
-                    if (i + j == boardSize - 1)
-                    {
-                        diagonalRight.Add(j + i * boardSize);
-                    }
-                }
-            }
-
-            lines.Add((int[])diagonalLeft.ToArray());
-            lines.Add((int[])diagonalRight.ToArray());
         }
 
         public bool IsWinningLine(string[] line)
