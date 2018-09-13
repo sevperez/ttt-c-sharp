@@ -16,6 +16,8 @@ namespace TTTCore
 
         int GetPlayerMoveSelection(Player player, Board board);
 
+        int GetBoardSizeSelection();
+
         void RequestMoveMessage(Player player, int[] emptyIndices);
 
         void DrawMainScreen(
@@ -33,6 +35,6 @@ namespace TTTCore
             Board board, string winnerName
         );
 
-        void DrawGameBoard(string[] tokens);
+        void DrawGameBoard(string[] tokens, int boardSize);
     }
 }

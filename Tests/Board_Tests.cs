@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TTTCore;
@@ -9,12 +10,30 @@ namespace BoardClass.UnitTests
     public class Board_Tests
     {
         [Test]
-        public void ConstructorShouldInitializeEmptySquaresAsDefault()
+        public void ConstructorShouldInitializeWithEmpty3x3SquaresAsDefault()
         {
             var subject = new Board();
 
             var result = subject.Squares;
-            var expected = new List<Square>(Constants.NumSquares);
+            var defaultNumSquares = (int)Math.Pow(Constants.DefaultBoardSize, 2);
+            var expected = new List<Square>(defaultNumSquares);
+            for (var i = 0; i < expected.Capacity; i += 1)
+            {
+                expected.Add(new Square(""));
+            }
+
+            Assert.That(result, Is.EquivalentTo(expected));
+        }
+
+        [TestCase(3)]
+        [TestCase(4)]
+        [TestCase(5)]
+        public void ConstructorShouldInitializeWithEmptyNxNSquares(int boardSize)
+        {
+            var subject = new Board(boardSize);
+
+            var result = subject.Squares;
+            var expected = new List<Square>((int)Math.Pow(boardSize, 2));
             for (var i = 0; i < expected.Capacity; i += 1)
             {
                 expected.Add(new Square(""));
@@ -24,7 +43,7 @@ namespace BoardClass.UnitTests
         }
 
         [Test]
-        public void ConstructorShouldInitializeWithFilledSquares()
+        public void ConstructorShouldInitializeWithFilled3x3Squares()
         {
             string[] existingTokens = new string[] { 
                 "X", "X", "O", "", "X", "O", "X", "O", ""
@@ -32,7 +51,8 @@ namespace BoardClass.UnitTests
             var subject = new Board(existingTokens);
             
             var result = subject.Squares;
-            var expected = new List<Square>(Constants.NumSquares);
+            var defaultNumSquares = (int)Math.Pow(Constants.DefaultBoardSize, 2);
+            var expected = new List<Square>(defaultNumSquares);
             for (var i = 0; i < expected.Capacity; i += 1) {
                 expected.Add(new Square(existingTokens[i]));
             }
@@ -41,12 +61,50 @@ namespace BoardClass.UnitTests
         }
 
         [Test]
-        public void IsFullReturnsTrueIfBoardIsFull()
+        public void ConstructorShouldInitializeWithFilledNxNSquares()
+        {
+            string[] existingTokens = new string[] { 
+                "X", "X", "O", "O",
+                "", "X", "O", "X",
+                "X", "O", "", "",
+                "O", "X", "", ""
+            };
+            var boardSize = 4;
+            var subject = new Board(boardSize, existingTokens);
+            
+            var result = subject.Squares;
+            var expected = new List<Square>((int)Math.Pow(boardSize, 2));
+            for (var i = 0; i < expected.Capacity; i += 1) {
+                expected.Add(new Square(existingTokens[i]));
+            }
+
+            Assert.That(result, Is.EquivalentTo(expected));
+        }
+
+        [Test]
+        public void IsFullReturnsTrueIfBoardIsFullAtDefaultSize()
         {
             string[] existingTokens = new string[] {
                 "X", "X", "O", "O", "X", "X", "X", "O", "O"
             };
             var subject = new Board(existingTokens);
+
+            var result = subject.IsFull();
+
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public void IsFullReturnsTrueIfBoardIsFullAtNSize()
+        {
+            var boardSize = 4;
+            string[] existingTokens = new string[] {
+                "X", "X", "O", "X",
+                "O", "X", "O", "X",
+                "X", "O", "O", "X",
+                "O", "X", "X", "O"
+            };
+            var subject = new Board(boardSize, existingTokens);
 
             var result = subject.IsFull();
 
@@ -111,7 +169,7 @@ namespace BoardClass.UnitTests
         }
 
         [Test]
-        public void GetEmptySquareIndicesShouldReturnEmptyIndices()
+        public void GetEmptySquareIndicesShouldReturnEmptyIndicesAtDefaultSize()
         {
             string[] existingTokens = new string[] {
                 "X", "", "X", "O", "X", "O", "", "", "O"
@@ -123,5 +181,23 @@ namespace BoardClass.UnitTests
 
             Assert.That(result, Is.EquivalentTo(expected));
         }
-  }
+
+        [Test]
+        public void GetEmptySquareIndicesShouldReturnEmptyIndicesAtNxNSize()
+        {
+            var boardSize = 4;
+            string[] existingTokens = new string[] {
+                "X", "X", "O", "O",
+                "", "X", "O", "X",
+                "X", "O", "", "",
+                "O", "X", "", ""
+            };
+            var subject = new Board(boardSize, existingTokens);
+
+            var result = subject.GetEmptySquareIndices();
+            var expected = new int[] { 4, 10, 11, 14, 15 };
+
+            Assert.That(result, Is.EquivalentTo(expected));
+        }
+    }
 }

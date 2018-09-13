@@ -8,10 +8,24 @@ namespace TTTCore
     public class Board : IEquatable<Board>
     {
         public List<Square> Squares { get; set; }
+        public int BoardSize { get; set; }
 
         public Board()
         {
-            this.Squares = new List<Square>(Constants.NumSquares);
+            this.BoardSize = Constants.DefaultBoardSize;
+            var numSquares = this.ConvertBoardSizeToNumSquares(this.BoardSize);
+            this.Squares = new List<Square>(numSquares);
+            for (var i = 0; i < this.Squares.Capacity; i += 1)
+            {
+                this.Squares.Add(new Square(""));
+            }
+        }
+
+        public Board(int boardSize)
+        {
+            this.BoardSize = boardSize;
+            var numSquares = this.ConvertBoardSizeToNumSquares(this.BoardSize);
+            this.Squares = new List<Square>(numSquares);
             for (var i = 0; i < this.Squares.Capacity; i += 1)
             {
                 this.Squares.Add(new Square(""));
@@ -20,11 +34,29 @@ namespace TTTCore
 
         public Board(string[] tokens)
         {
-            this.Squares = new List<Square>(Constants.NumSquares);
+            this.BoardSize = Constants.DefaultBoardSize;
+            var numSquares = this.ConvertBoardSizeToNumSquares(this.BoardSize);
+            this.Squares = new List<Square>(numSquares);
             for (var i = 0; i < this.Squares.Capacity; i += 1)
             {
                 this.Squares.Add(new Square(tokens[i]));
             }
+        }
+
+        public Board(int boardSize, string[] tokens)
+        {
+            this.BoardSize = boardSize;
+            var numSquares = this.ConvertBoardSizeToNumSquares(this.BoardSize);
+            this.Squares = new List<Square>(numSquares);
+            for (var i = 0; i < this.Squares.Capacity; i += 1)
+            {
+                this.Squares.Add(new Square(tokens[i]));
+            }
+        }
+
+        public int ConvertBoardSizeToNumSquares(int boardSize)
+        {
+            return (int)Math.Pow(boardSize, 2);
         }
 
         public bool IsFull()

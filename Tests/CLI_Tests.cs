@@ -98,6 +98,20 @@ namespace CLI_Class.UnitTests
         }
 
         [Test]
+        public void GetBoardSizeSelectionShouldReturnIntInRange1To3()
+        {
+            var inputString = "3\n";
+            var readInputs = new List<String>() { inputString };
+            var testConsole = new FakeConsole(readInputs);
+            var subject = new CLI(testConsole);
+
+            int result = subject.GetBoardSizeSelection();
+            var expected = Int32.Parse(inputString.Trim());
+
+            Assert.That(result, Is.EqualTo(expected));
+        }
+
+        [Test]
         public void DrawRoundBannerShouldDrawCurrentScores()
         {
             var testConsole = new FakeConsole();
@@ -124,7 +138,7 @@ namespace CLI_Class.UnitTests
         }
 
         [Test]
-        public void DrawGameBoardShouldDrawBoardWithCurrentTokens()
+        public void DrawGameBoardShouldDrawDefaultSizeBoardWithCurrentTokens()
         {
             var testConsole = new FakeConsole();
             var subject = new CLI(testConsole);
@@ -132,6 +146,7 @@ namespace CLI_Class.UnitTests
                 "X", "", "O", "O", "", "X", "X", "", "O"
             };
             var board = new Board(currentTokens);
+            var boardSize = board.BoardSize;
 
             var expected =
                 "             |     |     \n" +
@@ -146,20 +161,22 @@ namespace CLI_Class.UnitTests
                 "          X  |     |  O  \n" +
                 "             |     |     \n\n";
 
-            subject.DrawGameBoard(currentTokens);
+            subject.DrawGameBoard(currentTokens, boardSize);
             var result = String.Join("", testConsole.ConsoleOutputList);
             
             Assert.That(result, Is.EqualTo(expected));
         }
 
         [Test]
-        public void DrawGameBoardShouldDrawEmptyBoardIfNoTokens()
+        public void DrawGameBoardShouldDrawDefautlSizeEmptyBoardIfNoTokens()
         {
             var testConsole = new FakeConsole();
             var subject = new CLI(testConsole);
             string[] currentTokens = new string[] {
                 "", "", "", "", "", "", "", "", ""
             };
+            var board = new Board(currentTokens);
+            var boardSize = board.BoardSize;
 
             var expected =
                 "             |     |     \n" +
@@ -174,14 +191,101 @@ namespace CLI_Class.UnitTests
                 "             |     |     \n" +
                 "             |     |     \n\n";
 
-            subject.DrawGameBoard(currentTokens);
+            subject.DrawGameBoard(currentTokens, boardSize);
             var result = String.Join("", testConsole.ConsoleOutputList);
             
             Assert.That(result, Is.EqualTo(expected));
         }
 
         [Test]
-        public void RequestMoveOptionsShouldDisplayAllOptionsOnEmptyBoard()
+        public void DrawGameBoardShouldDraw4x4BoardWithCurrentTokens()
+        {
+            var testConsole = new FakeConsole();
+            var subject = new CLI(testConsole);
+            string[] currentTokens = new string[] {
+                "X", "", "O", "X",
+                "O", "X", "", "X",
+                "", "O", "", "X",
+                "O", "X", "X", "O"
+            };
+            var boardSize = 4;
+            var board = new Board(boardSize, currentTokens);
+
+            var expected =
+                "             |     |     |     \n" +
+                "          X  |     |  O  |  X  \n" +
+                "             |     |     |     \n" +
+                "        -----------------------\n" +
+                "             |     |     |     \n" +
+                "          O  |  X  |     |  X  \n" +
+                "             |     |     |     \n" +
+                "        -----------------------\n" +
+                "             |     |     |     \n" +
+                "             |  O  |     |  X  \n" +
+                "             |     |     |     \n" +
+                "        -----------------------\n" +
+                "             |     |     |     \n" +
+                "          O  |  X  |  X  |  O  \n" +
+                "             |     |     |     \n\n";
+
+            subject.DrawGameBoard(currentTokens, boardSize);
+            var result = String.Join("", testConsole.ConsoleOutputList);
+            
+            Assert.That(result, Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void BuildGameBoardShouldBuild3x3BoardString()
+        {
+            var testConsole = new FakeConsole();
+            var subject = new CLI(testConsole);
+
+            var result = subject.BuildGameBoard(3);
+
+            var expected =
+                "             |     |     \n" +
+                "          {0}  |  {1}  |  {2}  \n" +
+                "             |     |     \n" +
+                "        -----------------\n" +
+                "             |     |     \n" +
+                "          {3}  |  {4}  |  {5}  \n" +
+                "             |     |     \n" +
+                "        -----------------\n" +
+                "             |     |     \n" +
+                "          {6}  |  {7}  |  {8}  \n" +
+                "             |     |     \n\n";
+            Assert.That(result, Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void BuildGameBoardShouldBuild4x4BoardString()
+        {
+            var testConsole = new FakeConsole();
+            var subject = new CLI(testConsole);
+
+            var result = subject.BuildGameBoard(4);
+
+            var expected =
+                "             |     |     |     \n" +
+                "          {0}  |  {1}  |  {2}  |  {3}  \n" +
+                "             |     |     |     \n" +
+                "        -----------------------\n" +
+                "             |     |     |     \n" +
+                "          {4}  |  {5}  |  {6}  |  {7}  \n" +
+                "             |     |     |     \n" +
+                "        -----------------------\n" +
+                "             |     |     |     \n" +
+                "          {8}  |  {9}  |  {10}  |  {11}  \n" +
+                "             |     |     |     \n" +
+                "        -----------------------\n" +
+                "             |     |     |     \n" +
+                "          {12}  |  {13}  |  {14}  |  {15}  \n" +
+                "             |     |     |     \n\n";
+            Assert.That(result, Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void RequestMoveOptionsShouldDisplayAllOptionsOnEmpty3x3Board()
         {
             var testConsole = new FakeConsole();
             var subject = new CLI(testConsole);
@@ -200,7 +304,27 @@ namespace CLI_Class.UnitTests
         }
 
         [Test]
-        public void RequestMoveOptionsShouldDisplayAvailableOptionsOnBoard()
+        public void RequestMoveOptionsShouldDisplayAllOptionsOnEmpty4x4Board()
+        {
+            var testConsole = new FakeConsole();
+            var subject = new CLI(testConsole);
+            var boardSize = 4;
+            var board = new Board(boardSize);
+            var emptyIndices = board.GetEmptySquareIndices();
+            var player = new Human();
+            player.Name = "Fry";
+
+            subject.RequestMoveMessage(player, emptyIndices);
+            var result = String.Join("", testConsole.ConsoleOutputList);
+            var expected = "Fry's Move!\n" + 
+                           "Please choose a square:\n" +
+                           "1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16\n";
+
+            Assert.That(result, Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void RequestMoveOptionsShouldDisplayAvailableOptionsOn3x3Board()
         {
             var testConsole = new FakeConsole();
             var subject = new CLI(testConsole);
@@ -217,6 +341,32 @@ namespace CLI_Class.UnitTests
             var expected = "Fry's Move!\n" + 
                            "Please choose a square:\n" +
                            "2, 5, 8\n";
+
+            Assert.That(result, Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void RequestMoveOptionsShouldDisplayAvailableOptionsOn4x4Board()
+        {
+            var testConsole = new FakeConsole();
+            var subject = new CLI(testConsole);
+            string[] currentTokens = new string[] {
+                "X", "", "O", "X",
+                "O", "X", "", "X",
+                "", "O", "", "X",
+                "O", "X", "X", "O"
+            };
+            var boardSize = 4;
+            var board = new Board(boardSize, currentTokens);
+            var emptyIndices = board.GetEmptySquareIndices();
+            var player = new Human();
+            player.Name = "Fry";
+
+            subject.RequestMoveMessage(player, emptyIndices);
+            var result = String.Join("", testConsole.ConsoleOutputList);
+            var expected = "Fry's Move!\n" + 
+                           "Please choose a square:\n" +
+                           "2, 7, 9, 11\n";
 
             Assert.That(result, Is.EqualTo(expected));
         }
