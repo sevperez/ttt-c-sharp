@@ -178,51 +178,6 @@ namespace AIClass.UnitTests
         }
 
         [Test]
-        public void GetTerminalBoardScoreReturnsPositiveIfOwnerWinner()
-        {
-            string[] tokens = new string[] {
-                "", "O", "X",
-                "O", "X", "O",
-                "X", "X", ""
-            };
-            var board = new Board(tokens);
-
-            var result = subject.GetTerminalBoardScore(board);
-
-            Assert.That(result, Is.EqualTo(Constants.MINIMAX_MAX));
-        }
-
-        [Test]
-        public void GetTerminalBoardScoreReturnsNegativeIfOpponentWinner()
-        {
-            string[] tokens = new string[] {
-                "O", "O", "O",
-                "X", "X", "O",
-                "X", "", ""
-            };
-            var board = new Board(tokens);
-
-            var result = subject.GetTerminalBoardScore(board);
-
-            Assert.That(result, Is.EqualTo(Constants.MINIMAX_MIN));
-        }
-
-        [Test]
-        public void GetTerminalBoardScoreReturnsZeroIfDraw()
-        {
-            string[] tokens = new string[] {
-                "X", "O", "X",
-                "O", "X", "O",
-                "O", "X", "O"
-            };
-            var board = new Board(tokens);
-
-            var result = subject.GetTerminalBoardScore(board);
-
-            Assert.That(result, Is.EqualTo(0));
-        }
-
-        [Test]
         public void GetInitialDepthShouldReturnMaxConstantIfBoardIsLarge()
         {
             var board = new Board(5);
@@ -240,6 +195,36 @@ namespace AIClass.UnitTests
             var result = subject.GetInitialDepth(board);
 
             Assert.That(result, Is.EqualTo(2));
+        }
+
+        [Test]
+        public void GetPossibleBoardStatesShouldReturnPossibleNextBoards()
+        {
+            string[] currentTokens = new string[] {
+                "X", "", "X", "O", "X", "O", "", "", "O"
+            };
+            var currentBoard = new Board(currentTokens);
+            var nextMoveToken = "X";
+
+            string[] newTokens1 = new string[] {
+                "X", nextMoveToken, "X", "O", "X", "O", "", "", "O"
+            };
+            var newBoard1 = new Board(newTokens1);
+
+            string[] newTokens2 = new string[] {
+                "X", "", "X", "O", "X", "O", nextMoveToken, "", "O"
+            };
+            var newBoard2 = new Board(newTokens2);
+
+            string[] newTokens3 = new string[] {
+                "X", "", "X", "O", "X", "O", "", nextMoveToken, "O"
+            };
+            var newBoard3 = new Board(newTokens3);
+
+            Board[] result = subject.GetPossibleBoardStates(currentBoard, nextMoveToken);
+            var expected = new Board[] { newBoard1, newBoard2, newBoard3 };
+
+            Assert.That(result, Is.EquivalentTo(expected));
         }
 
         [Test]
@@ -301,100 +286,6 @@ namespace AIClass.UnitTests
             var originalContent = new Board(existingTokens);
 
             Assert.That(inputBoard, Is.EqualTo(originalContent));
-        }
-
-        [Test]
-        public void GetPossibleBoardStatesShouldReturnPossibleNextBoards()
-        {
-            string[] currentTokens = new string[] {
-                "X", "", "X", "O", "X", "O", "", "", "O"
-            };
-            var currentBoard = new Board(currentTokens);
-            var nextMoveToken = "X";
-
-            string[] newTokens1 = new string[] {
-                "X", nextMoveToken, "X", "O", "X", "O", "", "", "O"
-            };
-            var newBoard1 = new Board(newTokens1);
-
-            string[] newTokens2 = new string[] {
-                "X", "", "X", "O", "X", "O", nextMoveToken, "", "O"
-            };
-            var newBoard2 = new Board(newTokens2);
-
-            string[] newTokens3 = new string[] {
-                "X", "", "X", "O", "X", "O", "", nextMoveToken, "O"
-            };
-            var newBoard3 = new Board(newTokens3);
-
-            Board[] result = subject.GetPossibleBoardStates(currentBoard, nextMoveToken);
-            var expected = new Board[] { newBoard1, newBoard2, newBoard3 };
-
-            Assert.That(result, Is.EquivalentTo(expected));
-        }
-
-        [Test]
-        public void GetHeuristicScoreReturnsAppropriateScore()
-        {
-            string[] tokens = new string[] {
-                "X", "X", "",
-                "O", "", "X",
-                "O", "", ""
-            };
-            var board = new Board(tokens);
-
-            var result = subject.GetHeuristicScore(board);
-
-            Assert.That(result, Is.EqualTo(30));
-                //20 - 10 + 10 + 10 + 10 - 10
-        }
-
-        [Test]
-        public void GetHeuristicLineScoreReturnsZeroIfNoPossibleWinners()
-        {
-            string[] tokens = new string[] {
-                "", "O", "X",
-                "O", "X", "O",
-                "", "X", ""
-            };
-            var board = new Board(tokens);
-            int[] line = new int[] { 0, 1, 2 };
-
-            var result = subject.GetHeuristicLineScore(board, line);
-
-            Assert.That(result, Is.EqualTo(0));
-        }
-
-        [Test]
-        public void GetHeuristicLineScoreReturnsPositiveIfOwnerCanWin()
-        {
-            string[] tokens = new string[] {
-                "O", "", "",
-                "O", "X", "",
-                "", "X", ""
-            };
-            var board = new Board(tokens);
-            int[] line = new int[] { 1, 4, 7 };
-
-            var result = subject.GetHeuristicLineScore(board, line);
-
-            Assert.That(result, Is.EqualTo(20));
-        }
-
-        [Test]
-        public void GetHeuristicLineScoreReturnsNegativeIfOpponentCanWin()
-        {
-            string[] tokens = new string[] {
-                "O", "O", "",
-                "O", "X", "",
-                "", "X", ""
-            };
-            var board = new Board(tokens);
-            int[] line = new int[] { 0, 1, 2 };
-
-            var result = subject.GetHeuristicLineScore(board, line);
-
-            Assert.That(result, Is.EqualTo(-20));
         }
     }
 }

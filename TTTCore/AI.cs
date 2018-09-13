@@ -78,14 +78,15 @@ namespace TTTCore
 
         public int Minimax(Board board, int depth, bool ownerNext, int alpha, int beta)
         {
+            var boardScorer = new BoardScorer(board, this.OwnerToken, this.OpponentToken);
             if (this.IsLeaf(board))
             {
-                return this.GetTerminalBoardScore(board);
+                return boardScorer.GetTerminalBoardScore();
             }
 
             if (depth == 0)
             {
-                return this.GetHeuristicScore(board);
+                return boardScorer.GetHeuristicScore();
             }
 
             var nextMoveToken = this.GetNextMoveToken(ownerNext);
@@ -143,93 +144,6 @@ namespace TTTCore
             game.Board = board;
 
             return game.CheckRoundOver();
-        }
-
-        public int GetTerminalBoardScore(Board board)
-        {
-            var game = new Game();
-            game.Board = board;
-
-            var winningToken = game.GetWinningToken();
-
-            if (winningToken == this.OwnerToken)
-            {
-                return Constants.MINIMAX_MAX;
-            }
-            else if (winningToken == this.OpponentToken)
-            {
-                return Constants.MINIMAX_MIN;
-            }
-            else
-            {
-                return 0;
-            }
-        }
-
-        public int GetHeuristicScore(Board board)
-        {
-            var game = new Game();
-            game.Board = board;
-            var wlm = new WinningLineGenerator(game.Board.BoardSize);
-            int[,] winningLines = wlm.GetWinningLines();
-
-            var score = 0;
-            for (var i = 0; i < winningLines.GetLength(0); i += 1)
-            {
-                List<int> currentLineList = new List<int>();
-                for (var j = 0; j < winningLines.GetLength(1); j += 1)
-                {
-                    currentLineList.Add(winningLines[i, j]);
-                }
-                var currentLine = (int[])currentLineList.ToArray();
-
-                score += this.GetHeuristicLineScore(game.Board, currentLine);
-            }
-
-            return score;
-        }
-
-        public int GetHeuristicLineScore(Board board, int[] line)
-        {
-            if (this.OwnerCanWinLine(board, line))
-            {
-                return this.GetFilledCount(board, line) * 10;
-            }
-            else if (this.OpponentCanWinLine(board, line))
-            {
-                return this.GetFilledCount(board, line) * -10;
-            }
-            else
-            {
-                return 0;
-            }
-        }
-
-        public bool OwnerCanWinLine(Board board, int[] line)
-        {
-            var lineTokens = line.Select(squareIdx => board.Squares[squareIdx].CurrentToken);
-            return !lineTokens.Contains(this.OpponentToken);
-        }
-
-        public bool OpponentCanWinLine(Board board, int[] line)
-        {
-            var lineTokens = line.Select(squareIdx => board.Squares[squareIdx].CurrentToken);
-            return !lineTokens.Contains(this.OwnerToken);
-        }
-
-        public int GetFilledCount(Board board, int[] line)
-        {
-            var count = 0;
-            var lineTokens = line.Select(squareIdx => board.Squares[squareIdx].CurrentToken);
-            foreach (string fillToken in lineTokens)
-            {
-                if (fillToken != "")
-                {
-                    count += 1;
-                }
-            }
-
-            return count;
         }
 
         public int GetInitialDepth(Board board)
