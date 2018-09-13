@@ -91,40 +91,50 @@ namespace TTTCore
             var nextMoveToken = this.GetNextMoveToken(ownerNext);
             if (ownerNext)
             {
-                int best = Constants.MIN;
-                var childBoards = this.GetPossibleBoardStates(board, nextMoveToken);
-                foreach (Board child in childBoards)
-                {
-                    var score = this.Minimax(child, depth - 1, false, alpha, beta);
-                    best = new int[] { best, score }.Max();
-                    alpha = new int[] { alpha, best }.Max();
-
-                    if (beta <= alpha)
-                    {
-                        break;
-                    }
-                }
-
-                return best;
+                return this.GetMaximizerScore(board, nextMoveToken, depth, alpha, beta);
             }
             else
             {
-                int best = Constants.MAX;
-                var childBoards = this.GetPossibleBoardStates(board, nextMoveToken);
-                foreach (Board child in childBoards)
-                {
-                    var score = this.Minimax(child, depth - 1, true, alpha, beta);
-                    best = new int[] { best, score }.Min();
-                    beta = new int[] { beta, best }.Min();
-
-                    if (beta <= alpha)
-                    {
-                        break;
-                    }
-                }
-
-                return best;
+                return this.GetMinimizerScore(board, nextMoveToken, depth, alpha, beta);
             }
+        }
+
+        public int GetMaximizerScore(Board board, string nextMoveToken, int depth, int alpha, int beta)
+        {
+            int best = Constants.MIN;
+            var childBoards = this.GetPossibleBoardStates(board, nextMoveToken);
+            foreach (Board child in childBoards)
+            {
+                var score = this.Minimax(child, depth - 1, false, alpha, beta);
+                best = new int[] { best, score }.Max();
+                alpha = new int[] { alpha, best }.Max();
+
+                if (beta <= alpha)
+                {
+                    break;
+                }
+            }
+
+            return best;
+        }
+
+        public int GetMinimizerScore(Board board, string nextMoveToken, int depth, int alpha, int beta)
+        {
+            int best = Constants.MAX;
+            var childBoards = this.GetPossibleBoardStates(board, nextMoveToken);
+            foreach (Board child in childBoards)
+            {
+                var score = this.Minimax(child, depth - 1, true, alpha, beta);
+                best = new int[] { best, score }.Min();
+                beta = new int[] { beta, best }.Min();
+
+                if (beta <= alpha)
+                {
+                    break;
+                }
+            }
+
+            return best;
         }
 
         public bool IsLeaf(Board board)
@@ -153,62 +163,6 @@ namespace TTTCore
             else
             {
                 return 0;
-            }
-        }
-
-        public Board[] GetPossibleBoardStates(Board currentBoard, string nextMoveToken)
-        {
-            int[] emptyIndices = currentBoard.GetEmptySquareIndices();
-            ArrayList possibleBoardStates = new ArrayList();
-
-            for (var i = 0; i < emptyIndices.Length; i += 1)
-            {
-                var emptyIndex = emptyIndices[i];
-                Board boardState = this.SimulateMove(currentBoard, emptyIndex, nextMoveToken);
-                possibleBoardStates.Add(boardState);
-            }
-
-            Board[] result = (Board[])possibleBoardStates.ToArray(typeof(Board));
-            return result;
-        }
-
-        public int GetInitialDepth(Board board)
-        {
-            if (board.BoardSize <= Constants.MAX_MINIMAX_DEPTH)
-            {
-                return board.BoardSize - 1;
-            }
-            else
-            {
-                return Constants.MAX_MINIMAX_DEPTH;
-            }
-        }
-
-        public Board SimulateMove(Board inputBoard, int moveIndex, string moveToken)
-        {
-            var simulatedBoard = new Board(inputBoard.BoardSize);
-            for (var i = 0; i < inputBoard.Squares.Count; i += 1)
-            {
-                var fillToken = inputBoard.Squares[i].CurrentToken;
-                if (fillToken != "")
-                {
-                simulatedBoard.Squares[i].Fill(fillToken);
-                }
-            }
-            simulatedBoard.Squares[moveIndex].Fill(moveToken);
-
-            return simulatedBoard;
-        }
-
-        public string GetNextMoveToken(bool ownerMovesNext)
-        {
-            if (ownerMovesNext)
-            {
-                return this.OwnerToken;
-            }
-            else
-            {
-                return this.OpponentToken;
             }
         }
 
@@ -275,6 +229,62 @@ namespace TTTCore
             }
 
             return count;
+        }
+
+        public int GetInitialDepth(Board board)
+        {
+            if (board.BoardSize <= Constants.MAX_MINIMAX_DEPTH)
+            {
+                return board.BoardSize - 1;
+            }
+            else
+            {
+                return Constants.MAX_MINIMAX_DEPTH;
+            }
+        }
+
+        public Board[] GetPossibleBoardStates(Board currentBoard, string nextMoveToken)
+        {
+            int[] emptyIndices = currentBoard.GetEmptySquareIndices();
+            ArrayList possibleBoardStates = new ArrayList();
+
+            for (var i = 0; i < emptyIndices.Length; i += 1)
+            {
+                var emptyIndex = emptyIndices[i];
+                Board boardState = this.SimulateMove(currentBoard, emptyIndex, nextMoveToken);
+                possibleBoardStates.Add(boardState);
+            }
+
+            Board[] result = (Board[])possibleBoardStates.ToArray(typeof(Board));
+            return result;
+        }
+
+        public Board SimulateMove(Board inputBoard, int moveIndex, string moveToken)
+        {
+            var simulatedBoard = new Board(inputBoard.BoardSize);
+            for (var i = 0; i < inputBoard.Squares.Count; i += 1)
+            {
+                var fillToken = inputBoard.Squares[i].CurrentToken;
+                if (fillToken != "")
+                {
+                simulatedBoard.Squares[i].Fill(fillToken);
+                }
+            }
+            simulatedBoard.Squares[moveIndex].Fill(moveToken);
+
+            return simulatedBoard;
+        }
+
+        public string GetNextMoveToken(bool ownerMovesNext)
+        {
+            if (ownerMovesNext)
+            {
+                return this.OwnerToken;
+            }
+            else
+            {
+                return this.OpponentToken;
+            }
         }
     }
 }
