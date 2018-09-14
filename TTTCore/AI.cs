@@ -78,81 +78,81 @@ namespace TTTCore
 
         public int Minimax(Board board, int depth, bool ownerNext, int alpha, int beta)
         {
+            var boardScorer = new BoardScorer(board, this.OwnerToken, this.OpponentToken);
             if (this.IsLeaf(board))
             {
-                return this.GetTerminalBoardScore(board);
+                return boardScorer.GetTerminalBoardScore();
             }
 
             if (depth == 0)
             {
-                return this.GetHeuristicScore(board);
+                return boardScorer.GetHeuristicScore();
             }
 
             var nextMoveToken = this.GetNextMoveToken(ownerNext);
             if (ownerNext)
             {
-                int best = Constants.MIN;
-                var childBoards = this.GetPossibleBoardStates(board, nextMoveToken);
-                foreach (Board child in childBoards)
-                {
-                    var score = this.Minimax(child, depth - 1, false, alpha, beta);
-                    best = new int[] { best, score }.Max();
-                    alpha = new int[] { alpha, best }.Max();
-
-                    if (beta <= alpha)
-                    {
-                        break;
-                    }
-                }
-
-                return best;
+                return this.GetMaximizerScore(board, nextMoveToken, depth, alpha, beta);
             }
             else
             {
-                int best = Constants.MAX;
-                var childBoards = this.GetPossibleBoardStates(board, nextMoveToken);
-                foreach (Board child in childBoards)
-                {
-                    var score = this.Minimax(child, depth - 1, true, alpha, beta);
-                    best = new int[] { best, score }.Min();
-                    beta = new int[] { beta, best }.Min();
-
-                    if (beta <= alpha)
-                    {
-                        break;
-                    }
-                }
-
-                return best;
+                return this.GetMinimizerScore(board, nextMoveToken, depth, alpha, beta);
             }
+        }
+
+        public int GetMaximizerScore(Board board, string nextMoveToken, int depth, int alpha, int beta)
+        {
+            int best = Constants.MIN;
+            var childBoards = this.GetPossibleBoardStates(board, nextMoveToken);
+            foreach (Board child in childBoards)
+            {
+                var score = this.Minimax(child, depth - 1, false, alpha, beta);
+                best = new int[] { best, score }.Max();
+                alpha = new int[] { alpha, best }.Max();
+
+                if (beta <= alpha)
+                {
+                    break;
+                }
+            }
+
+            return best;
+        }
+
+        public int GetMinimizerScore(Board board, string nextMoveToken, int depth, int alpha, int beta)
+        {
+            int best = Constants.MAX;
+            var childBoards = this.GetPossibleBoardStates(board, nextMoveToken);
+            foreach (Board child in childBoards)
+            {
+                var score = this.Minimax(child, depth - 1, true, alpha, beta);
+                best = new int[] { best, score }.Min();
+                beta = new int[] { beta, best }.Min();
+
+                if (beta <= alpha)
+                {
+                    break;
+                }
+            }
+
+            return best;
         }
 
         public bool IsLeaf(Board board)
         {
-            var game = new Game();
-            game.Board = board;
-
-            return game.CheckRoundOver();
+            var round = new Round(board);
+            return round.CheckRoundOver();
         }
 
-        public int GetTerminalBoardScore(Board board)
+        public int GetInitialDepth(Board board)
         {
-            var game = new Game();
-            game.Board = board;
-
-            var winningToken = game.GetWinningToken();
-
-            if (winningToken == this.OwnerToken)
+            if (board.BoardSize <= Constants.MAX_MINIMAX_DEPTH)
             {
-                return Constants.MINIMAX_MAX;
-            }
-            else if (winningToken == this.OpponentToken)
-            {
-                return Constants.MINIMAX_MIN;
+                return board.BoardSize - 1;
             }
             else
             {
-                return 0;
+                return Constants.MAX_MINIMAX_DEPTH;
             }
         }
 
@@ -170,18 +170,6 @@ namespace TTTCore
 
             Board[] result = (Board[])possibleBoardStates.ToArray(typeof(Board));
             return result;
-        }
-
-        public int GetInitialDepth(Board board)
-        {
-            if (board.BoardSize <= Constants.MAX_MINIMAX_DEPTH)
-            {
-                return board.BoardSize - 1;
-            }
-            else
-            {
-                return Constants.MAX_MINIMAX_DEPTH;
-            }
         }
 
         public Board SimulateMove(Board inputBoard, int moveIndex, string moveToken)
@@ -210,71 +198,6 @@ namespace TTTCore
             {
                 return this.OpponentToken;
             }
-        }
-
-        public int GetHeuristicScore(Board board)
-        {
-            var game = new Game();
-            game.Board = board;
-            int[,] winningLines = game.GetWinningLines();
-
-            var score = 0;
-            for (var i = 0; i < winningLines.GetLength(0); i += 1)
-            {
-                List<int> currentLineList = new List<int>();
-                for (var j = 0; j < winningLines.GetLength(1); j += 1)
-                {
-                    currentLineList.Add(winningLines[i, j]);
-                }
-                var currentLine = (int[])currentLineList.ToArray();
-
-                score += this.GetHeuristicLineScore(game.Board, currentLine);
-            }
-
-            return score;
-        }
-
-        public int GetHeuristicLineScore(Board board, int[] line)
-        {
-            if (this.OwnerCanWinLine(board, line))
-            {
-                return this.GetFilledCount(board, line) * 10;
-            }
-            else if (this.OpponentCanWinLine(board, line))
-            {
-                return this.GetFilledCount(board, line) * -10;
-            }
-            else
-            {
-                return 0;
-            }
-        }
-
-        public bool OwnerCanWinLine(Board board, int[] line)
-        {
-            var lineTokens = line.Select(squareIdx => board.Squares[squareIdx].CurrentToken);
-            return !lineTokens.Contains(this.OpponentToken);
-        }
-
-        public bool OpponentCanWinLine(Board board, int[] line)
-        {
-            var lineTokens = line.Select(squareIdx => board.Squares[squareIdx].CurrentToken);
-            return !lineTokens.Contains(this.OwnerToken);
-        }
-
-        public int GetFilledCount(Board board, int[] line)
-        {
-            var count = 0;
-            var lineTokens = line.Select(squareIdx => board.Squares[squareIdx].CurrentToken);
-            foreach (string fillToken in lineTokens)
-            {
-                if (fillToken != "")
-                {
-                    count += 1;
-                }
-            }
-
-            return count;
         }
     }
 }

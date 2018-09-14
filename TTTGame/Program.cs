@@ -8,7 +8,7 @@ namespace TTTGame
         static void Main(string[] args)
         {
             var game = new Game();
-            game.Play();
+            game.Start();
         }
     }
 }

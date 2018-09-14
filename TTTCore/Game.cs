@@ -12,11 +12,10 @@ namespace TTTCore
         public int RoundsToWin { get; set; }
         public int NextPlayerNumber { get; set; }
         public int BoardSizeSelection { get; set; }
-        public bool GameOver { get; set; }
         public GameModes Mode { get; set; }
         public Player Player1 { get; set; }
         public Player Player2 { get; set; }
-        public Board Board { get; set; }
+        public Round Round { get; set; }
         
         public Game(IGameInterface gameInterface = null)
         {
@@ -30,18 +29,23 @@ namespace TTTCore
             }
         }
 
-        public void Play()
+        public void Start()
         {
             this.WelcomeScreen();
             this.GameSetup();
-            this.PlayGame();
+            this.Play();
         }
 
-        public void PlayGame()
+        public void Play()
         {
             while (!this.CheckGameOver())
             {
-                this.PlayRound();
+                this.Round = new Round(
+                    this.GameInterface, this.Mode, this.BoardSizeSelection,
+                    this.RoundsToWin, this.NextPlayerNumber, this.Player1, this.Player2
+                );
+                this.Round.Play();
+                this.AlternateNextPlayer();
                 Thread.Sleep(1000);
             }
             
@@ -63,7 +67,7 @@ namespace TTTCore
             this.GameInterface.DrawGameEnd
             (
                 this.Player1, this.Player2,
-                this.RoundsToWin, this.Board, winnerName
+                this.RoundsToWin, this.Round.Board, winnerName
             );
         }
 
@@ -77,220 +81,6 @@ namespace TTTCore
             {
                 return this.Player2.Name;
             }
-        }
-
-        public void PlayRound()
-        {
-            this.Board = new Board(this.BoardSizeSelection);
-
-            while (!this.CheckRoundOver())
-            {
-                this.HandlePlayerMoves();
-            }
-
-            this.HandleRoundEnd();
-        }
-
-        public bool CheckRoundOver()
-        {
-            if (this.GetWinningToken() != null || this.Board.IsFull())
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        public void HandleRoundEnd()
-        {
-            var winningToken = this.GetWinningToken();
-            var winnerName = this.GetRoundWinnerName(winningToken);
-
-            this.IncrementWinnerScore(winningToken);
-
-            this.GameInterface.DrawRoundEnd
-            (
-                this.Player1, this.Player2,
-                this.RoundsToWin, this.Board, winnerName
-            );
-        }
-
-        public string GetWinningToken()
-        {
-            int[,] winningLines = this.GetWinningLines();
-            for (var i = 0; i < winningLines.GetLength(0); i += 1)
-            {
-                ArrayList lineTokens = new ArrayList();
-                for (var j = 0; j < winningLines.GetLength(1); j += 1)
-                {
-                    var index = winningLines[i, j];
-                    lineTokens.Add(this.Board.Squares[index].CurrentToken);
-                }
-
-                string[] tokenStrings = (string[])lineTokens.ToArray(typeof(string));
-                if (this.IsWinningLine(tokenStrings))
-                {
-                    return tokenStrings[0];
-                }
-            }
-
-            return null;
-        }
-
-        public int[,] GetWinningLines()
-        {
-            var boardSize = this.Board.BoardSize;
-            var winningLineLists = new List<int[]>();
-
-            this.AddHorizontalWinningLines(boardSize, winningLineLists);
-            this.AddVerticalWinningLines(boardSize, winningLineLists);
-            this.AddDiagonalWinningLines(boardSize, winningLineLists);
-
-            return this.ConvertWinningLineListsToMDArray(winningLineLists, boardSize);
-        }
-
-        public int[,] ConvertWinningLineListsToMDArray(List<int[]> list, int boardSize)
-        {
-            int[,] mdArray = new int[boardSize * 2 + 2, boardSize];
-
-            for (var i = 0; i < list.Count; i += 1)
-            {
-                for (var j = 0; j < list[0].Length; j += 1)
-                {
-                    mdArray[i, j] = list[i][j];
-                }
-            }
-
-            return mdArray;
-        }
-
-        public void AddHorizontalWinningLines(int boardSize, List<int[]> lines)
-        {
-            for (var i = 0; i < boardSize; i += 1)
-            {
-                var currentLine = new List<int>();
-                for (var j = 0; j < boardSize; j += 1)
-                {
-                    currentLine.Add(j + i * boardSize);
-                }
-
-                lines.Add((int[])currentLine.ToArray());
-            }
-        }
-
-        public void AddVerticalWinningLines(int boardSize, List<int[]> lines)
-        {
-            for (var i = 0; i < boardSize; i += 1)
-            {
-                var currentLine = new List<int>();
-                for (var j = 0; j < boardSize; j += 1)
-                {
-                    currentLine.Add(i + j * boardSize);
-                }
-
-                lines.Add((int[])currentLine.ToArray());
-            }
-        }
-
-        public void AddDiagonalWinningLines(int boardSize, List<int[]> lines)
-        {
-            var diagonalLeft = new List<int>();
-            var diagonalRight = new List<int>();
-
-            for (var i = 0; i < boardSize; i += 1)
-            {
-                for (var j = 0; j < boardSize; j += 1)
-                {
-                    if (i == j)
-                    {
-                        diagonalLeft.Add(j + i * boardSize);
-                    }
-
-                    if (i + j == boardSize - 1)
-                    {
-                        diagonalRight.Add(j + i * boardSize);
-                    }
-                }
-            }
-
-            lines.Add((int[])diagonalLeft.ToArray());
-            lines.Add((int[])diagonalRight.ToArray());
-        }
-
-        public bool IsWinningLine(string[] line)
-        {
-            return line.All(token => line[0] != "" && token == line[0]);
-        }
-
-        public string GetRoundWinnerName(string winningToken)
-        {
-            if (winningToken == Player1.Token)
-            {
-                return Player1.Name;
-            }
-            else if (winningToken == Player2.Token)
-            {
-                return Player2.Name;
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        public void IncrementWinnerScore(string winningToken)
-        {
-            if (winningToken == null) return;
-
-            if (winningToken == this.Player1.Token)
-            {
-                this.Player1.NumWins += 1;
-            }
-
-            if (winningToken == this.Player2.Token)
-            {
-                this.Player2.NumWins += 1;
-            }   
-        }
-
-        public void HandlePlayerMoves()
-        {
-            this.HandlePlayerMoveAction();
-            this.AlternateNextPlayer();
-        }
-
-        public void HandlePlayerMoveAction()
-        {
-            var currentPlayer = this.NextPlayerNumber == 1 ? this.Player1 : this.Player2;
-
-            int moveSelection;
-            if (currentPlayer == this.Player2 && this.Mode == GameModes.PlayerVsComputer)
-            {
-                moveSelection = this.HandleComputerMoveAction(currentPlayer);
-            }
-            else
-            {
-                moveSelection = this.HandleHumanMoveAction(currentPlayer);
-            }
-            
-            this.Board.Squares[moveSelection].Fill(currentPlayer.Token);
-        }
-
-        public int HandleHumanMoveAction(Player currentPlayer)
-        {
-            this.GameInterface.DrawMainScreen
-            (
-                this.Player1, this.Player2, this.RoundsToWin, 
-                this.Board, this.NextPlayerNumber
-            );
-            return this.GameInterface.GetPlayerMoveSelection(currentPlayer, this.Board);
-        }
-
-        public int HandleComputerMoveAction(Player currentPlayer)
-        {
-            return currentPlayer.ai.GetMiniMaxMove(this.Board, true);
         }
 
         public void AlternateNextPlayer()
@@ -328,6 +118,20 @@ namespace TTTCore
             }
         }
 
+        public void InstantiatePlayers()
+        {
+            this.Player1 = new Human();
+
+            if (this.Mode == GameModes.PlayerVsComputer)
+            {
+                this.Player2 = new Computer();
+            }
+            else
+            {
+                this.Player2 = new Human();
+            }
+        }
+
         public void HandleGameModeSetup()
         {
             Console.Clear();
@@ -345,20 +149,6 @@ namespace TTTCore
             else
             {
                 throw new ArgumentException("Invalid game mode selection.");
-            }
-        }
-
-        public void InstantiatePlayers()
-        {
-            this.Player1 = new Human();
-
-            if (this.Mode == GameModes.PlayerVsComputer)
-            {
-                this.Player2 = new Computer();
-            }
-            else
-            {
-                this.Player2 = new Human();
             }
         }
 
