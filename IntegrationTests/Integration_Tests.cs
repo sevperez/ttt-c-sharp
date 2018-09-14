@@ -22,7 +22,7 @@ namespace TTTGame.IntegrationTests
             var testCLI = new CLI(testConsole);
             var subject = new Game(testCLI);
 
-            subject.Play();
+            subject.Start();
 
             var result = testConsole.ConsoleOutputList;
             foreach (string output in TestValues.expectedOutputs3x3)
@@ -43,7 +43,7 @@ namespace TTTGame.IntegrationTests
             var testCLI = new CLI(testConsole);
             var subject = new Game(testCLI);
 
-            subject.Play();
+            subject.Start();
 
             var result = testConsole.ConsoleOutputList;
             foreach (string output in TestValues.expectedOutputs4x4)

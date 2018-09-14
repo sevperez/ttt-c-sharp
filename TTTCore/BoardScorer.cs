@@ -20,10 +20,8 @@ namespace TTTCore
 
         public int GetTerminalBoardScore()
         {
-            var game = new Game();
-            game.Board = this.Board;
-
-            var winningToken = game.GetWinningToken();
+            var round = new Round(this.Board);
+            var winningToken = round.GetWinningToken();
 
             if (winningToken == this.TestToken)
             {
@@ -41,9 +39,7 @@ namespace TTTCore
 
         public int GetHeuristicScore()
         {
-            var game = new Game();
-            game.Board = this.Board;
-            var wlm = new WinningLineGenerator(game.Board.BoardSize);
+            var wlm = new WinningLineGenerator(this.Board.BoardSize);
             int[,] winningLines = wlm.GetWinningLines();
 
             var score = 0;

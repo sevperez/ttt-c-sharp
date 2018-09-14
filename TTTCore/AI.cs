@@ -140,10 +140,8 @@ namespace TTTCore
 
         public bool IsLeaf(Board board)
         {
-            var game = new Game();
-            game.Board = board;
-
-            return game.CheckRoundOver();
+            var round = new Round(board);
+            return round.CheckRoundOver();
         }
 
         public int GetInitialDepth(Board board)
