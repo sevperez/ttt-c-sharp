@@ -20,14 +20,7 @@ namespace TTTCore
         
         public Game(IGameInterface gameInterface = null)
         {
-            if (gameInterface == null)
-            {
-                this.GameInterface = new CLI();
-            }
-            else
-            {
-                this.GameInterface = gameInterface;
-            }
+            this.GameInterface = gameInterface == null ? new CLI() : gameInterface;
         }
 
         public void Start()
@@ -74,26 +67,12 @@ namespace TTTCore
 
         public string GetGameWinnerName()
         {
-            if (this.Player1.NumWins == this.RoundsToWin)
-            {
-                return this.Player1.Name;
-            }
-            else
-            {
-                return this.Player2.Name;
-            }
+            return this.Player1.NumWins == this.RoundsToWin ? this.Player1.Name : this.Player2.Name;
         }
 
         public void AlternateNextPlayer()
         {
-            if (this.NextPlayerNumber == 1)
-            {
-                this.NextPlayerNumber = 2;
-            }
-            else
-            {
-                this.NextPlayerNumber = 1;
-            }
+            this.NextPlayerNumber = this.NextPlayerNumber == 1 ? 2 : 1;
         }
 
         public void WelcomeScreen()
