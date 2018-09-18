@@ -61,24 +61,17 @@ namespace TTTCore
 
         public bool IsFull()
         {
-            if (this.Squares.Contains(new Square()))
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+            return !this.Squares.Contains(new Square());
         }
 
         public string[] GetTokenArray()
         {
-            return (string[])this.Squares.Select( square => square.CurrentToken ).ToArray();
+            return this.Squares.Select( square => square.CurrentToken ).ToArray();
         }
 
         public int[] GetEmptySquareIndices()
         {
-            var emptyIndices = new ArrayList();
+            var emptyIndices = new List<int>();
 
             for (var i = 0; i < this.Squares.Count; i += 1)
             {
@@ -88,7 +81,7 @@ namespace TTTCore
                 }
             }
 
-            return (int[])emptyIndices.ToArray(typeof(int));
+            return emptyIndices.ToArray();
         }
 
         // IEquatable Implementation
