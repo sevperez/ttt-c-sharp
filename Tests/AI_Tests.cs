@@ -2,7 +2,7 @@ using NUnit.Framework;
 using TTTCore;
 using System.Linq;
 
-namespace AIClass.UnitTests
+namespace MM.AI.AIClass.UnitTests
 {
     [TestFixture]
     public class AI_Tests
@@ -25,8 +25,8 @@ namespace AIClass.UnitTests
             };
             var testBoard = new Board(testTokens);
             var ownerMovesNext = true;
-            var winningMoveOption1 = new MoveOption(1, Constants.MINIMAX_MAX);
-            var winningMoveOption2 = new MoveOption(6, Constants.MINIMAX_MAX);
+            var winningMoveOption1 = new MoveOption(1, MMConstants.MINIMAX_MAX);
+            var winningMoveOption2 = new MoveOption(6, MMConstants.MINIMAX_MAX);
             var winningMoves = new MoveOption[] { winningMoveOption1, winningMoveOption2 };
             var winningMoveIndices = winningMoves.Select(move => move.SquareIndex);
 
@@ -62,12 +62,12 @@ namespace AIClass.UnitTests
             };
             var testBoard = new Board(testTokens);
             var ownerMovesNext = true;
-            var alpha = Constants.MIN;
-            var beta = Constants.MAX;
+            var alpha = MMConstants.MIN;
+            var beta = MMConstants.MAX;
             var depth = 2;
 
             var result = subject.Minimax(testBoard, depth, ownerMovesNext, alpha, beta);
-            var expected = Constants.MINIMAX_MAX;
+            var expected = MMConstants.MINIMAX_MAX;
 
             Assert.That(result, Is.EqualTo(expected));
         }
@@ -82,12 +82,12 @@ namespace AIClass.UnitTests
             };
             var testBoard = new Board(testTokens);
             var ownerMovesNext = false;
-            var alpha = Constants.MIN;
-            var beta = Constants.MAX;
+            var alpha = MMConstants.MIN;
+            var beta = MMConstants.MAX;
             var depth = 2;
 
             var result = subject.Minimax(testBoard, depth, ownerMovesNext, alpha, beta);
-            var expected = Constants.MINIMAX_MIN;
+            var expected = MMConstants.MINIMAX_MIN;
 
             Assert.That(result, Is.EqualTo(expected));
         }
@@ -102,12 +102,12 @@ namespace AIClass.UnitTests
             };
             var testBoard = new Board(testTokens);
             var ownerMovesNext = true;
-            var alpha = Constants.MIN;
-            var beta = Constants.MAX;
+            var alpha = MMConstants.MIN;
+            var beta = MMConstants.MAX;
             var depth = 2;
 
             var result = subject.Minimax(testBoard, depth, ownerMovesNext, alpha, beta);
-            var expected = Constants.MINIMAX_MIN;
+            var expected = MMConstants.MINIMAX_MIN;
 
             Assert.That(result, Is.EqualTo(expected));
         }
@@ -122,8 +122,8 @@ namespace AIClass.UnitTests
             };
             var testBoard = new Board(testTokens);
             var ownerMovesNext = true;
-            var alpha = Constants.MIN;
-            var beta = Constants.MAX;
+            var alpha = MMConstants.MIN;
+            var beta = MMConstants.MAX;
             var depth = 2;
 
             var result = subject.Minimax(testBoard, depth, ownerMovesNext, alpha, beta);
@@ -184,7 +184,7 @@ namespace AIClass.UnitTests
 
             var result = subject.GetInitialDepth(board);
 
-            Assert.That(result, Is.EqualTo(Constants.MAX_MINIMAX_DEPTH));
+            Assert.That(result, Is.EqualTo(MMConstants.MAX_MINIMAX_DEPTH));
         }
 
         [Test]

@@ -4,16 +4,7 @@ using System.Collections.Generic;
 namespace TTTCore
 {
     public static class Constants
-    {
-        public static int MAX = Int32.MaxValue;
-        public static int MIN = Int32.MinValue;
-        
-        public static int MINIMAX_MAX = 1000;
-
-        public static int MINIMAX_MIN = -1000;
-
-        public static int MAX_MINIMAX_DEPTH = 3;
-
+    {        
         public static int DefaultBoardSize = 3;
 
         public static string MainBanner =

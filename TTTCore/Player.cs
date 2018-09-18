@@ -1,4 +1,6 @@
-﻿namespace TTTCore
+﻿using MM.AI;
+
+namespace TTTCore
 {
     public class Player
     {

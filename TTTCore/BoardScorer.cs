@@ -2,8 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TTTCore;
 
-namespace TTTCore
+namespace MM.AI
 {
     public class BoardScorer
     {
@@ -25,11 +26,11 @@ namespace TTTCore
 
             if (winningToken == this.TestToken)
             {
-                return Constants.MINIMAX_MAX;
+                return MMConstants.MINIMAX_MAX;
             }
             else if (winningToken == this.OtherToken)
             {
-                return Constants.MINIMAX_MIN;
+                return MMConstants.MINIMAX_MIN;
             }
             else
             {
