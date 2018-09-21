@@ -75,5 +75,10 @@ namespace IConsoleInterface.Tests
         {
             this.CurrentReadIndex += 1;
         }
+
+        public void Clear()
+        {
+            return;
+        }
     }
 }

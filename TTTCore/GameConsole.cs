@@ -40,5 +40,10 @@ namespace TTTCore
         {
             return Console.ReadLine();
         }
+
+        public void Clear()
+        {
+            Console.Clear();
+        }
     }
 }

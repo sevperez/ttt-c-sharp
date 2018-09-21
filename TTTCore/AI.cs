@@ -2,13 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TTTCore;
 
-namespace TTTCore
+namespace MM.AI
 {
     public class AI
     {
-        public string OwnerToken { get; set; }
-        public string OpponentToken { get; set; }
+        private string OwnerToken { get; set; }
+        private string OpponentToken { get; set; }
 
         public AI(string ownerToken, string opponentToken)
         {
@@ -22,21 +23,21 @@ namespace TTTCore
             var topMoves = this.GetTopMoveOptions(allMoveOptions);
 
             var random = new Random();
-            var randomIndex = random.Next(topMoves.Length);
+            var randomIndex = random.Next(topMoves.Count);
             return topMoves[randomIndex].SquareIndex;
         }
 
-        public MoveOption[] GetTopMoveOptions(MoveOption[] allMoveOptions)
+        private List<MoveOption> GetTopMoveOptions(List<MoveOption> allMoveOptions)
         {
-            ArrayList topMoves = new ArrayList();
+            List<MoveOption> topMoves = new List<MoveOption>();
             var bestMiniMaxScore = allMoveOptions[0].MiniMaxScore;
 
-            for (var i = 0; i < allMoveOptions.Length; i += 1)
+            for (var i = 0; i < allMoveOptions.Count; i += 1)
             {
                 var currentMoveOption = allMoveOptions[i];
                 if (currentMoveOption.MiniMaxScore > bestMiniMaxScore)
                 {
-                    topMoves = new ArrayList();
+                    topMoves = new List<MoveOption>();
                     topMoves.Add(currentMoveOption);
                     bestMiniMaxScore = currentMoveOption.MiniMaxScore;
                 }
@@ -46,30 +47,30 @@ namespace TTTCore
                 }
             }
 
-            return (MoveOption[])topMoves.ToArray(typeof(MoveOption));
+            return topMoves;
         }
 
-        public MoveOption[] GetAllMoveOptions(Board board, bool ownerNext)
+        private List<MoveOption> GetAllMoveOptions(Board board, bool ownerNext)
         {
-            var moveOptions = new ArrayList();
+            var allMoveOptions = new List<MoveOption>();
 
             int[] emptyIndices = board.GetEmptySquareIndices();
             foreach (int idx in emptyIndices)
             {
                 var move = this.GenerateMoveOption(board, idx, ownerNext);
-                moveOptions.Add(move);
+                allMoveOptions.Add(move);
             }
 
-            return (MoveOption[])moveOptions.ToArray(typeof(MoveOption));
+            return allMoveOptions;
         }
 
-        public MoveOption GenerateMoveOption(Board board, int moveIndex, bool ownerNext)
+        private MoveOption GenerateMoveOption(Board board, int moveIndex, bool ownerNext)
         {
             var token = this.GetNextMoveToken(ownerNext);
             var nextBoard = this.SimulateMove(board, moveIndex, token);
 
-            var alpha = Constants.MIN;
-            var beta = Constants.MAX;
+            var alpha = MMConstants.MIN;
+            var beta = MMConstants.MAX;
             var initialDepth = this.GetInitialDepth(board);
             var score = this.Minimax(nextBoard, initialDepth, !ownerNext, alpha, beta);
 
@@ -100,9 +101,9 @@ namespace TTTCore
             }
         }
 
-        public int GetMaximizerScore(Board board, string nextMoveToken, int depth, int alpha, int beta)
+        private int GetMaximizerScore(Board board, string nextMoveToken, int depth, int alpha, int beta)
         {
-            int best = Constants.MIN;
+            int best = MMConstants.MIN;
             var childBoards = this.GetPossibleBoardStates(board, nextMoveToken);
             foreach (Board child in childBoards)
             {
@@ -119,9 +120,9 @@ namespace TTTCore
             return best;
         }
 
-        public int GetMinimizerScore(Board board, string nextMoveToken, int depth, int alpha, int beta)
+        private int GetMinimizerScore(Board board, string nextMoveToken, int depth, int alpha, int beta)
         {
-            int best = Constants.MAX;
+            int best = MMConstants.MAX;
             var childBoards = this.GetPossibleBoardStates(board, nextMoveToken);
             foreach (Board child in childBoards)
             {
@@ -146,13 +147,13 @@ namespace TTTCore
 
         public int GetInitialDepth(Board board)
         {
-            if (board.BoardSize <= Constants.MAX_MINIMAX_DEPTH)
+            if (board.BoardSize <= MMConstants.MAX_MINIMAX_DEPTH)
             {
                 return board.BoardSize - 1;
             }
             else
             {
-                return Constants.MAX_MINIMAX_DEPTH;
+                return MMConstants.MAX_MINIMAX_DEPTH;
             }
         }
 
@@ -190,14 +191,7 @@ namespace TTTCore
 
         public string GetNextMoveToken(bool ownerMovesNext)
         {
-            if (ownerMovesNext)
-            {
-                return this.OwnerToken;
-            }
-            else
-            {
-                return this.OpponentToken;
-            }
+            return ownerMovesNext ? this.OwnerToken : this.OpponentToken;
         }
     }
 }

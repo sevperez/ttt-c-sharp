@@ -1,4 +1,5 @@
 ﻿using System;
+using MM.AI;
 
 namespace TTTCore
 {
@@ -26,14 +27,7 @@ namespace TTTCore
 
         public override void SetPlayerToken(string invalidToken)
         {
-            if (invalidToken == "O")
-            {
-                this.Token = "X";
-            }
-            else
-            {
-                this.Token = "O";
-            }
+            this.Token = invalidToken == "O" ? "X" : "O";
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using MM.AI;
 
 namespace TTTCore
 {
@@ -19,14 +20,7 @@ namespace TTTCore
         
         public Game(IGameInterface gameInterface = null)
         {
-            if (gameInterface == null)
-            {
-                this.GameInterface = new CLI();
-            }
-            else
-            {
-                this.GameInterface = gameInterface;
-            }
+            this.GameInterface = gameInterface == null ? new CLI() : gameInterface;
         }
 
         public void Start()
@@ -73,31 +67,16 @@ namespace TTTCore
 
         public string GetGameWinnerName()
         {
-            if (this.Player1.NumWins == this.RoundsToWin)
-            {
-                return this.Player1.Name;
-            }
-            else
-            {
-                return this.Player2.Name;
-            }
+            return this.Player1.NumWins == this.RoundsToWin ? this.Player1.Name : this.Player2.Name;
         }
 
         public void AlternateNextPlayer()
         {
-            if (this.NextPlayerNumber == 1)
-            {
-                this.NextPlayerNumber = 2;
-            }
-            else
-            {
-                this.NextPlayerNumber = 1;
-            }
+            this.NextPlayerNumber = this.NextPlayerNumber == 1 ? 2 : 1;
         }
 
         public void WelcomeScreen()
         {
-            Console.Clear();
             GameInterface.WelcomeMessage();
             Thread.Sleep(1000);
         }
@@ -134,7 +113,6 @@ namespace TTTCore
 
         public void HandleGameModeSetup()
         {
-            Console.Clear();
             this.SetGameMode(GameInterface.GetGameModeSelection());
         }
 
@@ -170,7 +148,6 @@ namespace TTTCore
         {
             var currentPlayer = playerNumber == 1 ? this.Player1 : this.Player2;
 
-            Console.Clear();
             var name = GameInterface.GetPlayerNameSelection(playerNumber, invalidName);
             currentPlayer.SetPlayerName(name);
         }
@@ -193,14 +170,12 @@ namespace TTTCore
         {
             var currentPlayer = playerNumber == 1 ? this.Player1 : this.Player2;
 
-            Console.Clear();
             var token = GameInterface.GetPlayerTokenSelection(playerNumber, invalidToken);
             currentPlayer.SetPlayerToken(token);
         }
 
         public void HandleNumRoundsSetup()
         {
-            Console.Clear();
             this.SetRoundsToWin(GameInterface.GetRoundsToWinSelection());
         }
 
@@ -218,14 +193,12 @@ namespace TTTCore
 
         public void HandleFirstPlayerSelection()
         {
-            Console.Clear();
             int selection = (GameInterface.GetFirstPlayerSelection(this.Player1, this.Player2));
             this.SetFirstPlayer(selection);
         }
 
         public void HandleBoardSizeSelection()
         {
-            Console.Clear();
             int selection = (GameInterface.GetBoardSizeSelection());
 
             if (selection == 1 || selection == 2 || selection == 3)
