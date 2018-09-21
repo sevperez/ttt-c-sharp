@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace MM.AI
+namespace ArtificialIntelligence
 {
     public static class MMConstants
     {

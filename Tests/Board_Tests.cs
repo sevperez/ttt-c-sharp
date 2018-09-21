@@ -176,7 +176,7 @@ namespace BoardClass.UnitTests
             };
             var subject = new Board(existingTokens);
 
-            var result = subject.GetEmptySquareIndices();
+            var result = subject.GetAvailableLocations();
             var expected = new int[] { 1, 6, 7 };
 
             Assert.That(result, Is.EquivalentTo(expected));
@@ -194,7 +194,7 @@ namespace BoardClass.UnitTests
             };
             var subject = new Board(boardSize, existingTokens);
 
-            var result = subject.GetEmptySquareIndices();
+            var result = subject.GetAvailableLocations();
             var expected = new int[] { 4, 10, 11, 14, 15 };
 
             Assert.That(result, Is.EquivalentTo(expected));

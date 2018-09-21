@@ -5,13 +5,13 @@ namespace TTTCore
 {
     public class MoveOption : IEquatable<MoveOption>
     {
-        public int SquareIndex { get; set; }
-        public int MiniMaxScore { get; set; }
+        public int Location { get; set; }
+        public int Score { get; set; }
 
-        public MoveOption(int squareIndex, int miniMaxScore)
+        public MoveOption(int location, int score)
         {
-            this.SquareIndex = squareIndex;
-            this.MiniMaxScore = miniMaxScore;
+            this.Location = location;
+            this.Score = score;
         }
 
         // IEquatable Implementation
@@ -21,8 +21,8 @@ namespace TTTCore
             {
                 return false;
             }
-            else if (this.SquareIndex == other.SquareIndex &&
-                     this.MiniMaxScore == other.MiniMaxScore)
+            else if (this.Location == other.Location &&
+                     this.Score == other.Score)
             {
                 return true;
             }
@@ -55,8 +55,8 @@ namespace TTTCore
             unchecked
             {
                 int hash = 17;
-                hash = hash * 31 + this.SquareIndex.GetHashCode();
-                hash = hash * 31 + this.MiniMaxScore.GetHashCode();
+                hash = hash * 31 + this.Location.GetHashCode();
+                hash = hash * 31 + this.Score.GetHashCode();
                 return hash;
             }
         }

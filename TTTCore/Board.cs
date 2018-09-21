@@ -69,7 +69,7 @@ namespace TTTCore
             return this.Squares.Select( square => square.CurrentToken ).ToArray();
         }
 
-        public int[] GetEmptySquareIndices()
+        public int[] GetAvailableLocations()
         {
             var emptyIndices = new List<int>();
 

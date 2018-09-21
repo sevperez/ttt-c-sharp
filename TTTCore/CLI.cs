@@ -147,7 +147,7 @@ namespace TTTCore
 
         public int GetPlayerMoveSelection(Player player, Board board)
         {
-            var emptyIndices = board.GetEmptySquareIndices();
+            var emptyIndices = board.GetAvailableLocations();
 
             string input = this.GameConsole.ReadLine().Trim();
             int selection;
@@ -178,7 +178,7 @@ namespace TTTCore
         )
         {
             var tokens = board.GetTokenArray();
-            var emptyIndices = board.GetEmptySquareIndices();
+            var emptyIndices = board.GetAvailableLocations();
             var nextPlayer = nextPlayerNumber == 1 ? player1 : player2;
 
             this.GameConsole.Clear();

@@ -169,7 +169,7 @@ namespace TTTCore
 
         public int HandleComputerMoveAction(Player currentPlayer)
         {
-            return currentPlayer.ai.GetMiniMaxMove(this.Board, true);
+            return currentPlayer.ai.ChooseMove(this.Board, true);
         }
 
         public void AlternateNextPlayer()

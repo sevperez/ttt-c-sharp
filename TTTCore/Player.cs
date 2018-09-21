@@ -1,4 +1,4 @@
-﻿using MM.AI;
+﻿using ArtificialIntelligence;
 
 namespace TTTCore
 {

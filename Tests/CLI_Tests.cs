@@ -290,7 +290,7 @@ namespace CLI_Class.UnitTests
             var testConsole = new FakeConsole();
             var subject = new CLI(testConsole);
             var board = new Board();
-            var emptyIndices = board.GetEmptySquareIndices();
+            var emptyIndices = board.GetAvailableLocations();
             var player = new Human();
             player.Name = "Fry";
 
@@ -310,7 +310,7 @@ namespace CLI_Class.UnitTests
             var subject = new CLI(testConsole);
             var boardSize = 4;
             var board = new Board(boardSize);
-            var emptyIndices = board.GetEmptySquareIndices();
+            var emptyIndices = board.GetAvailableLocations();
             var player = new Human();
             player.Name = "Fry";
 
@@ -332,7 +332,7 @@ namespace CLI_Class.UnitTests
                 "X", "", "O", "O", "", "X", "X", "", "O"
             };
             var board = new Board(currentTokens);
-            var emptyIndices = board.GetEmptySquareIndices();
+            var emptyIndices = board.GetAvailableLocations();
             var player = new Human();
             player.Name = "Fry";
 
@@ -358,7 +358,7 @@ namespace CLI_Class.UnitTests
             };
             var boardSize = 4;
             var board = new Board(boardSize, currentTokens);
-            var emptyIndices = board.GetEmptySquareIndices();
+            var emptyIndices = board.GetAvailableLocations();
             var player = new Human();
             player.Name = "Fry";
 

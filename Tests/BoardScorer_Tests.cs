@@ -2,7 +2,7 @@ using NUnit.Framework;
 using TTTCore;
 using System.Linq;
 
-namespace MM.AI.BoardScorerClass.UnitTests
+namespace ArtificialIntelligence.BoardScorerClass.UnitTests
 {
     [TestFixture]
     public class BoardScorer_Tests
@@ -18,7 +18,7 @@ namespace MM.AI.BoardScorerClass.UnitTests
             var board = new Board(tokens);
             var subject = new BoardScorer(board, "X", "O");
 
-            var result = subject.GetTerminalBoardScore();
+            var result = subject.GetTerminalScore();
 
             Assert.That(result, Is.EqualTo(MMConstants.MINIMAX_MAX));
         }
@@ -34,7 +34,7 @@ namespace MM.AI.BoardScorerClass.UnitTests
             var board = new Board(tokens);
             var subject = new BoardScorer(board, "X", "O");
 
-            var result = subject.GetTerminalBoardScore();
+            var result = subject.GetTerminalScore();
 
             Assert.That(result, Is.EqualTo(MMConstants.MINIMAX_MIN));
         }
@@ -50,7 +50,7 @@ namespace MM.AI.BoardScorerClass.UnitTests
             var board = new Board(tokens);
             var subject = new BoardScorer(board, "X", "O");
 
-            var result = subject.GetTerminalBoardScore();
+            var result = subject.GetTerminalScore();
 
             Assert.That(result, Is.EqualTo(0));
         }

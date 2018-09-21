@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using TTTCore;
 
-namespace MM.AI
+namespace ArtificialIntelligence
 {
-    public class BoardScorer
+    public class BoardScorer : IScorer
     {
         public Board Board { get; set; }
         public string TestToken { get; set; }
@@ -19,7 +19,7 @@ namespace MM.AI
             this.OtherToken = otherToken;
         }
 
-        public int GetTerminalBoardScore()
+        public int GetTerminalScore()
         {
             var round = new Round(this.Board);
             var winningToken = round.GetWinningToken();
