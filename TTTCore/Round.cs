@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using ArtificialIntelligence;
 
 namespace TTTCore
 {
@@ -15,7 +16,7 @@ namespace TTTCore
         public Player Player2 { get; set; }
         public int RoundsToWin { get; set; }
         public int BoardSize { get; set; }
-        public Board Board { get; set; }
+        public IBoard Board { get; set; }
         
         public Round(
             IGameInterface gameInterface, GameModes mode, int boardSize,
@@ -31,7 +32,7 @@ namespace TTTCore
             this.Player2 = player2;
         }
 
-        public Round(Board board)
+        public Round(IBoard board)
         {
             this.Board = board;
         }
@@ -85,7 +86,7 @@ namespace TTTCore
                 for (var j = 0; j < winningLines.GetLength(1); j += 1)
                 {
                     var index = winningLines[i, j];
-                    lineTokens.Add(this.Board.Squares[index].CurrentToken);
+                    lineTokens.Add(this.Board.Units[index].CurrentToken);
                 }
 
                 string[] tokenStrings = (string[])lineTokens.ToArray(typeof(string));
@@ -154,7 +155,7 @@ namespace TTTCore
                 moveSelection = this.HandleHumanMoveAction(currentPlayer);
             }
             
-            this.Board.Squares[moveSelection].Fill(currentPlayer.Token);
+            this.Board.Units[moveSelection].Fill(currentPlayer.Token);
         }
 
         public int HandleHumanMoveAction(Player currentPlayer)

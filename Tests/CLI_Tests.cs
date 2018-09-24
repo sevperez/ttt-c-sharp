@@ -285,7 +285,7 @@ namespace CLI_Class.UnitTests
         }
 
         [Test]
-        public void RequestMoveOptionsShouldDisplayAllOptionsOnEmpty3x3Board()
+        public void RequestMoveMessageShouldDisplayAllOptionsOnEmpty3x3Board()
         {
             var testConsole = new FakeConsole();
             var subject = new CLI(testConsole);
@@ -304,7 +304,7 @@ namespace CLI_Class.UnitTests
         }
 
         [Test]
-        public void RequestMoveOptionsShouldDisplayAllOptionsOnEmpty4x4Board()
+        public void RequestMoveMessageShouldDisplayAllOptionsOnEmpty4x4Board()
         {
             var testConsole = new FakeConsole();
             var subject = new CLI(testConsole);
@@ -324,7 +324,7 @@ namespace CLI_Class.UnitTests
         }
 
         [Test]
-        public void RequestMoveOptionsShouldDisplayAvailableOptionsOn3x3Board()
+        public void RequestMoveMessageShouldDisplayAvailableOptionsOn3x3Board()
         {
             var testConsole = new FakeConsole();
             var subject = new CLI(testConsole);
@@ -346,7 +346,7 @@ namespace CLI_Class.UnitTests
         }
 
         [Test]
-        public void RequestMoveOptionsShouldDisplayAvailableOptionsOn4x4Board()
+        public void RequestMoveMessageShouldDisplayAvailableOptionsOn4x4Board()
         {
             var testConsole = new FakeConsole();
             var subject = new CLI(testConsole);

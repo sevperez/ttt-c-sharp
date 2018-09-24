@@ -2,17 +2,23 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using TTTCore;
+using ArtificialIntelligence;
 
-namespace ArtificialIntelligence
+namespace TTTCore
 {
     public class BoardScorer : IScorer
     {
-        public Board Board { get; set; }
-        public string TestToken { get; set; }
-        public string OtherToken { get; set; }
+        public IBoard Board { get; set; }
+        private string TestToken { get; set; }
+        private string OtherToken { get; set; }
 
-        public BoardScorer(Board board, string testToken, string otherToken)
+        public BoardScorer(string testToken, string otherToken)
+        {
+            this.TestToken = testToken;
+            this.OtherToken = otherToken;
+        }
+
+        public BoardScorer(IBoard board, string testToken, string otherToken)
         {
             this.Board = board;
             this.TestToken = testToken;
@@ -77,20 +83,20 @@ namespace ArtificialIntelligence
 
         public bool OwnerCanWinLine(int[] line)
         {
-            var lineTokens = line.Select(squareIdx => this.Board.Squares[squareIdx].CurrentToken);
+            var lineTokens = line.Select(squareIdx => this.Board.Units[squareIdx].CurrentToken);
             return !lineTokens.Contains(this.OtherToken);
         }
 
         public bool OpponentCanWinLine(int[] line)
         {
-            var lineTokens = line.Select(squareIdx => this.Board.Squares[squareIdx].CurrentToken);
+            var lineTokens = line.Select(squareIdx => this.Board.Units[squareIdx].CurrentToken);
             return !lineTokens.Contains(this.TestToken);
         }
 
         public int GetFilledCount(int[] line)
         {
             var count = 0;
-            var lineTokens = line.Select(squareIdx => this.Board.Squares[squareIdx].CurrentToken);
+            var lineTokens = line.Select(squareIdx => this.Board.Units[squareIdx].CurrentToken);
             foreach (string fillToken in lineTokens)
             {
                 if (fillToken != "")

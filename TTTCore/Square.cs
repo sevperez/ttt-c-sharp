@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using ArtificialIntelligence;
 
 namespace TTTCore
 {
-    public class Square : IEquatable<Square>
+    public class Square : IEquatable<Square>, IBoardUnit
     {
         public string CurrentToken { get; set; }
 

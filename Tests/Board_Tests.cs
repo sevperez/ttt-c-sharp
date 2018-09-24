@@ -14,7 +14,7 @@ namespace BoardClass.UnitTests
         {
             var subject = new Board();
 
-            var result = subject.Squares;
+            var result = subject.Units;
             var defaultNumSquares = (int)Math.Pow(Constants.DefaultBoardSize, 2);
             var expected = new List<Square>(defaultNumSquares);
             for (var i = 0; i < expected.Capacity; i += 1)
@@ -32,7 +32,7 @@ namespace BoardClass.UnitTests
         {
             var subject = new Board(boardSize);
 
-            var result = subject.Squares;
+            var result = subject.Units;
             var expected = new List<Square>((int)Math.Pow(boardSize, 2));
             for (var i = 0; i < expected.Capacity; i += 1)
             {
@@ -50,7 +50,7 @@ namespace BoardClass.UnitTests
             };
             var subject = new Board(existingTokens);
             
-            var result = subject.Squares;
+            var result = subject.Units;
             var defaultNumSquares = (int)Math.Pow(Constants.DefaultBoardSize, 2);
             var expected = new List<Square>(defaultNumSquares);
             for (var i = 0; i < expected.Capacity; i += 1) {
@@ -72,7 +72,7 @@ namespace BoardClass.UnitTests
             var boardSize = 4;
             var subject = new Board(boardSize, existingTokens);
             
-            var result = subject.Squares;
+            var result = subject.Units;
             var expected = new List<Square>((int)Math.Pow(boardSize, 2));
             for (var i = 0; i < expected.Capacity; i += 1) {
                 expected.Add(new Square(existingTokens[i]));

@@ -1,7 +1,6 @@
 using NUnit.Framework;
-using TTTCore;
 
-namespace MoveOptionClass.UnitTests
+namespace ArtificialIntelligence.MoveOptionClass.UnitTests
 {
     [TestFixture]
     public class MoveOption_Tests

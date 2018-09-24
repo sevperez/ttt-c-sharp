@@ -2,22 +2,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using ArtificialIntelligence;
 
 namespace TTTCore
 {
-    public class Board : IEquatable<Board>
+    public class Board : IEquatable<Board>, IBoard
     {
-        public List<Square> Squares { get; set; }
+        public List<IBoardUnit> Units { get; set; }
         public int BoardSize { get; set; }
 
         public Board()
         {
             this.BoardSize = Constants.DefaultBoardSize;
             var numSquares = this.ConvertBoardSizeToNumSquares(this.BoardSize);
-            this.Squares = new List<Square>(numSquares);
-            for (var i = 0; i < this.Squares.Capacity; i += 1)
+            this.Units = new List<IBoardUnit>(numSquares);
+            for (var i = 0; i < this.Units.Capacity; i += 1)
             {
-                this.Squares.Add(new Square(""));
+                this.Units.Add(new Square(""));
             }
         }
 
@@ -25,10 +26,10 @@ namespace TTTCore
         {
             this.BoardSize = boardSize;
             var numSquares = this.ConvertBoardSizeToNumSquares(this.BoardSize);
-            this.Squares = new List<Square>(numSquares);
-            for (var i = 0; i < this.Squares.Capacity; i += 1)
+            this.Units = new List<IBoardUnit>(numSquares);
+            for (var i = 0; i < this.Units.Capacity; i += 1)
             {
-                this.Squares.Add(new Square(""));
+                this.Units.Add(new Square(""));
             }
         }
 
@@ -36,10 +37,10 @@ namespace TTTCore
         {
             this.BoardSize = Constants.DefaultBoardSize;
             var numSquares = this.ConvertBoardSizeToNumSquares(this.BoardSize);
-            this.Squares = new List<Square>(numSquares);
-            for (var i = 0; i < this.Squares.Capacity; i += 1)
+            this.Units = new List<IBoardUnit>(numSquares);
+            for (var i = 0; i < this.Units.Capacity; i += 1)
             {
-                this.Squares.Add(new Square(tokens[i]));
+                this.Units.Add(new Square(tokens[i]));
             }
         }
 
@@ -47,10 +48,10 @@ namespace TTTCore
         {
             this.BoardSize = boardSize;
             var numSquares = this.ConvertBoardSizeToNumSquares(this.BoardSize);
-            this.Squares = new List<Square>(numSquares);
-            for (var i = 0; i < this.Squares.Capacity; i += 1)
+            this.Units = new List<IBoardUnit>(numSquares);
+            for (var i = 0; i < this.Units.Capacity; i += 1)
             {
-                this.Squares.Add(new Square(tokens[i]));
+                this.Units.Add(new Square(tokens[i]));
             }
         }
 
@@ -61,21 +62,21 @@ namespace TTTCore
 
         public bool IsFull()
         {
-            return !this.Squares.Contains(new Square());
+            return !this.Units.Contains(new Square());
         }
 
         public string[] GetTokenArray()
         {
-            return this.Squares.Select( square => square.CurrentToken ).ToArray();
+            return this.Units.Select( square => square.CurrentToken ).ToArray();
         }
 
         public int[] GetAvailableLocations()
         {
             var emptyIndices = new List<int>();
 
-            for (var i = 0; i < this.Squares.Count; i += 1)
+            for (var i = 0; i < this.Units.Count; i += 1)
             {
-                if (this.Squares[i].CurrentToken == "")
+                if (this.Units[i].CurrentToken == "")
                 {
                     emptyIndices.Add(i);
                 }
@@ -94,9 +95,9 @@ namespace TTTCore
             else
             {
                 var areEqual = true;
-                for (var i = 0; i < this.Squares.Count; i += 1)
+                for (var i = 0; i < this.Units.Count; i += 1)
                 {
-                    if (this.Squares[i].CurrentToken != other.Squares[i].CurrentToken)
+                    if (this.Units[i].CurrentToken != other.Units[i].CurrentToken)
                     {
                         areEqual = false;
                         break;
@@ -127,7 +128,7 @@ namespace TTTCore
 
         public override int GetHashCode()
         {
-            return this.Squares.GetHashCode();
+            return this.Units.GetHashCode();
         }
 
         public static bool operator ==(Board board1, Board board2)

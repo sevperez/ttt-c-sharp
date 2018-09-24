@@ -3,6 +3,7 @@ using System.IO;
 using System.Threading;
 using System.Linq;
 using System.Collections.Generic;
+using ArtificialIntelligence;
 
 namespace TTTCore
 {
@@ -145,7 +146,7 @@ namespace TTTCore
             return Int32.Parse(selection);
         }
 
-        public int GetPlayerMoveSelection(Player player, Board board)
+        public int GetPlayerMoveSelection(Player player, IBoard board)
         {
             var emptyIndices = board.GetAvailableLocations();
 
@@ -174,7 +175,7 @@ namespace TTTCore
 
         public void DrawMainScreen(
             Player player1, Player player2, int numRounds, 
-            Board board, int nextPlayerNumber
+            IBoard board, int nextPlayerNumber
         )
         {
             var tokens = board.GetTokenArray();
@@ -191,7 +192,7 @@ namespace TTTCore
 
         public void DrawRoundEnd(
             Player player1, Player player2, int numRounds, 
-            Board board, string winnerName
+            IBoard board, string winnerName
         )
         {
             var tokens = board.GetTokenArray();
@@ -215,7 +216,7 @@ namespace TTTCore
 
         public void DrawGameEnd(
             Player player1, Player player2, int numRounds, 
-            Board board, string winnerName
+            IBoard board, string winnerName
         )
         {
             var tokens = board.GetTokenArray();

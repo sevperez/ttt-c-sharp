@@ -17,9 +17,10 @@ namespace ArtificialIntelligence
             this.OwnerToken = ownerToken;
             this.OpponentToken = opponentToken;
             this.Algorithm = new Minimax(this.OwnerToken, this.OpponentToken);
+            this.Algorithm.Scorer = new BoardScorer(this.OwnerToken, this.OpponentToken);
         }
 
-        public int ChooseMove(Board board, bool ownerNext)
+        public int ChooseMove(IBoard board, bool ownerNext)
         {
             var allMoveOptions = this.GetAllMoveOptions(board, ownerNext);
             var topMoves = this.GetTopMoveOptions(allMoveOptions);
@@ -53,7 +54,7 @@ namespace ArtificialIntelligence
             return topMoves;
         }
 
-        private List<MoveOption> GetAllMoveOptions(Board board, bool ownerNext)
+        private List<MoveOption> GetAllMoveOptions(IBoard board, bool ownerNext)
         {
             var allMoveOptions = new List<MoveOption>();
 
@@ -67,7 +68,7 @@ namespace ArtificialIntelligence
             return allMoveOptions;
         }
 
-        private MoveOption GenerateMoveOption(Board board, int moveIndex, bool ownerNext)
+        private MoveOption GenerateMoveOption(IBoard board, int moveIndex, bool ownerNext)
         {
             var token = this.GetNextMoveToken(ownerNext);
             var nextBoard = this.SimulateMove(board, moveIndex, token);
@@ -82,7 +83,7 @@ namespace ArtificialIntelligence
             return new MoveOption(moveIndex, score);
         }
 
-        public int GetInitialDepth(Board board)
+        public int GetInitialDepth(IBoard board)
         {
             if (board.BoardSize <= MMConstants.MAX_MINIMAX_DEPTH)
             {
@@ -94,18 +95,18 @@ namespace ArtificialIntelligence
             }
         }
 
-        public Board SimulateMove(Board inputBoard, int moveIndex, string moveToken)
+        public IBoard SimulateMove(IBoard inputBoard, int moveIndex, string moveToken)
         {
             var simulatedBoard = new Board(inputBoard.BoardSize);
-            for (var i = 0; i < inputBoard.Squares.Count; i += 1)
+            for (var i = 0; i < inputBoard.Units.Count; i += 1)
             {
-                var fillToken = inputBoard.Squares[i].CurrentToken;
+                var fillToken = inputBoard.Units[i].CurrentToken;
                 if (fillToken != "")
                 {
-                simulatedBoard.Squares[i].Fill(fillToken);
+                simulatedBoard.Units[i].Fill(fillToken);
                 }
             }
-            simulatedBoard.Squares[moveIndex].Fill(moveToken);
+            simulatedBoard.Units[moveIndex].Fill(moveToken);
 
             return simulatedBoard;
         }

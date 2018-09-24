@@ -1,3 +1,5 @@
+using ArtificialIntelligence;
+
 namespace TTTCore
 {
     public interface IGameInterface
@@ -14,7 +16,7 @@ namespace TTTCore
         
         int GetFirstPlayerSelection(Player player1, Player player2);
 
-        int GetPlayerMoveSelection(Player player, Board board);
+        int GetPlayerMoveSelection(Player player, IBoard board);
 
         int GetBoardSizeSelection();
 
@@ -22,17 +24,17 @@ namespace TTTCore
 
         void DrawMainScreen(
             Player player1, Player player2, int numRounds, 
-            Board board, int nextPlayerNumber
+            IBoard board, int nextPlayerNumber
         );
 
         void DrawRoundEnd(
             Player player1, Player player2, int numRounds, 
-            Board board, string winnerName
+            IBoard board, string winnerName
         );
 
         void DrawGameEnd(
             Player player1, Player player2, int numRounds, 
-            Board board, string winnerName
+            IBoard board, string winnerName
         );
 
         void DrawGameBoard(string[] tokens, int boardSize);

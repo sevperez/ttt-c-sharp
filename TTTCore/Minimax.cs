@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using TTTCore;
+// using TTTCore;
 
 namespace ArtificialIntelligence
 {
@@ -10,6 +10,7 @@ namespace ArtificialIntelligence
     {
         private string TestToken { get; set; }
         private string OtherToken { get; set; }
+        public IScorer Scorer { get; set; }
 
         public Minimax(string testToken, string otherToken)
         {
@@ -17,17 +18,17 @@ namespace ArtificialIntelligence
             this.OtherToken = otherToken;
         }
 
-        public int CalculateScore(Board board, int depth, bool ownerNext, int alpha, int beta)
+        public int CalculateScore(IBoard board, int depth, bool ownerNext, int alpha, int beta)
         {
-            var scorer = new BoardScorer(board, this.TestToken, this.OtherToken);
+            this.Scorer.Board = board;
             if (this.IsLeaf(board))
             {
-                return scorer.GetTerminalScore();
+                return this.Scorer.GetTerminalScore();
             }
 
             if (depth == 0)
             {
-                return scorer.GetHeuristicScore();
+                return this.Scorer.GetHeuristicScore();
             }
 
             var nextMoveToken = this.GetNextMoveToken(ownerNext);
@@ -41,11 +42,11 @@ namespace ArtificialIntelligence
             }
         }
 
-        private int GetMaximizerScore(Board board, string nextMoveToken, int depth, int alpha, int beta)
+        private int GetMaximizerScore(IBoard board, string nextMoveToken, int depth, int alpha, int beta)
         {
             int best = MMConstants.MIN;
             var childBoards = this.GetPossibleBoardStates(board, nextMoveToken);
-            foreach (Board child in childBoards)
+            foreach (IBoard child in childBoards)
             {
                 var score = this.CalculateScore(child, depth - 1, false, alpha, beta);
                 best = new int[] { best, score }.Max();
@@ -60,11 +61,11 @@ namespace ArtificialIntelligence
             return best;
         }
 
-        private int GetMinimizerScore(Board board, string nextMoveToken, int depth, int alpha, int beta)
+        private int GetMinimizerScore(IBoard board, string nextMoveToken, int depth, int alpha, int beta)
         {
             int best = MMConstants.MAX;
             var childBoards = this.GetPossibleBoardStates(board, nextMoveToken);
-            foreach (Board child in childBoards)
+            foreach (IBoard child in childBoards)
             {
                 var score = this.CalculateScore(child, depth - 1, true, alpha, beta);
                 best = new int[] { best, score }.Min();
@@ -79,13 +80,13 @@ namespace ArtificialIntelligence
             return best;
         }
 
-        public bool IsLeaf(Board board)
+        public bool IsLeaf(IBoard board)
         {
             var round = new Round(board);
             return round.CheckRoundOver();
         }
 
-        public Board[] GetPossibleBoardStates(Board currentBoard, string nextMoveToken)
+        public IBoard[] GetPossibleBoardStates(IBoard currentBoard, string nextMoveToken)
         {
             int[] emptyIndices = currentBoard.GetAvailableLocations();
             ArrayList possibleBoardStates = new ArrayList();
@@ -93,26 +94,26 @@ namespace ArtificialIntelligence
             for (var i = 0; i < emptyIndices.Length; i += 1)
             {
                 var emptyIndex = emptyIndices[i];
-                Board boardState = this.SimulateMove(currentBoard, emptyIndex, nextMoveToken);
+                IBoard boardState = this.SimulateMove(currentBoard, emptyIndex, nextMoveToken);
                 possibleBoardStates.Add(boardState);
             }
 
-            Board[] result = (Board[])possibleBoardStates.ToArray(typeof(Board));
+            IBoard[] result = (IBoard[])possibleBoardStates.ToArray(typeof(IBoard));
             return result;
         }
 
-        public Board SimulateMove(Board inputBoard, int moveIndex, string moveToken)
+        public IBoard SimulateMove(IBoard inputBoard, int moveIndex, string moveToken)
         {
-            var simulatedBoard = new Board(inputBoard.BoardSize);
-            for (var i = 0; i < inputBoard.Squares.Count; i += 1)
+            var simulatedBoard = new IBoard(inputBoard.BoardSize);
+            for (var i = 0; i < inputBoard.Units.Count; i += 1)
             {
-                var fillToken = inputBoard.Squares[i].CurrentToken;
+                var fillToken = inputBoard.Units[i].CurrentToken;
                 if (fillToken != "")
                 {
-                simulatedBoard.Squares[i].Fill(fillToken);
+                simulatedBoard.Units[i].Fill(fillToken);
                 }
             }
-            simulatedBoard.Squares[moveIndex].Fill(moveToken);
+            simulatedBoard.Units[moveIndex].Fill(moveToken);
 
             return simulatedBoard;
         }

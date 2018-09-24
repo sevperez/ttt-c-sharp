@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace TTTCore
+namespace ArtificialIntelligence
 {
     public class MoveOption : IEquatable<MoveOption>
     {
