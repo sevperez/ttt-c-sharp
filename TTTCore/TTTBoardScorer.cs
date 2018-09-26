@@ -6,19 +6,19 @@ using ArtificialIntelligence;
 
 namespace TTTCore
 {
-    public class BoardScorer : IScorer
+    public class TTTBoardScorer : IScorer
     {
         public IBoard Board { get; set; }
         private string TestToken { get; set; }
         private string OtherToken { get; set; }
 
-        public BoardScorer(string testToken, string otherToken)
+        public TTTBoardScorer(string testToken, string otherToken)
         {
             this.TestToken = testToken;
             this.OtherToken = otherToken;
         }
 
-        public BoardScorer(IBoard board, string testToken, string otherToken)
+        public TTTBoardScorer(IBoard board, string testToken, string otherToken)
         {
             this.Board = board;
             this.TestToken = testToken;

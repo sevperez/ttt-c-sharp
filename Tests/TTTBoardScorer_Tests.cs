@@ -5,7 +5,7 @@ using System.Linq;
 namespace ArtificialIntelligence.BoardScorerClass.UnitTests
 {
     [TestFixture]
-    public class BoardScorer_Tests
+    public class TTTBoardScorer_Tests
     {
         [Test]
         public void GetTerminalBoardScoreReturnsPositiveIfOwnerWinner()
@@ -16,7 +16,7 @@ namespace ArtificialIntelligence.BoardScorerClass.UnitTests
                 "X", "X", ""
             };
             var board = new Board(tokens);
-            var subject = new BoardScorer(board, "X", "O");
+            var subject = new TTTBoardScorer(board, "X", "O");
 
             var result = subject.GetTerminalScore();
 
@@ -32,7 +32,7 @@ namespace ArtificialIntelligence.BoardScorerClass.UnitTests
                 "X", "", ""
             };
             var board = new Board(tokens);
-            var subject = new BoardScorer(board, "X", "O");
+            var subject = new TTTBoardScorer(board, "X", "O");
 
             var result = subject.GetTerminalScore();
 
@@ -48,7 +48,7 @@ namespace ArtificialIntelligence.BoardScorerClass.UnitTests
                 "O", "X", "O"
             };
             var board = new Board(tokens);
-            var subject = new BoardScorer(board, "X", "O");
+            var subject = new TTTBoardScorer(board, "X", "O");
 
             var result = subject.GetTerminalScore();
 
@@ -64,7 +64,7 @@ namespace ArtificialIntelligence.BoardScorerClass.UnitTests
                 "O", "", ""
             };
             var board = new Board(tokens);
-            var subject = new BoardScorer(board, "X", "O");
+            var subject = new TTTBoardScorer(board, "X", "O");
 
             var result = subject.GetHeuristicScore();
 
@@ -80,7 +80,7 @@ namespace ArtificialIntelligence.BoardScorerClass.UnitTests
                 "", "X", ""
             };
             var board = new Board(tokens);
-            var subject = new BoardScorer(board, "X", "O");
+            var subject = new TTTBoardScorer(board, "X", "O");
             int[] line = new int[] { 0, 1, 2 };
 
             var result = subject.GetHeuristicLineScore(line);
@@ -97,7 +97,7 @@ namespace ArtificialIntelligence.BoardScorerClass.UnitTests
                 "", "X", ""
             };
             var board = new Board(tokens);
-            var subject = new BoardScorer(board, "X", "O");
+            var subject = new TTTBoardScorer(board, "X", "O");
             int[] line = new int[] { 1, 4, 7 };
 
             var result = subject.GetHeuristicLineScore(line);
@@ -114,7 +114,7 @@ namespace ArtificialIntelligence.BoardScorerClass.UnitTests
                 "", "X", ""
             };
             var board = new Board(tokens);
-            var subject = new BoardScorer(board, "X", "O");
+            var subject = new TTTBoardScorer(board, "X", "O");
             int[] line = new int[] { 0, 1, 2 };
 
             var result = subject.GetHeuristicLineScore(line);

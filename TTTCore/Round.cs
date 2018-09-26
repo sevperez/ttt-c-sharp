@@ -41,7 +41,7 @@ namespace TTTCore
         {
             this.Board = new Board(this.BoardSize);
 
-            while (!this.CheckRoundOver())
+            while (!this.IsOver())
             {
                 this.HandlePlayerMoves();
             }
@@ -49,7 +49,7 @@ namespace TTTCore
             this.HandleRoundEnd();
         }
 
-        public bool CheckRoundOver()
+        public bool IsOver()
         {
             if (this.GetWinningToken() != null || this.Board.IsFull())
             {

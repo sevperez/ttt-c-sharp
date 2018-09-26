@@ -87,7 +87,7 @@ namespace RoundClass.UnitTests
             };
             subject.Board = new Board(tokens);
 
-            var result = subject.CheckRoundOver();
+            var result = subject.IsOver();
 
             Assert.IsTrue(result);
         }
@@ -107,7 +107,7 @@ namespace RoundClass.UnitTests
             };
             subject.Board = new Board(subject.BoardSize, tokens);
 
-            var result = subject.CheckRoundOver();
+            var result = subject.IsOver();
 
             Assert.IsTrue(result);
         }
@@ -126,7 +126,7 @@ namespace RoundClass.UnitTests
             };
             subject.Board = new Board(tokens);
 
-            var result = subject.CheckRoundOver();
+            var result = subject.IsOver();
 
             Assert.IsTrue(result);
         }
@@ -145,7 +145,7 @@ namespace RoundClass.UnitTests
             };
             subject.Board = new Board(tokens);
 
-            var result = subject.CheckRoundOver();
+            var result = subject.IsOver();
 
             Assert.IsFalse(result);
         }

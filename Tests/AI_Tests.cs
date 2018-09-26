@@ -12,11 +12,13 @@ namespace ArtificialIntelligence.AIClass.UnitTests
         [SetUp]
         public void Init()
         {
-            subject = new AI("X", "O");
+            var analyzer = new TTTBoardAnalyzer();
+            var scorer = new TTTBoardScorer("X", "O");
+            subject = new AI("X", "O", analyzer, scorer);
         }
 
         [Test]
-        public void GetTopMoveIndexShouldReturnIndexOfAWinningMoveIfAvailable()
+        public void ChooseMoveShouldReturnIndexOfAWinningMoveIfAvailable()
         {
             string[] testTokens = new string[] {
                 "O", "", "",
@@ -36,7 +38,7 @@ namespace ArtificialIntelligence.AIClass.UnitTests
         }
 
         [Test]
-        public void GetTopMoveIndexShouldReturnIndexOfABlockingMoveIfLoseImminent()
+        public void ChooseMoveShouldReturnIndexOfABlockingMoveIfLoseImminent()
         {
             string[] testTokens = new string[] {
                 "", "", "O", 

@@ -93,7 +93,11 @@ namespace TTTCore
 
             if (this.Mode == GameModes.PlayerVsComputer)
             {
-                this.Player2.ai = new AI(this.Player2.Token, this.Player1.Token);
+                var analyzer = new TTTBoardAnalyzer();
+                var scorer = new TTTBoardScorer(this.Player2.Token, this.Player1.Token);
+                this.Player2.ai = new AI(
+                    this.Player2.Token, this.Player1.Token, analyzer, scorer
+                );
             }
         }
 

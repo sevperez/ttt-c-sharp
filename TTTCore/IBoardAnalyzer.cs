@@ -1,14 +1,9 @@
-using System.Collections.Generic;
-using TTTCore;
-
 namespace ArtificialIntelligence
 {
     public interface IBoardAnalyzer
     {
-        List<MoveOption> GetTopMoveOptions(List<MoveOption> allMoveOptions);
+        bool IsEndState(IBoard board);
 
-        List<MoveOption> GetAllMoveOptions(Board board, bool ownerNext);
-
-        MoveOption GenerateMoveOption(Board board, int moveIndex, bool ownerNext);
+        IBoard SimulateMove(IBoard inputBoard, int moveIndex, string moveToken);
     }
 }

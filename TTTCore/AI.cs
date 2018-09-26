@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using TTTCore;
 
 namespace ArtificialIntelligence
 {
@@ -12,12 +11,15 @@ namespace ArtificialIntelligence
         private string OpponentToken { get; set; }
         private IAlgorithm Algorithm { get; set; }
 
-        public AI(string ownerToken, string opponentToken)
+        public AI(
+            string ownerToken, string opponentToken, IBoardAnalyzer analyzer, IScorer scorer
+        )
         {
             this.OwnerToken = ownerToken;
             this.OpponentToken = opponentToken;
             this.Algorithm = new Minimax(this.OwnerToken, this.OpponentToken);
-            this.Algorithm.Scorer = new BoardScorer(this.OwnerToken, this.OpponentToken);
+            this.Algorithm.Scorer = scorer;
+            this.Algorithm.BoardAnalyzer = analyzer;
         }
 
         public int ChooseMove(IBoard board, bool ownerNext)
@@ -71,7 +73,7 @@ namespace ArtificialIntelligence
         private MoveOption GenerateMoveOption(IBoard board, int moveIndex, bool ownerNext)
         {
             var token = this.GetNextMoveToken(ownerNext);
-            var nextBoard = this.SimulateMove(board, moveIndex, token);
+            var nextBoard = this.Algorithm.BoardAnalyzer.SimulateMove(board, moveIndex, token);
 
             var alpha = MMConstants.MIN;
             var beta = MMConstants.MAX;
@@ -93,22 +95,6 @@ namespace ArtificialIntelligence
             {
                 return MMConstants.MAX_MINIMAX_DEPTH;
             }
-        }
-
-        public IBoard SimulateMove(IBoard inputBoard, int moveIndex, string moveToken)
-        {
-            var simulatedBoard = new Board(inputBoard.BoardSize);
-            for (var i = 0; i < inputBoard.Units.Count; i += 1)
-            {
-                var fillToken = inputBoard.Units[i].CurrentToken;
-                if (fillToken != "")
-                {
-                simulatedBoard.Units[i].Fill(fillToken);
-                }
-            }
-            simulatedBoard.Units[moveIndex].Fill(moveToken);
-
-            return simulatedBoard;
         }
 
         public string GetNextMoveToken(bool ownerMovesNext)

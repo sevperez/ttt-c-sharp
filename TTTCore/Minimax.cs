@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-// using TTTCore;
 
 namespace ArtificialIntelligence
 {
@@ -11,6 +10,7 @@ namespace ArtificialIntelligence
         private string TestToken { get; set; }
         private string OtherToken { get; set; }
         public IScorer Scorer { get; set; }
+        public IBoardAnalyzer BoardAnalyzer { get; set; }
 
         public Minimax(string testToken, string otherToken)
         {
@@ -82,8 +82,7 @@ namespace ArtificialIntelligence
 
         public bool IsLeaf(IBoard board)
         {
-            var round = new Round(board);
-            return round.CheckRoundOver();
+            return this.BoardAnalyzer.IsEndState(board);
         }
 
         public IBoard[] GetPossibleBoardStates(IBoard currentBoard, string nextMoveToken)
@@ -94,28 +93,12 @@ namespace ArtificialIntelligence
             for (var i = 0; i < emptyIndices.Length; i += 1)
             {
                 var emptyIndex = emptyIndices[i];
-                IBoard boardState = this.SimulateMove(currentBoard, emptyIndex, nextMoveToken);
+                IBoard boardState = this.BoardAnalyzer.SimulateMove(currentBoard, emptyIndex, nextMoveToken);
                 possibleBoardStates.Add(boardState);
             }
 
             IBoard[] result = (IBoard[])possibleBoardStates.ToArray(typeof(IBoard));
             return result;
-        }
-
-        public IBoard SimulateMove(IBoard inputBoard, int moveIndex, string moveToken)
-        {
-            var simulatedBoard = new IBoard(inputBoard.BoardSize);
-            for (var i = 0; i < inputBoard.Units.Count; i += 1)
-            {
-                var fillToken = inputBoard.Units[i].CurrentToken;
-                if (fillToken != "")
-                {
-                simulatedBoard.Units[i].Fill(fillToken);
-                }
-            }
-            simulatedBoard.Units[moveIndex].Fill(moveToken);
-
-            return simulatedBoard;
         }
 
         public string GetNextMoveToken(bool ownerMovesNext)
